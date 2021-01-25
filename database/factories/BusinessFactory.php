@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Business;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 class BusinessFactory extends Factory
 {
@@ -22,7 +23,9 @@ class BusinessFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'title' => $this->faker->word,
+            'description' => $this->faker->paragraph,
+            'prefix' => strtoupper(Str::random(3)),
         ];
     }
 }
