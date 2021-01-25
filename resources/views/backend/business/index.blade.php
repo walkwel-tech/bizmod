@@ -28,6 +28,7 @@
                                 <th scope="col">Title</th>
                                 <th scope="col">Description</th>
                                 <th scope="col">Prefix</th>
+                                <th scope="col">User</th>
                                 <th scope="col"></th>
                             </tr>
                         </thead>
@@ -37,6 +38,7 @@
                                 <td>{{ $business->getSEOTitle() }}</td>
                                 <td>{{ $business->getSEODescription(2) }}</td>
                                 <td>{{ $business->prefix }}</td>
+                                <td>{{ $business->getOwnerTitle() }}</td>
                                 <td class="d-flex justify-content-end">
                                     @can('backend.business.update')
                                     <a class="btn btn-info btn-icon btn-icon-md rounded-0" href="{{ route('admin.business.show', $business) }}" data-toggle="tooltip" data-placement="left" title="{{ __('basic.actions.view', ['name' => 'Business']) }}">

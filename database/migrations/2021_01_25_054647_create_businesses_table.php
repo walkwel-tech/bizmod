@@ -19,6 +19,7 @@ class CreateBusinessesTable extends Migration
             $table->string('slug');
             $table->longText('description');
             $table->string('prefix', 3);
+            $table->integer('owner_id')->unsigned();
             $table->softDeletes();
             $table->timestamps();
         });

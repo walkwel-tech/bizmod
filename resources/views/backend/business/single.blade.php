@@ -46,6 +46,16 @@
 
                                     <x-form.input name="prefix" :title="__('Prefix')" :value="$business->prefix" required />
 
+                                        @if($business->getKey())
+                                        <x-form.select name="owner_id" :title="__('User')" :selected="$business->owner_id" :options="$users" required :hide-label="true">
+                                            <a href="{{ route('admin.user.show', $business->owner) }}" class="btn btn-link px-0 text-left">
+                                                <i class="fas fa-level-up-alt"></i> {{ __('Users') }}
+                                            </a>
+                                        </x-form.select>
+                                        @else
+                                        <x-form.select name="owner_id" :title="__('User')" :selected="$business->owner_id" :options="$users" required />
+                                        @endif
+
                                     <div class="text-center">
                                         <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
                                     </div>

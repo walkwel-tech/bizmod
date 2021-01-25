@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Business;
+use App\User;
 use App\Http\Requests\BusinessStoreRequest;
 use App\Http\Requests\BusinessUpdateRequest;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -66,9 +67,10 @@ class BusinessController extends Controller
             'method' => 'PATCH',
         ];
 
+        $users = User::all();
 
 
-        return view('backend.business.single', compact(['business', 'form']));
+        return view('backend.business.single', compact(['business', 'form', 'users']));
     }
 
     /**
@@ -87,8 +89,10 @@ class BusinessController extends Controller
             'method' => 'POST',
         ];
 
+        $users = User::all();
 
-        return view('backend.business.single', compact(['business', 'form']));
+
+        return view('backend.business.single', compact(['business', 'form', 'users']));
     }
 
     /**
@@ -110,7 +114,8 @@ class BusinessController extends Controller
         $business = Business::create($request->only([
             'title',
             'description',
-            'prefix'
+            'prefix',
+            'owner_id'
         ]));
 
 
@@ -128,6 +133,7 @@ class BusinessController extends Controller
             'title',
             'description',
             'prefix',
+            'owner_id'
         ]));
 
         $business->save();

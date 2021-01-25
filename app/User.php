@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Http\Requests\BusinessStoreRequest;
 use App\Traits\HasAddresses;
 use App\Traits\HasAvatar;
 use App\Traits\PerformsSEO;
@@ -171,6 +172,10 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function identities() {
         return $this->hasMany('App\SocialIdentity');
+    }
+
+    public function businesses() {
+        return $this->hasMany(Business::class,'owner_id');
     }
 
 

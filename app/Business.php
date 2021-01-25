@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Str;
 use App\Traits\PerformsSEO;
 use App\Traits\ScopesSlug;
 use App\Traits\WalkwelSlugMaker;
@@ -23,6 +24,7 @@ class Business extends Model
         'title',
         'description',
         'prefix',
+        'owner_id',
     ];
 
     /**
@@ -38,6 +40,24 @@ class Business extends Model
     public function setPrefixAttribute($value)
     {
         $this->attributes['prefix'] = strtoupper($value);
+    }
+
+    public function owner() {
+        return $this->belongsTo(User::class, 'owner_id');
+    }
+
+    public function getOwnerTitle($limitCharacters = null, $end = '...')
+    {
+        $title = $this->owner->first_name;
+
+        return ($limitCharacters)
+                ? Str::limit($title, $limitCharacters, $end)
+                : $title;
+    }
+
+    public static function getOwnerAttributeColumnName()
+    {
+        return 'owner_id';
     }
 
 }
