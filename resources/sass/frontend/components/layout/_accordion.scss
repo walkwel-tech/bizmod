@@ -1,0 +1,65 @@
+
+.accordion {
+    .card {
+        border: 0;
+        border-bottom: 1px solid $border-color !important;
+        @include border-radius(0);
+        &:last-child {
+            border-bottom: 0 !important;
+        }
+        &-header {
+            border: 0;
+            @include border-radius(2px);
+            padding: 0;
+            .btn-header-link {
+                color: #fff;
+                display: block;
+                text-align: left;
+                background: #fff;
+                color: $black-20;
+                padding: 22px 0 20px;
+                position: relative;
+                font-size: 14px;
+                font-weight: 700;
+                letter-spacing: 0.5px;
+                text-transform: uppercase;
+                &:after {
+                    content: "";
+                    background:$secondary-color url(/../images/collapse-arrow-up.png) no-repeat center center;
+                    border: 1px solid $secondary-color;
+                    width: 34px;
+                    height: 34px;
+                    position: absolute;
+                    z-index: 10;
+                    right: 0;
+                    top: 14px;
+                    @include border-radius(50%);
+                }
+                &.collapsed {
+                    background: #fff;
+                    color: $gray-1;
+                    font-weight: 500;
+                    &:after {
+                        background:#fff url(/../images/collapse-arrow-down.png) no-repeat center center;
+                        border: 1px solid $border-color;
+                    }
+                }
+              }
+        }
+        .collapsing {
+            background: #fff;
+            line-height: 30px;
+        }
+        .collapse {
+            border: 0;
+            &.show {
+                background: #fff;
+                line-height: 30px;
+                color: #222;
+            }
+        }
+        &-body {
+            padding: 0 0 10px;
+        }
+      }
+}

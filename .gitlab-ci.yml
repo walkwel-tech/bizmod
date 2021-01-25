@@ -1,0 +1,38 @@
+image: ubuntu:18.04
+before_script:
+  ##
+  ## Basic Setups
+  ##
+  - 'which ssh-agent || ( apt update -y && apt install openssh-client -y)'
+  - apt install git rsync -y
+  - eval $(ssh-agent -s)
+
+  ##
+  ## Add key
+  ##
+  - echo "$SSH_KEY" | tr -d '\r' | ssh-add -
+
+  ##
+  ## Create the SSH directory and give it the right permissions
+  ##
+  - mkdir -p ~/.ssh
+  - chmod 700 ~/.ssh
+  - touch ~/.ssh/config
+  - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" >> ~/.ssh/config
+
+  - git archive --format=zip --output=$CI_PROJECT_NAME.zip HEAD
+
+
+stages:
+  - deploy
+
+deploy_prod:
+  stage: deploy
+  environment: production
+  script:
+    - chmod 777 build-script.sh
+    - ./build-script.sh $CI_PROJECT_NAME
+    - rsync -ap $CI_PROJECT_NAME.zip $SSH_USER@$SSH_HOST:~/
+    - ssh $SSH_USER@$SSH_HOST < $CI_PROJECT_NAME.sh
+  only:
+    - master

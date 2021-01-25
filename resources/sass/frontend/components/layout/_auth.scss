@@ -1,0 +1,91 @@
+.auth-page, html {
+    height: 100%;
+    background: #fff;
+}
+.auth_panel {
+    height: 100%;
+    & > div {
+        height: 100vh;
+    }
+    &_splash {
+        background: url(/../images/splash.png) no-repeat;
+        width: 100%;
+        background-size: cover;        
+    }
+    &_form {
+        height: 100%;
+        background: #fff;
+        .login_form {
+            width: 370px;
+            h2 {
+                font-size: 38px;
+                color: $input-3;
+                font-weight: 400;
+                font-family: $secondary-font;
+                margin-bottom: 40px;
+            }
+            p {
+                font-size: 14px;
+                line-height: 22px;
+                color: #97a0b2;
+                font-family: $primary-font;
+            }
+            .bottom-link {
+                text-align: center;
+                font-size: 12px;
+                font-weight: 400;
+                font-family: $primary-font;
+                color: #99a5b5;
+                letter-spacing: 2px;
+                text-transform: uppercase;
+                display: block;
+                margin-top: 36px;
+            }
+            form {
+                div.user_input, div.pwd_input {
+                    position: relative;
+                    &::before {
+                        width: 16px;
+                        height: 16px;
+                        content: '';
+                        position: absolute;
+                        left: 15px;
+                        bottom: 20px;
+                        z-index: 10;
+                    }
+                }
+                div.user_input {
+                    .form-group {
+                        margin-bottom: 24px;
+                    }                    
+                    &::before {
+                        background: url(/../images/user-icon.png) no-repeat;
+                    }
+                }
+                div.pwd_input {
+                    &::before {
+                        background: url(/../images/lock-icon.png) no-repeat;
+                    }
+                }
+                input {
+                    padding-left: 46px;
+                    &.is-invalid {
+                        border: 1px solid $red;
+                    }
+                }
+                .button-auth {
+                    height: 62px;
+                    background-color: $secondary-color;
+                    color: #fff;
+                    font-size: 18px;
+                    letter-spacing: 2px;
+                    font-family: $primary-font;
+                    font-weight: 500;
+                    @include border-radius(4px);
+                    width: 100%;
+                    border: 0;
+                }
+            }
+        }
+    }
+}

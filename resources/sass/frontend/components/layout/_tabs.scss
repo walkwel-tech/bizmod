@@ -1,0 +1,184 @@
+.form_tab {
+  &_header {
+    padding: 30px 35px;
+    position: relative;
+    h2 {
+      font-size: 34px;
+      font-family: $secondary-font;
+      font-weight: 700;
+      color: $black-26;
+      margin-bottom: 5px;
+      span {
+        color: $secondary-color;
+      }
+    }
+    p {
+      color: #2e384d;
+      position: relative;
+      span {
+        width: 1px;
+        height: 17px;
+        background-color: #2e384d;
+        display: inline-block;
+        margin: 0 16px;
+        position: relative;
+        top: 3px;
+      }
+    }
+    .project_action {
+      position: absolute;
+      right: 0;
+      top: 35px;    
+      ul {
+        li {
+            padding-right: 30px;
+            a {
+                color: $gray-2;
+                font-size: 12px;
+                font-weight: 500;
+                letter-spacing: 0.5px;
+                text-transform: uppercase;
+                display: flex;
+                transition: all 0.2s;
+                span {
+                    display: inline-block;
+                    height: 17px;
+                    margin-right: 10px;
+                }
+                &.project_action_edit {
+                    span {                                
+                        background: url(/../images/edit-sprite.png) no-repeat;
+                        width: 17px;
+                        background-position: 0 0;
+                    }
+                    &:hover {
+                        color: $primary-color;
+                        span {                                    
+                            background-position: -17px 0;
+                        }
+                    }
+                }
+                &.project_action_delete {
+                    span {                                
+                        background: url(/../images/delete-sprite.png) no-repeat;
+                        width: 15px;
+                        background-position: 0 0;
+                    }
+                    &:hover {
+                        color: $red;
+                        span {                                    
+                            background-position: -15px 0;
+                        }
+                    }
+                }
+            }
+        }
+      }
+    }
+  }
+    
+  .tab-content {
+    padding: 0;
+  }
+  .tab-pane {
+    padding: 32px 48px;
+    .card-body {
+      padding: 0;
+    }
+  }
+  .nav-tabs {
+      display:none;
+  }
+
+  @media(min-width:768px) {
+      .nav-tabs {
+          display: flex;
+      }
+      
+      .card {
+          border: none;
+      }
+
+      .card .card-header {
+          display:none;
+      }  
+
+      .card .collapse{
+          display:block;
+      }
+  }
+  .nav-tabs {
+    padding: 0;
+    position: relative;  
+    .nav-item {
+      margin-left: 0;
+      width: 25%;
+      text-align: center;
+      a {
+        color: $secondary-color;
+        display: block;
+        padding: 30px 5px 20px;
+        font-size: 16px;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        background: #eaf9e8;
+        border-radius: 0;
+        border: 0;
+        border-right: 1px solid #d1d8ed;
+        span {
+          width: 22px;
+          height: 22px;
+          background-repeat: no-repeat;
+          background-position: -22px 0;  
+          display: block;
+          margin: 0 auto;
+          margin-bottom: 10px;          
+        }      
+        &#project_dashboard_tab {
+          span {
+            background-image: url(/../images/dashboard-sprite.png);  
+          }
+        }     
+        &#project_summary_tab {
+          span {
+            background-image: url(/../images/summary-sprite.png);
+          }
+        }     
+        &#project_phases_tab {
+          span {
+            background-image: url(/../images/phases-sprite.png);
+          }
+        }     
+        &#project_requirements_tab {
+          span {
+            background-image: url(/../images/requirement-sprite.png);
+          }
+        }
+        &.active {
+          color: #71768a;
+          background: #fff;
+          position: relative;
+          border-right: 0;
+          span {
+            background-position: 0 0;  
+          }
+          &:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            background: $secondary-color;
+            width: 100%;
+            height: 6px;
+            left: 0;
+          }
+        }
+      }
+      &:last-child {
+        a {
+          border-right: 0;
+        }
+      }
+    }  
+  }  
+}

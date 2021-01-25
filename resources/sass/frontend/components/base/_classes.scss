@@ -1,0 +1,73 @@
+// WIDTH CLASSES
+.container_brand {
+    max-width: 1240px !important;
+    margin: 0 auto;
+    padding: 0;
+}
+
+// CLASSES
+.w-100 {
+    width: 100%;
+}
+.border-top {
+    border-top: 1px solid $border-color;
+}
+
+// STATUS SWATCHES
+.status_listing {
+    border: 1px dashed $border-color;
+    @include border-radius(3px);
+    overflow: hidden;
+    display: inline-block;
+    margin-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    li {
+        font-size: 14px;
+        color: $gray-1;
+        font-weight: 400;
+        margin-right: 20px;
+        float: left;
+        padding: 4px 0;
+        &:last-child {
+            margin-right: 0;
+        }
+        span {            
+            display: inline-block;
+            margin-right: 10px;
+            width: 14px;
+            height: 14px;
+            @include border-radius(50%);
+            border: 3px solid #ddd;
+            background: #fff;
+            position: relative;
+            top: 1px;
+            &.status_red {
+                border-color: $red;
+            }
+            &.status_yellow {
+                border-color: $lemon;
+            }
+            &.status_green {
+                border-color: $green;
+            }
+        }
+    }
+}
+
+// TABLE CSS
+.tr-hover {
+    cursor: pointer;
+    transition: all 0.3s;
+    &:hover {
+        background-color: whitesmoke;
+    }
+}
+
+// WIDTH
+.width-auto {
+    width: auto !important;
+}
+.h-100 {
+    height: 100%;
+}

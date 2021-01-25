@@ -1,0 +1,474 @@
+.projects {
+    width: 100%;
+    thead {
+        tr {
+            th {
+                font-size: 14px;
+                font-family: $primary-font;
+                color: $gray-1;
+                padding-bottom: 16px;
+                &:first-child {
+                    padding-left: 25px;
+                }
+            }
+        }
+    }
+    tbody {        
+        background-color: #fff;    
+        border: 1px solid $border-color;
+        tr {
+            transition: all 0.3;
+            &:hover {
+                background-color: #f1f4f8;
+            }
+        }
+        td {
+            padding-top: 15px;
+            padding-bottom: 15px;
+            vertical-align: middle;
+            border-bottom: 1px solid $border-color;
+        }
+        .project_details {
+            padding-left: 25px;
+            img {
+                display: inline-block;
+                width: 42px;
+                height: 42px;
+                object-fit: cover;
+                @include border-radius(10px);
+                margin-right: 15px;
+            }
+            .project_id {
+                h5 {
+                    font-family: $primary-font;
+                    font-size: 14px;
+                    font-weight: 500;
+                    color: $text-black;
+                    margin-bottom: 2px;
+                }
+                label {
+                    font-family: $primary-font;
+                    font-size: 12px;
+                    font-weight: 400;
+                    color: $gray-1;
+                }
+                
+            }
+            
+        }
+        .project_address {
+            address {
+                font-size: 14px;
+                color: $text-black;
+                font-family: $primary-font;
+                span {
+                    display: block;
+                    font-size: 12px;
+                    color: $gray-1;
+                    margin-top: 1px;
+                }
+            }
+        }
+        .project_date {
+            p {
+                font-family: $primary-font;
+                color: $text-black;
+                font-size: 14px;
+            }
+        }
+        .project_price {
+            p {
+                font-family: $primary-font;
+                color: $text-black;
+                font-size: 14px;
+                font-weight: 700;
+            }
+        }
+        .project_permission {
+            span.badge {
+                @include border-radius(3px);
+                font-family: $secondary-font;
+                color: #fff;
+                font-size: 10px;
+                font-weight: 600;
+                background-color: $text-black;
+                text-transform: uppercase;
+                letter-spacing: 1.2px;
+                padding: 6px 12px 5px;
+                &.badge-admin {
+                    background-color: $blue;
+                }
+                &.badge-builder {
+                    background-color: $black-1;
+                }
+            }
+        }
+        .project_action {
+            ul {
+                li {
+                    padding-right: 30px;
+                    a {
+                        color: $gray-2;
+                        font-size: 12px;
+                        font-weight: 500;
+                        letter-spacing: 0.5px;
+                        text-transform: uppercase;
+                        display: flex;
+                        transition: all 0.2s;
+                        span {
+                            display: inline-block;
+                            height: 17px;
+                            margin-right: 10px;
+                        }
+                        &.project_action_view {
+                            span {                                
+                                background: url(/../images/view-sprite.png) no-repeat;
+                                width: 17px;
+                                background-position: 0 0;
+                            }
+                            &:hover {
+                                color: $primary-color;
+                                span {                                    
+                                    background-position: -17px 0;
+                                }
+                            }
+                        }
+                        &.project_action_edit {
+                            span {                                
+                                background: url(/../images/edit-sprite.png) no-repeat;
+                                width: 17px;
+                                background-position: 0 0;
+                            }
+                            &:hover {
+                                color: $primary-color;
+                                span {                                    
+                                    background-position: -17px 0;
+                                }
+                            }
+                        }
+                        &.project_action_delete {
+                            span {                                
+                                background: url(/../images/delete-sprite.png) no-repeat;
+                                width: 15px;
+                                background-position: 0 0;
+                            }
+                            &:hover {
+                                color: $red;
+                                span {                                    
+                                    background-position: -15px 0;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+}
+
+// PAGINATION
+.pagination {
+    margin-top: 30px;
+    a {
+        color: $primary-color;
+        font-size: 12px;
+        font-weight: 500;
+        width: 34px;
+        height: 34px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-decoration: none;
+        border: 1px solid #e2e6f3;
+        margin: 0 4px;
+        background-color: #fff;
+        @include border-radius(5px);
+        transition: all 0.3s;
+        &.active {
+            background-color: $blue;
+            border-color: $blue;
+            color: white;
+        }
+        &:hover {
+            background-color: $blue;
+            border-color: $blue;
+            color: white;
+        }
+    }
+    &-prev, &-next {    
+        background: $grey !important;
+        border-color: $grey !important;
+    }
+    &-dots {  
+        display: flex;         
+        span {
+            width: 4px;
+            height: 4px;
+            display: block;
+            @include  border-radius(50%);
+            margin-left: 2px;
+            background-color: $primary-color;
+            &:first-child {
+                margin-left: 0;
+            }
+        }
+        &:hover {
+            span {                
+                background-color: #fff;
+                border-color: #fff;
+            }
+        }
+    }
+}
+  
+// TABLE CARD
+.table_card {
+    background: #f7f8fb;
+    border: 1px solid $border-color;
+    @include border-radius(3px);
+    padding: 44px;
+    margin-bottom: 30px;
+    min-height: 240px;
+    &_head {
+        position: relative;
+        margin-bottom:35px;
+        h6 {
+            font-family: $primary-font;
+            font-size: 18px;
+            font-weight: 500;
+            color: #71768a;
+            text-transform: uppercase;
+        }
+        button {
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: #fff;
+            background: $secondary-color;
+            @include border-radius(30px);
+            padding: 5px 22px;
+            border: 0;
+            outline: 0;
+            position: absolute;
+            right: -18px;
+            top: -18px;
+        }
+
+    }
+    table {
+        width: 100%;
+        tr {
+            td {
+                vertical-align: top;
+                .table_card_col {
+                    h6 {
+                        font-size: 14px;
+                        font-weight: 500;
+                        letter-spacing: 1px;
+                        color: #8390a2;
+                        margin-bottom: 5px;
+                        text-transform: uppercase;
+                        font-family: $primary-font;
+                    }
+                    p {
+                        font-size: 16px;
+                        font-weight: 500;
+                        line-height: 22px;
+                        color: #2e384d;
+                    }
+                }
+            }
+            &:first-child {
+                td {
+                    .table_card_col {
+                        min-height: 110px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// LAYOUT 2
+.table_tab_layout {
+    border: 0;
+    width: 100%;
+    &.table_tab_layout_total {
+        tr {
+            border-bottom: 0;
+            td {
+                padding: 26px 0;
+                h6, h5 {
+                    font-size: 20px;
+                    font-weight: 700;
+                }
+            }
+        }
+    }
+    tr {
+        border-bottom: 1px solid $border-color;
+        td {
+            padding: 23px 0;
+            h6, h5 {
+                letter-spacing: 0.5px;
+                text-transform: uppercase;
+                font-family: $primary-font;
+            }
+            h6 {
+                font-size: 14px;
+                font-weight: 500;
+                color: #5a5a5a;
+            }
+            h5 {
+                font-size: 16px;
+                font-weight: 700;
+                color: #222222;
+                text-align: right;
+            }
+        }
+    }
+}
+
+// LAYOUT 3
+.table_layout_3 {
+    thead {
+        th {            
+            font-size: 16px;
+            font-weight: 500 !important;
+            color: $gray-1;
+            font-family: $primary-font;
+            padding-left: 20px;
+            padding-bottom: 15px;
+        }
+    }
+    tfoot {
+        td {            
+            font-size: 20px;
+            font-weight: 700 !important;
+            color:#5a5a5a;
+            font-family: $primary-font;
+            padding-left: 20px;
+            padding-top: 20px;
+            text-transform: uppercase;
+        }
+    }
+    tbody {
+        tr {
+            table {
+                th {
+                    font-family: $primary-font;
+                    padding-left: 20px;
+                    background: #f7f8fb;
+                    border-top: 1px solid $border-color;
+                    border-bottom: 1px solid $border-color;
+                    &:first-child {                        
+                       border-left: 1px solid $border-color;
+                    }
+                    &:last-child {
+                        border-right: 1px solid $border-color;
+                    }
+                    h6 {
+                        font-size: 14px;
+                        font-weight: 500;
+                        letter-spacing: 0.5px;
+                        color: #5a5a5a;
+                        padding: 18px 0;
+                        text-transform: uppercase;
+                        font-family: $primary-font;
+                    }
+                }
+                td {
+                    padding-left: 20px;
+                    padding-top: 6px;
+                    padding-bottom: 6px;
+                    h6 {
+                        color: #9da9b8;
+                        font-family: $primary-font;
+                        font-size: 14px;
+                        font-weight: 700;
+                        letter-spacing: 0.5px;
+                    }
+                    p {
+                        font-size: 15px;
+                        font-weight: 400;
+                        color: #6d7a8c;
+                    }
+                    span.phase_status {
+                        display: block;
+                        width: 14px;
+                        height: 14px;
+                        @include border-radius(50%);
+                        border: 3px solid #ddd;
+                        background: #fff;
+                        &.status_red {
+                            border-color: $red;
+                        }
+                        &.status_yellow {
+                            border-color: $lemon;
+                        }
+                        &.status_green {
+                            border-color: $green;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+// LAYOUT 3
+.table_layout_4 {
+    thead {
+        th {            
+            font-size: 16px;
+            font-weight: 500 !important;
+            color: $gray-1;
+            font-family: $primary-font;
+            padding-left: 0;
+            padding-bottom: 15px;
+        }
+    }
+    tfoot {
+        td {            
+            font-size: 20px;
+            font-weight: 700 !important;
+            color:#5a5a5a;
+            font-family: $primary-font;
+            padding-left: 0;
+            padding-top: 20px;
+            text-transform: uppercase;
+        }
+    }
+    tbody {
+        tr {
+            td {
+                // INPUT
+                input {     
+                    border: 1px solid $gray-4;
+                    border-bottom: 0;
+                    border-right: 0;              
+                    width: 100%;
+                    height: 50px;
+                    padding-left: 22px;
+                    font-size: 16px;
+                    font-weight: 500 !important;
+                    color:#5a5a5a;
+                    font-family: $primary-font;
+                    border-radius: 0;     
+                    &:focus {
+                        outline: 0;
+                    }               
+                    &::placeholder {
+                        color: #cfd1d4;
+                    }
+                }
+                &:last-child {
+                 input {
+                     border-right: 1px solid $gray-4;
+                 }
+                }
+            }
+        }
+    }
+}

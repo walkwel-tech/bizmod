@@ -1,0 +1,143 @@
+.header {
+    background-color: $primary-color;
+    .navbar {
+        padding-top: 0;
+        padding-bottom: 0; 
+        &-brand {
+            padding-top: 0;
+            padding-bottom: 0;
+            margin-right: 0;
+            font-size: 0;
+        }     
+        &-nav{
+            li.nav-item {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                &.mobile-menu {
+                    display: none;
+                }
+                a.nav-link {
+                    font-family: $primary-font;
+                    font-size: 14px;
+                    font-weight: 500;
+                    color: $text-light-color;
+                    letter-spacing: 0.5px;
+                    text-transform: uppercase;
+                    padding: 15px 8px;
+                    margin-right: 30px;
+                }
+                .notification_alert {
+                    position: relative;
+                    margin-right: 10px !important;
+                    font-size: 0 !important;
+                    span {
+                        position: absolute;
+                        width: 8px;
+                        height: 8px;
+                        @include border-radius(50%);
+                        background-color: $lemon;
+                        right: 14px;
+                    }
+                }
+                &.dropdown {
+                    .dropdown-menu {
+                        top: 90px;
+                        border: 0;
+                        border-radius: 0;
+                        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+                    }
+                    .dropdown-toggle {
+                        margin-right: 0;
+                        &:after {
+                            background-image: url(/../images/arrow-down.png);
+                            width: 12px;
+                            height: 12px;
+                            border: 0;
+                            top: -16px;
+                            position: relative;
+                            margin-left: 8px;
+                        }
+                    }
+                    img {
+                        width: 56px;
+                        height: 56px;
+                        object-fit: cover;
+                        @include border-radius(50%);
+                    }
+                }
+                &.mobile-menu {
+                    a.nav-link {
+                        border-bottom: 0;
+                    }
+                }
+            }
+
+        }
+        &-toggler {
+            border: 1px solid #fff;
+            background: #Fff;
+            padding-top: 8px;
+            padding-bottom: 8px;
+        }
+    }
+}
+
+// PAGE HEADING HEADER
+.page_heading {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid $border-color;
+    margin-bottom: 50px;
+    h2 {
+        color: $black-26;
+        font-size: 38px;
+        font-weight: 400;
+        font-family: $secondary-font;
+        strong {
+            position: relative;
+            display: inline-block;
+            &:after {
+                content: '';
+                background: $border-color;
+                width: 1px;
+                height: 38px;
+                position: absolute;
+                top: 5px;
+                margin-left: 30px;
+            }
+            
+        }
+        span {
+            color: $light-blue;
+            display: inline-block;
+            font-weight: 700;
+            margin-left: 55px;
+        }
+    }
+}
+.page_heading_inner {
+    padding-top: 64px;
+    padding-bottom: 40px;
+    h6 {
+        font-family: $secondary-font;
+        font-size: 24px;
+        font-weight: 400;
+        color: $black-ae;
+        span {
+            color: $black-26;
+        }
+    }
+    a {
+        font-size: 13px;
+        font-weight: 500;
+        line-height: 32px;
+        color: $secondary-color;
+        letter-spacing: 0.5px;
+        img {
+            margin-right: 12px;
+            position: relative;
+            top: 2px;
+        }
+    }
+}

@@ -1,0 +1,54 @@
+.button {
+    background-color: #ddd;
+    @include border-radius(30px);
+    color: #333;
+    text-align: center;
+    padding: 10px 32px;
+    font-size: 13px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s;
+    cursor: pointer;
+    &:hover {
+        opacity: 0.7;
+    }
+    img {
+        margin-right: 15px;
+    }
+    &.button-solid {
+        background-color: $secondary-color;
+        color: #fff;
+    }
+}
+.btn:focus, .btn.focus {
+    outline: 0;
+    box-shadow: none;
+}
+.button-cancel {
+    @include border-radius(4px);
+    height: 62px;
+    background: transparent;
+    color: #6d7a8c;
+    font-size: 18px;
+    text-transform: capitalize;
+    font-weight: 500;
+    outline: 0;
+    border: 0;
+}
+.button-submit {
+    @include border-radius(4px);
+    height: 62px;
+    background: $secondary-color;
+    color: #fff;
+    font-size: 18px;
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 1px;
+    outline: 0;
+    border: 0;
+    padding: 0 62px;
+}
