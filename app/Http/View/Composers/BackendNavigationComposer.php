@@ -26,6 +26,8 @@ class BackendNavigationComposer
 
         $this->createModelRoutes('Pages', 'page', 'fa fa-barcode', true);
 
+        $this->createModelRoutes('Business', 'business', 'fa fa-barcode', true);
+
        // $this->createModelRoutes('Categories', 'category', 'fa fa-list-alt', true);
 
         //$this->createModelRoutes('Services', 'service', 'fa fa-barcode', true);

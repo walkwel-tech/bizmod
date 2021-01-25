@@ -25,7 +25,7 @@ class BusinessFactory extends Factory
         return [
             'title' => $this->faker->word,
             'description' => $this->faker->paragraph,
-            'prefix' => strtoupper(Str::random(3)),
+            'prefix' => strtoupper(substr($this->faker->word(), 0, 3)),
         ];
     }
 }

@@ -22,6 +22,7 @@ class Business extends Model
     protected $fillable = [
         'title',
         'description',
+        'prefix',
     ];
 
     /**
@@ -32,6 +33,11 @@ class Business extends Model
     public function getRouteKeyName()
     {
         return $this->getSlugColumnName();
+    }
+
+    public function setPrefixAttribute($value)
+    {
+        $this->attributes['prefix'] = strtoupper($value);
     }
 
 }

@@ -11,6 +11,11 @@ Route::post('/page/restore', 'PageController@restore')->name('page.restore');
 Route::delete('/page/delete/permanent', 'PageController@delete')->name('page.delete');
 Route::resource('page', 'PageController');
 
+Route::get('/business/trashed', 'BusinessController@trashed')->name('business.trashed');
+Route::post('/business/restore', 'BusinessController@restore')->name('business.restore');
+Route::delete('/business/delete/permanent', 'BusinessController@delete')->name('business.delete');
+Route::resource('business', 'BusinessController');
+
 Route::get('/category/trashed', 'CategoryController@trashed')->name('category.trashed');
 Route::post('/category/restore', 'CategoryController@restore')->name('category.restore');
 Route::delete('/category/delete/permanent', 'CategoryController@delete')->name('category.delete');
