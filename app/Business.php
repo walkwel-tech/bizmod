@@ -6,6 +6,7 @@ use Str;
 use App\Traits\PerformsSEO;
 use App\Traits\ScopesSlug;
 use App\Traits\WalkwelSlugMaker;
+use App\Traits\CanBeOwned;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -19,6 +20,7 @@ class Business extends Model
     use HasFactory;
     use ScopesSlug;
     use PerformsSEO;
+    use CanBeOwned;
 
     protected $fillable = [
         'title',
@@ -42,22 +44,5 @@ class Business extends Model
         $this->attributes['prefix'] = strtoupper($value);
     }
 
-    public function owner() {
-        return $this->belongsTo(User::class, 'owner_id');
-    }
-
-    public function getOwnerTitle($limitCharacters = null, $end = '...')
-    {
-        $title = $this->owner->first_name;
-
-        return ($limitCharacters)
-                ? Str::limit($title, $limitCharacters, $end)
-                : $title;
-    }
-
-    public static function getOwnerAttributeColumnName()
-    {
-        return 'owner_id';
-    }
 
 }
