@@ -2,31 +2,23 @@
 
 namespace App;
 
-use Str;
 use App\Traits\PerformsSEO;
 use App\Traits\ScopesSlug;
-use App\Traits\WalkwelSlugMaker;
-use App\Traits\CanBeOwned;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Spatie\Sluggable\HasSlug;
 
-class Business extends Model
+class Code extends Model
 {
+    use HasFactory;
     use SoftDeletes;
-    use HasSlug;
-    use WalkwelSlugMaker;
     use HasFactory;
     use ScopesSlug;
     use PerformsSEO;
-    use CanBeOwned;
 
     protected $fillable = [
-        'title',
-        'description',
-        'prefix',
-        'owner_id',
+        'batch_no',
+        'code'
     ];
 
     /**
@@ -36,16 +28,21 @@ class Business extends Model
      */
     public function getRouteKeyName()
     {
-        return $this->getSlugColumnName();
+        return 'code';
     }
 
-    public function setPrefixAttribute($value)
+    public function setBatchNoAttribute($value)
     {
-        $this->attributes['prefix'] = strtoupper($value);
+        $this->attributes['batch_no'] = str_pad(strtoupper(substr($value, 0, 5)),8,"QWE", STR_PAD_LEFT);
     }
 
-    public function codes()
+    public function setCodeAttribute($value)
     {
-        return $this->hasMany(Code::class);
+        $this->attributes['code'] = strtoupper(substr($value, 0, 12));
     }
+
+    public function business() {
+        return $this->belongsTo(Business::class);
+    }
+
 }
