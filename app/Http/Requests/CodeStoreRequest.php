@@ -25,10 +25,7 @@ class CodeStoreRequest extends FormRequest
     {
         $rules = [
             'batch_no' => 'required|unique:codes|max:8',
-            'code' => [
-                'required',
-                'string',
-            ],
+            'code' => 'required|unique:codes|max:12',
         ];
         return array_merge($rules, $this->ruleOverwrites());
     }
