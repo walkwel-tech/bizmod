@@ -37,6 +37,31 @@
 
                                 <div class="pl-lg-4">
 
+
+
+                                    @if($code->getKey())
+                                    <x-form.select name="business_id" :title="__('Business')" :selected="$code->business_id"
+                                        :options="$businessOptions" disabled="disabled"  :hide-label="true">
+                                        @if ($code->business)
+                                        <a href="{{ route('admin.business.show', $code->business) }}"
+                                            class="btn btn-link px-0 text-left">
+                                            <i class="fas fa-level-up-alt"></i> {{ __('Business') }}
+                                        </a>
+                                        @endif
+                                    </x-form.select>
+
+                                    <x-form.input name="batch_no" :title="__('Batch')" :value="$code->batch_no"
+                                        readonly />
+
+                                    <x-form.input name="prefix" :title="__('Code')" :value="$code->code" readonly />
+                                    <x-form.input type="number" name="page_id" :title="__('Page ID')" :value="$code->claim_details['page_id']" readonly />
+                                    <x-form.input  name="location" :title="__('Location')" :value="$code->claim_details['location']" readonly />
+                                    <x-form.input  name="country" :title="__('Country')" :value="$code->claim_details['country']"  readonly/>
+                                    <x-form.input  name="zip" :title="__('Zip')" :value="$code->claim_details['zip']"  readonly/>
+                                    <x-form.input  name="zip" :title="__('Claimed on')" :value="$code->claimed_on"  readonly/>
+
+
+                                    @else
                                     <x-form.select name="business_id" :title="__('Business')" :selected="$code->business_id"
                                         :options="$businessOptions" required :hide-label="true">
                                         @if ($code->business)
@@ -50,23 +75,16 @@
                                     <x-form.input name="batch_no" :title="__('Batch')" :value="$code->batch_no"
                                         required />
 
-                                    <x-form.input name="code" :title="__('Code')" :value="$code->code" required />
-
-                                    @if($code->getKey())
-                                    <x-form.input type="number" name="page_id" :title="__('Page ID')" :value="$code->claim_details['page_id']" readonly />
-                                    <x-form.input  name="location" :title="__('Location')" :value="$code->claim_details['location']" readonly />
-                                    <x-form.input  name="country" :title="__('Country')" :value="$code->claim_details['country']"  readonly/>
-                                    <x-form.input  name="zip" :title="__('Zip')" :value="$code->claim_details['zip']"  readonly/>
-                                    <x-form.input  name="zip" :title="__('Claimed on')" :value="$code->claimed_on"  readonly/>
-                                    @else
-
-                                    <x-form.input type="number" name="total_code" :title="__('Generate No. of code')" value="" required />
-
-                                    @endif
+                                    <x-form.input name="prefix" :title="__('Code Prefix')" :value="$code->code" required />
+                                    <x-form.input type="number" name="no_of_codes" :title="__('Generate No. of code')" value="" required />
 
                                     <div class="text-center">
                                         <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
                                     </div>
+
+                                    @endif
+
+
                                 </div>
                             </form>
                         </div>
@@ -91,13 +109,13 @@
 
         const {next_batch, prefix} = businessData[businessSelector.val()]
         $('[name="batch_no"]').val(next_batch);
-        $('[name="code"]').val(prefix);
+        $('[name="prefix"]').val(prefix);
 
         businessSelector.change(function (event) {
             const {next_batch, prefix} = businessData[$(this).val()];
 
             $('[name="batch_no"]').val(next_batch);
-            $('[name="code"]').val(prefix);
+            $('[name="prefix"]').val(prefix);
         });
     });
 </script>
