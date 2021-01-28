@@ -41,10 +41,10 @@
                                 <td>{{ $code->batch_no }}</td>
                                 <td>{{ $code->code }}</td>
                                 <td>{{ $code->business->getSEOTitle() }}</td>
-                                <td>{{ $code->claim_details['page_id']}}</td>
-                                <td>{{ $code->claim_details['location'] }}</td>
-                                <td>{{ $code->claim_details['country'] }}</td>
-                                <td>{{ $code->claim_details['zip'] }}</td>
+                                <td>{{ $code->claim_details->get('page_id', '-') }}</td>
+                                <td>{{ $code->claim_details->get('location', '-') }}</td>
+                                <td>{{ $code->claim_details->get('country', '-') }}</td>
+                                <td>{{ $code->claim_details->get('zip', '-') }}</td>
                                 <td class="d-flex justify-content-end">
                                     @can('backend.codes.update')
                                     <a class="btn btn-info btn-icon btn-icon-md rounded-0" href="{{ route('admin.code.show', $code) }}" data-toggle="tooltip" data-placement="left" title="{{ __('basic.actions.view', ['name' => 'Code']) }}">

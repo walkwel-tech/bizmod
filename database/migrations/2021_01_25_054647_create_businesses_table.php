@@ -18,6 +18,7 @@ class CreateBusinessesTable extends Migration
             $table->string('title');
             $table->string('slug');
             $table->longText('description');
+            $table->string('batch_no', 8)->nullable();
             $table->string('prefix', 3);
             $table->integer('owner_id')->unsigned();
             $table->softDeletes();
