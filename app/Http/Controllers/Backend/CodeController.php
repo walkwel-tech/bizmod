@@ -9,10 +9,11 @@ use App\Http\Requests\CodeUpdateRequest;
 use Spatie\QueryBuilder\QueryBuilder;
 
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\AllowedFilter;
 
 class CodeController extends Controller
 {
-    protected $allowedFilters = ['code', 'batch_no', 'business.title'];
+    protected $allowedFilters = ['code', 'batch_no', 'business.title',];
 
     /**
      * @param \Illuminate\Http\Request $request
@@ -23,7 +24,12 @@ class CodeController extends Controller
         $allowedFilters = $this->allowedFilters;
 
         $codes = QueryBuilder::for(Code::class)
-            ->allowedFilters($allowedFilters)
+            ->allowedFilters(array_merge(
+                $allowedFilters,
+                [
+                    AllowedFilter::scope('claimed', 'claimed')
+                ]
+            ))
             ->latest()
             ->paginate();
 

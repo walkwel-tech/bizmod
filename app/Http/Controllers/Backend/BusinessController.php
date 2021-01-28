@@ -25,6 +25,7 @@ class BusinessController extends Controller
         $businesses = QueryBuilder::for(Business::class)
             ->allowedFilters($allowedFilters)
             ->latest()
+            ->withCount(['codes', 'claimedCodes'])
             ->paginate();
 
         $authKey = $this->getPermissionKey();

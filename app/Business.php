@@ -44,14 +44,14 @@ class Business extends Model
     }
 
 
-    public function getNextBatchAttribute ()
+    public function getNextBatchAttribute()
     {
         $c = $this->batch_no ?? "{$this->prefix}000";
         return ++$c;
     }
 
 
-    public function setBatchNoAttribute ($value)
+    public function setBatchNoAttribute($value)
     {
         $this->attributes['batch_no'] = strtoupper(substr($value, 0, 8));
     }
@@ -63,6 +63,11 @@ class Business extends Model
     public function codes()
     {
         return $this->hasMany(Code::class);
+    }
+
+    public function claimedCodes()
+    {
+        return $this->hasMany(Code::class)->claimed();
     }
 
     // generate random codes

@@ -64,4 +64,11 @@ class Code extends Model
         return $this->belongsTo(Business::class);
     }
 
+    public function scopeClaimed ($query)
+    {
+        $query->whereNotNull('claimed_on');
+
+        return $query;
+    }
+
 }

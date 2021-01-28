@@ -29,6 +29,8 @@
                                 <th scope="col">Description</th>
                                 <th scope="col">Prefix</th>
                                 <th scope="col">User</th>
+                                <th scope="col">Codes</th>
+                                <th scope="col">Claimed Code</th>
                                 <th scope="col"></th>
                             </tr>
                         </thead>
@@ -39,6 +41,12 @@
                                 <td>{{ $business->getSEODescription(2) }}</td>
                                 <td>{{ $business->prefix }}</td>
                                 <td>{{ $business->getOwnerTitle() }}</td>
+                                <td>
+                                    <a href="{{ route('admin.code.index', ['filter' => ['business.title' => $business->title]]) }}">{{ $business->codes_count }}</a>
+                                </td>
+                                <td>
+                                    <a href="{{ route('admin.code.index', ['filter' => ['business.title' => $business->title, 'claimed' => true]]) }}">{{ $business->claimed_codes_count }}</a>
+                                </td>
                                 <td class="d-flex justify-content-end">
                                     @can('backend.business.update')
                                     <a class="btn btn-info btn-icon btn-icon-md rounded-0" href="{{ route('admin.business.show', $business) }}" data-toggle="tooltip" data-placement="left" title="{{ __('basic.actions.view', ['name' => 'Business']) }}">
