@@ -67,9 +67,9 @@ class CodeController extends Controller
             'method' => 'PATCH',
         ];
 
-        $business = Business::all();
+        $businessOptions = $this->getAvailableBusinessOptions();
 
-        return view('backend.code.single', compact(['code', 'form' ,'business']));
+        return view('backend.code.single', compact(['code', 'form' ,'businessOptions']));
     }
 
     /**
@@ -88,9 +88,9 @@ class CodeController extends Controller
             'method' => 'POST',
         ];
 
-        $business = Business::all();
+        $businessOptions = $this->getAvailableBusinessOptions();
 
-        return view('backend.code.single', compact(['code', 'form' ,'business']));
+        return view('backend.code.single', compact(['code', 'form' ,'businessOptions']));
     }
 
     /**
@@ -168,6 +168,13 @@ class CodeController extends Controller
         $code->forceDelete();
 
         return redirect()->route('admin.code.index')->with('success', __('basic.actions.permanent_deleted', ['name' => $this->getModelName()]));
+    }
+
+
+    private function getAvailableBusinessOptions() {
+        $businessOptions = Business::all();
+
+        return $businessOptions;
     }
 
     protected static function requiresPermission ()

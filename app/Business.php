@@ -39,6 +39,17 @@ class Business extends Model
         return $this->getSlugColumnName();
     }
 
+    public function getNextBatchAttribute ()
+    {
+        $c = $this->batch_no ?? "{$this->prefix}001";
+        return ++$c;
+    }
+
+    public function getOptionsData ()
+    {
+        return ['batch' => $this->next_batch, 'prefix' => $this->prefix];
+    }
+
     public function setPrefixAttribute($value)
     {
         $this->attributes['prefix'] = strtoupper($value);
@@ -48,4 +59,6 @@ class Business extends Model
     {
         return $this->hasMany(Code::class);
     }
+
+
 }

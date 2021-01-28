@@ -24,12 +24,12 @@ class CodeFactory extends Factory
         return [
             'batch_no' => $this->faker->word,
             'code' => $this->faker->word,
-            'claim_details' => json_encode([
+            'claim_details' => [
                 "page_id" => $this->faker->randomNumber(),
-                "location" => $this->faker->word,
-                "city" => $this->faker->word,
-                "zip" => $this->faker->word
-            ]),
+                "location" => $this->faker->streetAddress,
+                "country" => $this->faker->city,
+                "zip" => $this->faker->postcode
+            ],
 
             'claimed_on' => $this->faker->dateTime()
         ];

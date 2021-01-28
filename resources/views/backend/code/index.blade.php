@@ -15,7 +15,7 @@
                         </div>
                         @if($addNew)
                         <div class="col-4 text-right">
-                            <a href="{{ route('admin.code.create') }}" class="btn btn-sm btn-primary">Add Code</a>
+                            <a href="{{ route('admin.code.create') }}" class="btn btn-sm btn-primary">Add Codes</a>
                         </div>
                         @endif
                     </div>
@@ -28,6 +28,10 @@
                                 <th scope="col">Batch No</th>
                                 <th scope="col">Code</th>
                                 <th scope="col">Business</th>
+                                <th scope="col">Page</th>
+                                <th scope="col">Location</th>
+                                <th scope="col">Country</th>
+                                <th scope="col">Zip</th>
                                 <th scope="col"></th>
                             </tr>
                         </thead>
@@ -37,6 +41,10 @@
                                 <td>{{ $code->batch_no }}</td>
                                 <td>{{ $code->code }}</td>
                                 <td>{{ $code->business->getSEOTitle() }}</td>
+                                <td>{{ $code->claim_details['page_id']}}</td>
+                                <td>{{ $code->claim_details['location'] }}</td>
+                                <td>{{ $code->claim_details['country'] }}</td>
+                                <td>{{ $code->claim_details['zip'] }}</td>
                                 <td class="d-flex justify-content-end">
                                     @can('backend.codes.update')
                                     <a class="btn btn-info btn-icon btn-icon-md rounded-0" href="{{ route('admin.code.show', $code) }}" data-toggle="tooltip" data-placement="left" title="{{ __('basic.actions.view', ['name' => 'Code']) }}">

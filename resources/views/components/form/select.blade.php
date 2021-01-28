@@ -13,7 +13,7 @@
     @endif
     <select {{ $attributes->merge(['class'=>"form-control"]) }} name="{{ $name }}" id="selector-{{ $name }}">
             @foreach ($options as $option)
-                <option value="{{ $option->getKey() }}" @if ($selected === $option->getKey()) selected @endif >{{ $option->getSEOTitle() }}</option>
+                <option data-additional="@json((method_exists($option, 'getOptionsData')) ? $option->getOptionsData() : [] )" value="{{ $option->getKey() }}" @if ($selected === $option->getKey()) selected @endif >{{ $option->getSEOTitle() }}</option>
             @endforeach
     </select>
 

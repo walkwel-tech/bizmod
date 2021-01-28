@@ -36,25 +36,33 @@
                                 @endif
 
                                 <div class="pl-lg-4">
-                                    <x-form.input name="batch_no" :title="__('Batch No')" :value="$code->batch_no"
+
+                                    <x-form.select name="business_id" :title="__('Business')" :selected="$code->business_id"
+                                        :options="$businessOptions" required :hide-label="true">
+                                        @if ($code->business)
+                                        <a href="{{ route('admin.business.show', $code->business) }}"
+                                            class="btn btn-link px-0 text-left">
+                                            <i class="fas fa-level-up-alt"></i> {{ __('Business') }}
+                                        </a>
+                                        @endif
+                                    </x-form.select>
+
+                                    <x-form.input name="batch_no" :title="__('Batch')" :value="$code->batch_no"
                                         required />
 
                                     <x-form.input name="code" :title="__('Code')" :value="$code->code" required />
 
                                     @if($code->getKey())
-                                    <x-form.select name="business_id" :title="__('Business')" :selected="$code->business_id"
-                                        :options="$business" required :hide-label="true">
-                                        <a href="{{ route('admin.business.show', $code->business) }}"
-                                            class="btn btn-link px-0 text-left">
-                                            <i class="fas fa-level-up-alt"></i> {{ __('Business') }}
-                                        </a>
-                                    </x-form.select>
+                                    <x-form.input type="number" name="page_id" :title="__('Page ID')" :value="$code->claim_details['page_id']" readonly />
+                                    <x-form.input  name="location" :title="__('Location')" :value="$code->claim_details['location']" readonly />
+                                    <x-form.input  name="country" :title="__('Country')" :value="$code->claim_details['country']"  readonly/>
+                                    <x-form.input  name="zip" :title="__('Zip')" :value="$code->claim_details['zip']"  readonly/>
+                                    <x-form.input  name="zip" :title="__('Claimed on')" :value="$code->claimed_on"  readonly/>
                                     @else
-                                    <x-form.select name="business_id" :title="__('Business')" :selected="$code->business_id"
-                                        :options="$business" required />
+
+                                    <x-form.input type="number" name="total_code" :title="__('Generate No. of code')" value="" required />
+
                                     @endif
-
-
 
                                     <div class="text-center">
                                         <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
@@ -72,3 +80,25 @@
     @include('layouts.footers.auth')
 </div>
 @endsection
+
+@push('js')
+<script>
+
+    const businessData = @json($businessOptions->mapWithKeys(function($c) {return [$c->getKey() => $c->only(['prefix', 'next_batch'])];}));
+
+    $(function () {
+        const businessSelector = $('[name="business_id"]');
+
+        const {next_batch, prefix} = businessData[businessSelector.val()]
+        $('[name="batch_no"]').val(next_batch);
+        $('[name="code"]').val(prefix);
+
+        businessSelector.change(function (event) {
+            const {next_batch, prefix} = businessData[$(this).val()];
+
+            $('[name="batch_no"]').val(next_batch);
+            $('[name="code"]').val(prefix);
+        });
+    });
+</script>
+@endpush
