@@ -111,21 +111,16 @@ class CodeController extends Controller
      */
     public function store(CodeStoreRequest $request)
     {
-        // $code = Code::create($request->only([
-        //     'batch_no',
-        //     'code',
-        //     'business_id'
-        // ]));
         $business = Business::findOrFail($request->input('business_id'));
-        $business->generateRandomCodes(
+        $codes = $business->generateRandomCodes(
             $request->input('no_of_codes'),
             $request->input('batch_no'),
             $request->input('prefix')
         );
 
+        $batchNo = $codes->first()->batch_no;
 
-
-        return redirect()->route('admin.code.index');
+        return redirect()->route('admin.code.index', ['filter' => ['batch_no' => $batchNo]]);
     }
 
     /**
