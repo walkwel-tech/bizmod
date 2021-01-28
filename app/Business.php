@@ -29,6 +29,10 @@ class Business extends Model
         'owner_id',
     ];
 
+    protected $appends = [
+        'next_batch',
+    ];
+
     /**
      * Get the route key for the model.
      *
@@ -46,10 +50,6 @@ class Business extends Model
         return ++$c;
     }
 
-    public function getOptionsData ()
-    {
-        return ['batch' => $this->next_batch, 'prefix' => $this->prefix];
-    }
 
     public function setBatchNoAttribute ($value)
     {
