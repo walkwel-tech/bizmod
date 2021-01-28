@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 
 class CodeController extends Controller
 {
-    protected $allowedFilters = ['code'];
+    protected $allowedFilters = ['code', 'batch_no', 'business.title'];
 
     /**
      * @param \Illuminate\Http\Request $request
@@ -29,8 +29,9 @@ class CodeController extends Controller
 
         $authKey = $this->getPermissionKey();
         $addNew = auth()->user()->can("backend.{$authKey}.create");
+        $searchedParams = $request->input('filter');
 
-        return view('backend.code.index', compact(['allowedFilters', 'codes', 'addNew']));
+        return view('backend.code.index', compact(['allowedFilters', 'searchedParams', 'codes', 'addNew']));
     }
 
     /**
@@ -52,8 +53,9 @@ class CodeController extends Controller
 
         $authKey = $this->getPermissionKey();
         $addNew = false; // auth()->user()->can("backend.{$authKey}.create");
+        $searchedParams = $request->input('filter');
 
-        return view('backend.code.index', compact(['allowedFilters', 'codes', 'addNew']))
+        return view('backend.code.index', compact(['allowedFilters', 'searchedParams', 'codes', 'addNew']))
             ->with('pageHeader', 'Trashed');
     }
 
