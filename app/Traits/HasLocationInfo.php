@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 
 trait HasLocationInfo {
+    use HasCountryInfo;
     //region methods
     public function setLocationByName ($countryName, $stateName, $cityName) {
         $country = Country::name($countryName)->first();
@@ -30,11 +31,6 @@ trait HasLocationInfo {
         return $this;
     }
 
-    public function getCountryIdAttribute($value)
-    {
-        return $value ?? 101;
-    }
-
     public function setLocation($key, Request $request)
     {
         $country_id = $request->input('country.' . $key);
@@ -42,11 +38,6 @@ trait HasLocationInfo {
         $this->country_id = $country_id ? $country_id : $this->country_id;
         $this->state_id = $request->input('state.' . $key);
         $this->city_id = $request->input('city.' . $key);
-    }
-
-    public function relatesToCountry(Country $country)
-    {
-        return $this->country_id === $country->id;
     }
 
     public function relatesToState(State $state)
@@ -57,11 +48,6 @@ trait HasLocationInfo {
     public function relatesToCity(City $city)
     {
         return $this->city_id === $city->id;
-    }
-
-    public function getCountryName()
-    {
-        return $this->country ? $this->country->name : null;
     }
 
     public function getStateName()
@@ -77,10 +63,6 @@ trait HasLocationInfo {
     //endregion methods
 
     //region relationships
-    public function country()
-    {
-        return $this->belongsTo(Country::class);
-    }
 
     public function state()
     {
@@ -111,9 +93,6 @@ trait HasLocationInfo {
         }
     }
 
-    public function scopeOnlyForCountry ($query, $countryName) {
-        return $query->onlyForRelationWithName('country', $countryName);
-    }
 
     public function scopeOnlyForState ($query, $stateName) {
         return $query->onlyForRelationWithName('state', $stateName);

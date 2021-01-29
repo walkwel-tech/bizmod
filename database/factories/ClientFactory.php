@@ -26,7 +26,7 @@ class ClientFactory extends Factory
             'last_name' => $this->faker->lastName,
             'email' => $this->faker->unique()->safeEmail,
             'phone' => substr($this->faker->e164PhoneNumber, 1, 10),
-            'country' => $this->faker->country,
+            'country_name' => $this->faker->country,
             'country_code' => $this->faker->areaCode,
             'zip' => $this->faker->postcode,
         ];

@@ -21,6 +21,11 @@ Route::post('/code/restore', 'CodeController@restore')->name('code.restore');
 Route::delete('/code/delete/permanent', 'CodeController@delete')->name('code.delete');
 Route::resource('code', 'CodeController');
 
+Route::get('/client/trashed', 'ClientController@trashed')->name('client.trashed');
+Route::post('/client/restore', 'ClientController@restore')->name('client.restore');
+Route::delete('/client/delete/permanent', 'ClientController@delete')->name('client.delete');
+Route::resource('client', 'ClientController');
+
 Route::get('/category/trashed', 'CategoryController@trashed')->name('category.trashed');
 Route::post('/category/restore', 'CategoryController@restore')->name('category.restore');
 Route::delete('/category/delete/permanent', 'CategoryController@delete')->name('category.delete');

@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use App\Code;
-use App\User;
+use App\Client;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class CodeFactory extends Factory
@@ -25,6 +25,7 @@ class CodeFactory extends Factory
         return [
             'batch_no' => $this->faker->word,
             'code' => $this->faker->word,
+            'client_id' => Client::all()->random()->id,
             'claim_details' => [
                 "page_id" => $this->faker->randomNumber(),
                 "location" => $this->faker->streetAddress,

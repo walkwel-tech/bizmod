@@ -56,6 +56,7 @@
                                 <th scope="col">Batch No</th>
                                 <th scope="col">Code</th>
                                 <th scope="col">Business</th>
+                                <th scope="col">Customer</th>
                                 <th scope="col">Page</th>
                                 <th scope="col">Location</th>
                                 <th scope="col">Country</th>
@@ -69,6 +70,7 @@
                                 <td>{{ $code->batch_no }}</td>
                                 <td>{{ $code->code }}</td>
                                 <td>{{ $code->business->getSEOTitle() }}</td>
+                                <td>{{ $code->client->first_name }}</td>
                                 <td>{{ $code->claim_details->get('page_id', '-') }}</td>
                                 <td>{{ $code->claim_details->get('location', '-') }}</td>
                                 <td>{{ $code->claim_details->get('country', '-') }}</td>

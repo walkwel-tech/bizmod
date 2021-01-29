@@ -24,6 +24,7 @@ class RolesAndPermissionsTableSeeder extends Seeder
             'pages',
             'business',
             'codes',
+            'clients',
             'categories',
             'services',
             'steps',
