@@ -71,6 +71,13 @@ class Code extends Model
         return $query;
     }
 
+    public function scopeClaimedDate ($query,$date)
+    {
+        $query->whereDate('claimed_on', '=', $date);
+
+        return $query;
+    }
+
     public function client()
     {
         return $this->belongsTo(Client::class);
