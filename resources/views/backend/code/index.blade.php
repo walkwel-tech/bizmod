@@ -15,10 +15,14 @@
                             <div class="col-10">
                                 <div class="row">
                                     @foreach ($allowedFilters as $filter)
-                                    <div class="col-4">
+                                    <div class="col-3">
                                         <x-form.input :name="'filter['. $filter . ']'" :title="__($filter)" hideLabel="true" :value="Arr::get($searchedParams, $filter)"/>
+
                                     </div>
                                     @endforeach
+                                    <div class="col-3">
+                                    <x-form.checkbox name="filter[claimed]" title="Claimed" :value="Arr::get($searchedParams, 'claimed')" />
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-2">
