@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Code;
+use App\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class CodeFactory extends Factory

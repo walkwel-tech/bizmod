@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCodesTable extends Migration
+class CreateClientsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,15 @@ class CreateCodesTable extends Migration
      */
     public function up()
     {
-        Schema::create('codes', function (Blueprint $table) {
+        Schema::create('clients', function (Blueprint $table) {
             $table->id();
-            $table->string('batch_no', 8);
-            $table->string('code', 12);
-            $table->integer('business_id')->unsigned();
-            $table->integer('client_id')->unsigned()->nullable();
-            $table->schemalessAttributes('claim_details');
-            $table->timestamp('claimed_on')->nullable();
+            $table->string('first_name');
+            $table->string('last_name', 50);
+            $table->string('email')->unique();
+            $table->string('phone',16)->unique();
+            $table->string('country');
+            $table->string('country_code',4);
+            $table->string('zip',10);
             $table->softDeletes();
             $table->timestamps();
         });
@@ -33,6 +34,6 @@ class CreateCodesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('codes');
+        Schema::dropIfExists('clients');
     }
 }
