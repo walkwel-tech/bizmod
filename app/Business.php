@@ -134,4 +134,5 @@ class Business extends Model
             $length
         );
     }
+
 }

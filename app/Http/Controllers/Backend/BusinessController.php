@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 
 class BusinessController extends Controller
 {
-    protected $allowedFilters = ['title'];
+    protected $allowedFilters = ['title','prefix','owner.first_name'];
 
     /**
      * @param \Illuminate\Http\Request $request
@@ -30,8 +30,9 @@ class BusinessController extends Controller
 
         $authKey = $this->getPermissionKey();
         $addNew = auth()->user()->can("backend.{$authKey}.create");
+        $searchedParams = $request->input('filter');
 
-        return view('backend.business.index', compact(['allowedFilters', 'businesses', 'addNew']));
+        return view('backend.business.index', compact(['allowedFilters', 'searchedParams', 'businesses', 'addNew']));
     }
 
     /**
@@ -53,8 +54,9 @@ class BusinessController extends Controller
 
         $authKey = $this->getPermissionKey();
         $addNew = false; // auth()->user()->can("backend.{$authKey}.create");
+        $searchedParams = $request->input('filter');
 
-        return view('backend.business.index', compact(['allowedFilters', 'businesses', 'addNew']))
+        return view('backend.business.index', compact(['allowedFilters', 'searchedParams', 'businesses', 'addNew']))
             ->with('pageHeader', 'Trashed');
     }
 
