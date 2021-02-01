@@ -27,7 +27,8 @@ class Code extends Model
     protected $fillable = [
         'batch_no',
         'code',
-        'business_id'
+        'business_id',
+        'description'
     ];
 
     /**

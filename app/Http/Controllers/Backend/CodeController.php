@@ -37,8 +37,8 @@ class CodeController extends Controller
 
         $authKey = $this->getPermissionKey();
         $addNew = auth()->user()->can("backend.{$authKey}.create");
-        $searchedParams = $request->input('filter');
 
+        $searchedParams = $request->input('filter');
         $searchedParams['claimed_on_start'] = $request->input('claimed_on_start');
         $searchedParams['claimed_on_end'] = $request->input('claimed_on_end');
 
@@ -64,8 +64,8 @@ class CodeController extends Controller
 
         $authKey = $this->getPermissionKey();
         $addNew = false; // auth()->user()->can("backend.{$authKey}.create");
-        $searchedParams = $request->input('filter');
 
+        $searchedParams = $request->input('filter');
         $searchedParams['claimed_on_start'] = $request->input('claimed_on_start');
         $searchedParams['claimed_on_end'] = $request->input('claimed_on_end');
 
@@ -145,16 +145,12 @@ class CodeController extends Controller
     public function update(CodeUpdateRequest $request, Code $code)
     {
         $code->fill($request->only([
-            'batch_no',
-            'code',
-            'business_id'
+            'description'
         ]));
 
         $code->save();
 
-
-        return redirect()->route('admin.code.show', [$code])
-            ->with('status', __('basic.actions.modified', ['name' => $this->getModelName()]));
+        return redirect()->route('admin.code.show', $code)->with('success', __('basic.actions.modified', ['name' => $this->getModelName()]));
     }
 
     public function restore(Request $request)

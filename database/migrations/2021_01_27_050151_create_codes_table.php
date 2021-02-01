@@ -17,6 +17,7 @@ class CreateCodesTable extends Migration
             $table->id();
             $table->string('batch_no', 8);
             $table->string('code', 12);
+            $table->string('description')->nullable();
             $table->integer('business_id')->unsigned();
             $table->integer('client_id')->unsigned()->nullable();
             $table->schemalessAttributes('claim_details');
