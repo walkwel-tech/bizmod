@@ -32,7 +32,8 @@ class CodeController extends Controller
                 ]
             ))
             ->latest()
-            ->paginate();
+            ->paginate()
+            ->appends($request->query());
 
         $authKey = $this->getPermissionKey();
         $addNew = auth()->user()->can("backend.{$authKey}.create");
@@ -64,6 +65,9 @@ class CodeController extends Controller
         $authKey = $this->getPermissionKey();
         $addNew = false; // auth()->user()->can("backend.{$authKey}.create");
         $searchedParams = $request->input('filter');
+
+        $searchedParams['claimed_on_start'] = $request->input('claimed_on_start');
+        $searchedParams['claimed_on_end'] = $request->input('claimed_on_end');
 
         return view('backend.code.index', compact(['allowedFilters', 'searchedParams', 'codes', 'addNew']))
             ->with('pageHeader', 'Trashed');
