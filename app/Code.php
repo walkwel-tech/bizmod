@@ -22,6 +22,8 @@ class Code extends Model
         'claim_details' => 'array',
     ];
 
+
+
     protected $fillable = [
         'batch_no',
         'code',
@@ -71,16 +73,16 @@ class Code extends Model
         return $query;
     }
 
-    public function scopeClaimedDate ($query,$date)
+    public function scopeClaimedBetween ($query, $dateStart, $dateEnd)
     {
-        $query->whereDate('claimed_on', '=', $date);
+        $query->whereBetween('claimed_on', [$dateStart, $dateEnd]);
 
         return $query;
     }
 
     public function client()
     {
-        return $this->belongsTo(Client::class);
+        return $this->belongsTo(Client::class)->withDefault();
     }
 
 }

@@ -48,10 +48,18 @@ var Datepicker = (function() {
             format = 'Y-m-d';
         }
 
-		var options = {
+		const options = {
             dateFormat: format,
             allowInput: true,
-            plugins: []
+            plugins: [],
+            onChange: (selectedDates, dateStr, instance) => {
+                console.log($this.data('selected-dates'), 'lk');
+
+                const dateStart = formatDate(selectedDates['0']);
+                const dateEnd = formatDate(selectedDates['1']);
+                const selected_dates = dateStart + ',' + dateEnd;
+                $($this.data('selected-dates')).val(selected_dates);
+            }
         };
 
         switch ($this.data('type')) {
@@ -70,7 +78,21 @@ var Datepicker = (function() {
         }
 
 		$this.flatpickr(options);
-	}
+    }
+
+    function formatDate(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2)
+            month = '0' + month;
+        if (day.length < 2)
+            day = '0' + day;
+
+        return [year, month, day].join('-');
+    }
 
 	// Events
 

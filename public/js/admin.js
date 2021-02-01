@@ -63207,7 +63207,14 @@ var Datepicker = function () {
     var options = {
       dateFormat: format,
       allowInput: true,
-      plugins: []
+      plugins: [],
+      onChange: function onChange(selectedDates, dateStr, instance) {
+        console.log($this.data('selected-dates'), 'lk');
+        var dateStart = formatDate(selectedDates['0']);
+        var dateEnd = formatDate(selectedDates['1']);
+        var selected_dates = dateStart + ',' + dateEnd;
+        $($this.data('selected-dates')).val(selected_dates);
+      }
     };
 
     switch ($this.data('type')) {
@@ -63226,6 +63233,16 @@ var Datepicker = function () {
     }
 
     $this.flatpickr(options);
+  }
+
+  function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+    return [year, month, day].join('-');
   } // Events
 
 
@@ -63862,7 +63879,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/lakshay/Documents/Projects/clocksy/01 - code/clocksy/resources/js/admin.js */"./resources/js/admin.js");
+module.exports = __webpack_require__(/*! /home/raksha.devi/Documents/projects/bizmod/01 - code/bizmod/resources/js/admin.js */"./resources/js/admin.js");
 
 
 /***/ })

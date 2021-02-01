@@ -11,7 +11,12 @@ class DateRangePicker extends Component
     public $name;
     public $title;
     public $id;
+    public $pickerId;
+    public $nameStart;
+    public $nameEnd;
     public $placeholder;
+    public $startdateplaceholder;
+    public $enddateplaceholder;
     public $valueStart;
     public $valueEnd;
     public $hideLabel;
@@ -27,8 +32,10 @@ class DateRangePicker extends Component
      *
      * @return void
      */
-    public function __construct($name, $title = '', $placeholder = null, $valueStart = null, $valueEnd = null, $hideLabel = false, $format = 'Y-m-d', $type="only-date")
+    public function __construct($name, $title = '', $placeholder = null, $startdateplaceholder = null, $enddateplaceholder = null, $valueStart = null, $valueEnd = null, $hideLabel = false, $format = 'Y-m-d', $type="only-date", $nameStart = null, $nameEnd = null)
     {
+        $this->nameStart = $nameStart ?? $name . "[start]";
+        $this->nameEnd = $nameEnd ?? $name . "[end]";
 
         $this->name = $name;
         if($valueStart instanceof Carbon) {
@@ -36,6 +43,8 @@ class DateRangePicker extends Component
         } else {
             $this->valueStart = $valueStart;
         }
+
+        $this->pickerId = str_replace(['[', ']'], '', $name);
 
         $this->id = [
             'start' => Str::kebab($this->name) . '-start',
@@ -52,6 +61,9 @@ class DateRangePicker extends Component
 
         $this->title = $title ?? $name;
         $this->placeholder = $placeholder ?? $this->title;
+
+        $this->startdateplaceholder = $startdateplaceholder ?? $this->placeholder;
+        $this->enddateplaceholder = $enddateplaceholder ?? $this->placeholder;
 
         $this->hideLabel = $hideLabel;
 

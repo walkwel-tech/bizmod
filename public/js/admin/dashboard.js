@@ -651,9 +651,9 @@ var Charts = function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/lakshay/Documents/Projects/clocksy/01 - code/clocksy/resources/js/admin/dashboard.js */"./resources/js/admin/dashboard.js");
-__webpack_require__(/*! /home/lakshay/Documents/Projects/clocksy/01 - code/clocksy/resources/sass/app.scss */"./resources/sass/app.scss");
-module.exports = __webpack_require__(/*! /home/lakshay/Documents/Projects/clocksy/01 - code/clocksy/resources/sass/admin.scss */"./resources/sass/admin.scss");
+__webpack_require__(/*! /home/raksha.devi/Documents/projects/bizmod/01 - code/bizmod/resources/js/admin/dashboard.js */"./resources/js/admin/dashboard.js");
+__webpack_require__(/*! /home/raksha.devi/Documents/projects/bizmod/01 - code/bizmod/resources/sass/app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! /home/raksha.devi/Documents/projects/bizmod/01 - code/bizmod/resources/sass/admin.scss */"./resources/sass/admin.scss");
 
 
 /***/ })

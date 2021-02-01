@@ -13,7 +13,7 @@ use Spatie\QueryBuilder\AllowedFilter;
 
 class CodeController extends Controller
 {
-    protected $allowedFilters = ['code', 'batch_no', 'business.title',];
+    protected $allowedFilters = ['code', 'batch_no', 'business.title', 'client.email'];
 
     /**
      * @param \Illuminate\Http\Request $request
@@ -27,7 +27,8 @@ class CodeController extends Controller
             ->allowedFilters(array_merge(
                 $allowedFilters,
                 [
-                    AllowedFilter::scope('claimed', 'claimed')
+                    AllowedFilter::scope('claimed', 'claimed'),
+                    AllowedFilter::scope('claimed_between', 'claimedBetween'),
                 ]
             ))
             ->latest()
@@ -36,6 +37,9 @@ class CodeController extends Controller
         $authKey = $this->getPermissionKey();
         $addNew = auth()->user()->can("backend.{$authKey}.create");
         $searchedParams = $request->input('filter');
+
+        $searchedParams['claimed_on_start'] = $request->input('claimed_on_start');
+        $searchedParams['claimed_on_end'] = $request->input('claimed_on_end');
 
         return view('backend.code.index', compact(['allowedFilters', 'searchedParams', 'codes', 'addNew']));
     }
