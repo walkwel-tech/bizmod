@@ -10,6 +10,7 @@ class Select extends Component
     public $selected;
     public $title;
     public $name;
+    public $id;
     public $hideLabel;
 
     /**
@@ -23,6 +24,8 @@ class Select extends Component
         $this->options = $options;
 
         $this->title = $title ?? __('basic.inputs.department.selector');
+
+        $this->id = str_replace(['[', ']'], '', "selector-{$name}");
 
         $this->selected = $selected;
 

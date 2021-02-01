@@ -11,7 +11,7 @@
     {{ $slot }}
     @endif
     @endif
-    <select {{ $attributes->merge(['class'=>"form-control"]) }} name="{{ $name }}" id="selector-{{ $name }}">
+    <select {{ $attributes->merge(['class'=>"form-control"]) }} name="{{ $name }}" id="{{ $id }}">
             @foreach ($options as $option)
                 <option  value="{{ $option->getKey() }}" @if ($selected === $option->getKey()) selected @endif >{{ $option->getSEOTitle() }}</option>
             @endforeach
@@ -27,6 +27,6 @@
 
 @push('js')
 <script>
-    $("#selector-{{ $name }}").select2();
+    $("#{{ $id }}").select2();
 </script>
 @endpush

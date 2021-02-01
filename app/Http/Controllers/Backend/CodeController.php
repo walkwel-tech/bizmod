@@ -14,19 +14,17 @@ use Spatie\QueryBuilder\AllowedFilter;
 
 class CodeController extends Controller
 {
-    protected $allowedFilters = ['code', 'batch_no', 'business.title', 'client.email'];
-
     /**
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
     {
-        $allowedFilters = $this->allowedFilters;
+        $allowedFilters = $this->getAllowedFilters();
 
         $codes = QueryBuilder::for(Code::class)
             ->allowedFilters(array_merge(
-                $allowedFilters,
+                array_keys($allowedFilters),
                 [
                     AllowedFilter::scope('claimed', 'claimed'),
                     AllowedFilter::scope('claimed_between', 'claimedBetween'),
@@ -52,7 +50,7 @@ class CodeController extends Controller
     */
     public function trashed(Request $request)
     {
-        $allowedFilters = $this->allowedFilters;
+        $allowedFilters = array_keys($this->getAllowedFilters());
 
         $codes = QueryBuilder::for(Code::class)
             ->onlyTrashed()
@@ -240,6 +238,27 @@ class CodeController extends Controller
         return 'Code';
     }
 
-
+    public static function getAllowedFilters ()
+    {
+        return [
+            'batch_no' => [
+                'type' => 'select',
+                'title' => 'Batch No',
+                'options' => Code::distinct('batch_no')->pluck('batch_no')->mapInto(SelectObject::class)
+            ],
+            'code' => [
+                'type' => 'input',
+                'title' => 'Code'
+            ],
+            'business.title' => [
+                'type' => 'input',
+                'title' => 'Business Title'
+            ],
+            'client.email' => [
+                'type' => 'input',
+                'title' => 'Customer Email'
+            ]
+        ];
+    }
 
 }
