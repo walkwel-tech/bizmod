@@ -77,7 +77,7 @@
                             @foreach ($codes as $code)
                             <tr>
                                 <td>{{ $code->batch_no }}</td>
-                                <td>{{ $code->code }}</td>
+                                <td>{{ $code->getSEOTitle() }}</td>
                                 <td>{{ $code->business->getSEOTitle() }}</td>
                                 <td>{{ $code->client->email }}</td>
                                 <td>{{ $code->claim_details->get('page_id', '-') }}</td>

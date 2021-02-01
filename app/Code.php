@@ -38,9 +38,8 @@ class Code extends Model
      */
     public function getRouteKeyName()
     {
-        return 'code';
+        return static::getTitleAttributeColumnName();
     }
-
 
     public function getClaimDetailsAttribute(): SchemalessAttributes
     {
@@ -84,6 +83,11 @@ class Code extends Model
     public function client()
     {
         return $this->belongsTo(Client::class)->withDefault();
+    }
+
+
+    public static function getTitleAttributeColumnName() {
+        return 'code';
     }
 
 }

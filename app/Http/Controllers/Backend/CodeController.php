@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Code;
 use App\Business;
+use App\Helpers\SelectObject;
 use App\Http\Requests\CodeStoreRequest;
 use App\Http\Requests\CodeUpdateRequest;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -108,6 +109,39 @@ class CodeController extends Controller
 
         return view('backend.code.single', compact(['code', 'form' ,'businessOptions']));
     }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function showBatchForm(Request $request )
+    {
+        $form = [
+            'title' => 'Batch Notes',
+            'action' => 'create',
+            'passwords' => true,
+            'action_route' => route('admin.code.batch'),
+            'method' => 'POST',
+        ];
+
+        $batches = Code::distinct('batch_no')->pluck('batch_no')->mapInto(SelectObject::class);
+
+        return view('backend.code.batch', compact(['form' ,'batches']));
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updateBatch(Request $request )
+    {
+       // dd($request->input('batch_no'));
+        Code::where('batch_no',  $request->input('batch_no'))->update(['description' => $request->input('description')]);
+
+        return redirect()->route('admin.code.index', ['filter' => ['batch_no' => $request->input('batch_no')]])->with('success', __('basic.actions.modified', ['name' => $this->getModelName()]));
+
+    }
+
 
     /**
      * @param \Illuminate\Http\Request $request

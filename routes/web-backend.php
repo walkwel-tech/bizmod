@@ -19,7 +19,12 @@ Route::resource('business', 'BusinessController');
 Route::get('/code/trashed', 'CodeController@trashed')->name('code.trashed');
 Route::post('/code/restore', 'CodeController@restore')->name('code.restore');
 Route::delete('/code/delete/permanent', 'CodeController@delete')->name('code.delete');
+
+Route::get('/code/batch', 'CodeController@showBatchForm')->name('code.batch');
+Route::post('/code/batch', 'CodeController@updateBatch');
+
 Route::resource('code', 'CodeController');
+
 
 Route::get('/client/trashed', 'ClientController@trashed')->name('client.trashed');
 Route::post('/client/restore', 'ClientController@restore')->name('client.restore');

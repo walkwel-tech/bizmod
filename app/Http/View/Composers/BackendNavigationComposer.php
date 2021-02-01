@@ -28,7 +28,9 @@ class BackendNavigationComposer
 
         $this->createModelRoutes('Business', 'business', 'fa fa-industry', true);
 
-        $this->createModelRoutes('Codes', 'code', 'fa fa-barcode', true);
+        $this->createModelRoutes('Codes', 'code', 'fa fa-barcode', true, true, [
+            new NavigationItem(__('Update Batch Notes'), route('admin.code.batch'), 'ni ni-tv-2', 'main')
+        ]);
 
         $this->createModelRoutes('Clients', 'client', 'fa fa-users', true);
 
@@ -41,7 +43,7 @@ class BackendNavigationComposer
        // $this->createModelRoutes('Service Order', 'serviceorder', 'fa fa-barcode', true);
     }
 
-    public function createModelRoutes($modelTitle, $modelRouteKey, $icon = null, $softDeletes = true, $creations = true)
+    public function createModelRoutes($modelTitle, $modelRouteKey, $icon = null, $softDeletes = true, $creations = true, $additionalRoutes = [])
     {
         $key = Str::plural($modelRouteKey);
         $user = auth()->user();
@@ -58,6 +60,11 @@ class BackendNavigationComposer
 
             if ($softDeletes && $user->can("backend.{$key}.delete")) {
                 $modelRoutes->addChild('Trashed ' . Str::plural($modelTitle), route("admin.{$modelRouteKey}.trashed"));
+            }
+
+
+            foreach ($additionalRoutes as $newRoute) {
+                $modelRoutes->appendChild($newRoute);
             }
 
 
