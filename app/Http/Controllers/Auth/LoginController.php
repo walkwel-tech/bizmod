@@ -42,6 +42,16 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+
+    public function redirectTo()
+    {
+        $user = Auth::user();
+
+        return ($user->hasAnyRole('admin', 'super'))
+            ? '/admin'
+            : '/home';
+    }
+
     /**
      * Show the application's login form.
      *

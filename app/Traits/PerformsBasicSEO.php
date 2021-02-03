@@ -18,4 +18,5 @@ trait PerformsBasicSEO {
     {
         return 'title';
     }
+
 }

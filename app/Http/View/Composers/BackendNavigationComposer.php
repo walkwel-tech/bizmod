@@ -26,15 +26,19 @@ class BackendNavigationComposer
 
         $this->createModelRoutes('Pages', 'page', 'fa fa-barcode', true);
 
-        $this->createModelRoutes('Categories', 'category', 'fa fa-list-alt', true);
+        $this->createModelRoutes('Business', 'business', 'fa fa-industry', true);
 
-        $this->createModelRoutes('Services', 'service', 'fa fa-barcode', true);
+        $this->createModelRoutes('Codes', 'code', 'fa fa-barcode', true);
 
-        $this->createModelRoutes('Steps', 'step', 'fa fa-barcode', true);
+       // $this->createModelRoutes('Categories', 'category', 'fa fa-list-alt', true);
 
-        $this->createModelRoutes('Fields', 'field', 'fa fa-barcode', true);
+        //$this->createModelRoutes('Services', 'service', 'fa fa-barcode', true);
 
-        $this->createModelRoutes('Service Order', 'serviceorder', 'fa fa-barcode', true);
+      //  $this->createModelRoutes('Steps', 'step', 'fa fa-barcode', true);
+
+       // $this->createModelRoutes('Fields', 'field', 'fa fa-barcode', true);
+
+       // $this->createModelRoutes('Service Order', 'serviceorder', 'fa fa-barcode', true);
     }
 
     public function createModelRoutes($modelTitle, $modelRouteKey, $icon = null, $softDeletes = true, $creations = true)

@@ -53,9 +53,9 @@ class PageController extends Controller
         $authKey = $this->getPermissionKey();
         $addNew = false; // auth()->user()->can("backend.{$authKey}.create");
 
-        return view('backend.project.index', compact(['allowedFilters', 'pages', 'addNew']))
+        return view('backend.page.index', compact(['allowedFilters', 'pages', 'addNew']))
             ->with('pageHeader', 'Trashed');
-    }    
+    }
 
     public function show(Request $request,  Page $page)
     {
@@ -67,7 +67,7 @@ class PageController extends Controller
             'method' => 'PATCH',
         ];
 
-      
+
 
         return view('backend.page.single', compact(['page', 'form']));
     }
@@ -183,5 +183,5 @@ class PageController extends Controller
     {
         return 'Page';
     }
-    
+
 }
