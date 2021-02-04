@@ -9,18 +9,19 @@ class SelectObject {
 
     public $title;
     public $description;
+    public $value;
 
-    public function __construct($title, $description = null)
+    public function __construct($value, $title = null, $description = null)
     {
-        $this->title = $title;
+        $this->value = $value;
+        $this->title = $title ?? $this->value;
         $this->description = $description;
     }
 
     public function getKey ()
     {
-        return $this->title;
+        return $this->value;
     }
-
 
     public function getAttribute ($attributeName)
     {

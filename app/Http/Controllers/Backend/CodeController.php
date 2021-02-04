@@ -244,7 +244,9 @@ class CodeController extends Controller
             'batch_no' => [
                 'type' => 'select',
                 'title' => 'Batch No',
-                'options' => Code::distinct('batch_no')->pluck('batch_no')->mapInto(SelectObject::class)
+                'options' => Code::distinct('batch_no')->pluck('batch_no')->map(function ($singleBatchString) {
+                    return new SelectObject($singleBatchString);
+                })->prepend(new SelectObject("", "Batch No"))
             ],
             'code' => [
                 'type' => 'input',

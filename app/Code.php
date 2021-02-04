@@ -4,6 +4,7 @@ namespace App;
 
 use App\Traits\PerformsSEO;
 use App\Traits\ScopesSlug;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -75,7 +76,11 @@ class Code extends Model
 
     public function scopeClaimedBetween ($query, $dateStart, $dateEnd)
     {
-        $query->whereBetween('claimed_on', [$dateStart, $dateEnd]);
+        $dS = new Carbon($dateStart);
+        $dE = new Carbon($dateEnd);
+
+
+        $query->whereBetween('claimed_on', [$dS->startOfDay(), $dE->endOfDay()]);
 
         return $query;
     }
