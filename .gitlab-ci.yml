@@ -35,4 +35,4 @@ deploy_prod:
     - rsync -ap $CI_PROJECT_NAME.zip $SSH_USER@$SSH_HOST:~/
     - ssh $SSH_USER@$SSH_HOST < $CI_PROJECT_NAME.sh
   only:
-    - master
+    - aws-prod

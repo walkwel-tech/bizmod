@@ -22,7 +22,7 @@ class CreateFieldsTable extends Migration
             $table->string('mapped_to')->nullable();
             $table->string('placeholder')->nullable();
             $table->boolean('required')->default(0);
-            $table->json('validations')->nullable();
+            $table->text('validations')->nullable();
             $table->bigInteger('step_id');
             $table->softDeletes();
             $table->timestamps();
