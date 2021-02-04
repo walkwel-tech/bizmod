@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::redirect('/', '/services')->name('welcome');
+Route::redirect('/', '/admin')->name('welcome');
 
 Auth::routes(['verify' => true]);
 
