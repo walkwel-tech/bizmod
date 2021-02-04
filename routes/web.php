@@ -17,10 +17,10 @@ Route::redirect('/', '/services')->name('welcome');
 
 Auth::routes(['verify' => true]);
 
+Route::get('/profile/avatar/{path}', 'ImageController@show')
+        ->where('path', '.+')
+        ->name('user.avatar.get');
 Route::middleware(['auth'])->group(function() {
-    Route::get('/profile/avatar/{path}', 'ImageController@show')
-            ->where('path', '.+')
-            ->name('user.avatar.get');
 });
 
 Route::get('login/otp', 'Auth\OtpController@showLoginForm')->name('login.otp');
