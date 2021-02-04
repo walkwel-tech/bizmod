@@ -122,7 +122,9 @@ class CodeController extends Controller
             'method' => 'POST',
         ];
 
-        $batches = Code::distinct('batch_no')->pluck('batch_no')->mapInto(SelectObject::class);
+        $batches = Code::distinct('batch_no')->pluck('batch_no')->map(function ($singleBatchString) {
+            return new SelectObject($singleBatchString);
+        });
 
         return view('backend.code.batch', compact(['form' ,'batches']));
     }
