@@ -4,16 +4,16 @@
             <!-- Card stats -->
             <div class="row">
                 <div class="col-xl-3 col-lg-6">
-                    <x-stats-card title="Business" stats="{{$businessThisMonth}}" value="{{ $businessLastMonthAvg }}%" text="Since last month" icon="fas fa-chart-bar" icon-bg="gradient-danger"></x-stats-card>
+                    <x-stats-card title="Business" stats="{{$businessThisMonth}}" value="{{ $businessLastMonthAvg }}%" text="Since last month" icon="fas fa-industry" icon-bg="gradient-danger"></x-stats-card>
                 </div>
                 <div class="col-xl-3 col-lg-6">
-                    <x-stats-card title="New Clients" stats="{{ $clientThisMonth }}" value="{{ $clientLastMonthAvg }}%" text="Since last month" icon="fas fa-chart-pie" icon-bg="warning"></x-stats-card>
+                    <x-stats-card title="New Clients" stats="{{ $clientThisMonth }}" value="{{ $clientLastMonthAvg }}%" text="Since last month" icon="fas fa-users" icon-bg="warning"></x-stats-card>
                 </div>
                 <div class="col-xl-3 col-lg-6">
-                    <x-stats-card title="New Codes" stats="{{ $codeThisMonth }}" value="{{ $codeLastMonthAvg }}%" text="Since last month" icon="fas fa-users" icon-bg="yellow"></x-stats-card>
+                    <x-stats-card title="New Codes" stats="{{ $codeThisMonth }}" value="{{ $codeLastMonthAvg }}%" text="Since last month" icon="fas fa-barcode" icon-bg="yellow"></x-stats-card>
                 </div>
                 <div class="col-xl-3 col-lg-6">
-                    <x-stats-card title="Code Claimed" stats="{{ $codeThisMonthClaimed }}" value="{{ $codeLastMonthClaimedAvg }}%" text="Since last month" icon="fas fa-percent" icon-bg="info"></x-stats-card>
+                    <x-stats-card title="Code Claimed" stats="{{ $codeThisMonthClaimed }}" value="{{ $codeLastMonthClaimedAvg }}%" text="Since last month" icon="fas fa-barcode" icon-bg="info"></x-stats-card>
                 </div>
             </div>
         </div>
