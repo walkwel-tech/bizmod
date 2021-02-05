@@ -24,7 +24,7 @@ class StatsCard extends Component
      *
      * @return void
      */
-    public function __construct($title = null, $stats = null, $value = null, $text = null, $direction = 'up', $nature = 'success', $icon = 'fas fa-chart-bar', $iconBg = 'danger')
+    public function __construct($title = null, $stats = null, $value = null, $text = null, $direction = null, $nature = null, $icon = 'fas fa-chart-bar', $iconBg = 'danger')
     {
         $this->stats = $stats ?? '';
         $this->value = $value ?? '';
@@ -32,12 +32,22 @@ class StatsCard extends Component
         $this->title = $title ?? __('basic.stats.title');
         $this->text = $text ?? __('basic.stats.text');
 
-        $this->nature = $nature ?? 'success';
+        $this->nature = $nature ?? $this->checkNatureBasedOnValue();
 
         $this->icon = $icon ?? 'fas fa-chart-bar';
         $this->iconBg = $iconBg ?? 'danger';
 
-        $this->direction = $direction ?? 'up';
+        $this->direction = $direction ?? $this->checkDirectionBasedOnValue();
+    }
+
+    public function checkNatureBasedOnValue()
+    {
+        return ($this->value > 0) ? 'success' : 'warning';
+    }
+
+    public function checkDirectionBasedOnValue()
+    {
+        return ($this->value > 0) ? 'up' : 'down';
     }
 
     /**

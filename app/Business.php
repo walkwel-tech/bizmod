@@ -7,6 +7,7 @@ use App\Traits\PerformsSEO;
 use App\Traits\ScopesSlug;
 use App\Traits\WalkwelSlugMaker;
 use App\Traits\CanBeOwned;
+use App\Traits\ScopesDateRangeBetween;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -21,6 +22,7 @@ class Business extends Model
     use ScopesSlug;
     use PerformsSEO;
     use CanBeOwned;
+    use ScopesDateRangeBetween;
 
     protected $fillable = [
         'title',

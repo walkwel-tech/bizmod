@@ -3,8 +3,8 @@
 namespace App;
 
 use App\Traits\PerformsSEO;
+use App\Traits\ScopesDateRangeBetween;
 use App\Traits\ScopesSlug;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -18,6 +18,7 @@ class Code extends Model
     use HasFactory;
     use ScopesSlug;
     use PerformsSEO;
+    use ScopesDateRangeBetween;
 
     protected $casts = [
         'claim_details' => 'array',
@@ -74,22 +75,22 @@ class Code extends Model
         return $query;
     }
 
-    public function scopeClaimedBetween ($query, $dateStart, $dateEnd)
+    public function scopeUnclaimed ($query)
     {
-        $dS = new Carbon($dateStart);
-        $dE = new Carbon($dateEnd);
-
-
-        $query->whereBetween('claimed_on', [$dS->startOfDay(), $dE->endOfDay()]);
+        $query->whereNull('claimed_on');
 
         return $query;
+    }
+
+    public function scopeClaimedBetween ($query, $dateStart, $dateEnd)
+    {
+        return $query->dateRangeBetween('claimed_on', $dateStart, $dateEnd);
     }
 
     public function client()
     {
         return $this->belongsTo(Client::class)->withDefault();
     }
-
 
     public static function getTitleAttributeColumnName() {
         return 'code';

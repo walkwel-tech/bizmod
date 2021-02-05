@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Traits\HasCountryInfo;
+use App\Traits\ScopesDateRangeBetween;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -13,6 +14,7 @@ class Client extends Model
     use HasCountryInfo;
     use SoftDeletes;
     use HasFactory;
+    use ScopesDateRangeBetween;
 
     protected $fillable = [
             'first_name',

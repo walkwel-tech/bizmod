@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Business;
+use App\Client;
+use App\Code;
+use App\Http\Requests\ClientStoreRequest;
 
 class DashboardController extends Controller
 {
@@ -23,6 +27,12 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('backend.dashboard');
+        ['current' => $businessThisMonth, 'average' => $businessLastMonthAvg] = Business::calculateCreationAverage();
+        ['current' => $clientThisMonth, 'average' => $clientLastMonthAvg] = Client::calculateCreationAverage();
+
+        ['current' => $codeThisMonthClaimed, 'average' => $codeLastMonthClaimedAvg] = Code::calculateCreationAverage(Code::claimed());
+        ['current' => $codeThisMonth, 'average' => $codeLastMonthAvg] = Code::calculateCreationAverage(Code::unclaimed());
+
+        return view('backend.dashboard', compact(['businessThisMonth', 'businessLastMonthAvg', 'clientThisMonth', 'clientLastMonthAvg', 'codeThisMonth','codeLastMonthAvg', 'codeThisMonthClaimed', 'codeLastMonthClaimedAvg']));
     }
 }
