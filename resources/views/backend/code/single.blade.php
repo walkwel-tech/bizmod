@@ -74,7 +74,7 @@
 
                                         <x-form.input name="batch_no" :title="__('Batch')" :value="$code->batch_no" required />
 
-                                        <x-form.input name="prefix" :title="__('Code Prefix')" :value="$code->code" required />
+                                        <x-form.input name="prefix" :title="__('Code Prefix')" :value="$code->code" required readonly />
                                         <x-form.input type="number" name="no_of_codes" :title="__('Generate No. of code')" value="" required />
 
                                         <div class="text-center">
