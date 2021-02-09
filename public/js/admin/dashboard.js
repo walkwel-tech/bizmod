@@ -103,18 +103,22 @@ __webpack_require__.r(__webpack_exports__);
 
 var OrdersChart = function () {
   //
-  // Variables
-  //
-  var $chart = $('#chart-orders');
-  var $ordersSelect = $('[name="ordersSelect"]'); //
   // Methods
   //
   // Init chart
+  function initChart($chart, type, dataset) {
+    dataset.datasets = dataset.datasets.map(function (set) {
+      if (set.backgroundColor && set.backgroundColor !== undefined) {
+        set.backgroundColor = set.backgroundColor.split('.').reduce(function (o, i) {
+          return o[i];
+        }, _argon_components_chart_defaults__WEBPACK_IMPORTED_MODULE_0__["Charts"].colors);
+      }
 
-  function initChart($chart) {
-    // Create chart
+      return set;
+    }); // Create chart
+
     var ordersChart = new Chart($chart, {
-      type: 'bar',
+      type: type,
       options: {
         scales: {
           yAxes: [{
@@ -145,22 +149,30 @@ var OrdersChart = function () {
           }
         }
       },
-      data: {
-        labels: ['Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-        datasets: [{
-          label: 'Sales',
-          data: [25, 20, 30, 22, 17, 29]
-        }]
-      }
+      data: dataset
     }); // Save to jQuery object
 
     $chart.data('chart', ordersChart);
-  } // Init chart
+  } //
+  // Variables
+  //
 
 
-  if ($chart.length) {
-    initChart($chart);
-  }
+  if (chartsToRender !== undefined) {
+    chartsToRender.forEach(function (renderChart) {
+      var $chart = $(renderChart.canvasSelector);
+
+      if ($chart.length) {
+        initChart($chart, renderChart.type, renderChart.dataset);
+      }
+    });
+  } // var $chart = $('#chart-orders');
+  // var $ordersSelect = $('[name="ordersSelect"]');
+  // Init chart
+  // if ($chart.length) {
+  // initChart($chart);
+  // }
+
 }(); //
 // Charts
 //
@@ -173,11 +185,10 @@ var OrdersChart = function () {
 
 var SalesChart = function () {
   // Variables
-  var $chart = $('#chart-sales'); // Methods
-
-  function init($chart) {
+  // Methods
+  function init($chart, type, dataset) {
     var salesChart = new Chart($chart, {
-      type: 'line',
+      type: type,
       options: {
         scales: {
           yAxes: [{
@@ -188,7 +199,7 @@ var SalesChart = function () {
             ticks: {
               callback: function callback(value) {
                 if (!(value % 10)) {
-                  return '$' + value + 'k';
+                  return value;
                 }
               }
             }
@@ -205,29 +216,31 @@ var SalesChart = function () {
                 content += '<span class="popover-body-label mr-auto">' + label + '</span>';
               }
 
-              content += '<span class="popover-body-value">$' + yLabel + 'k</span>';
+              content += '<span class="popover-body-value">' + yLabel + '</span>';
               return content;
             }
           }
         }
       },
-      data: {
-        labels: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-        datasets: [{
-          label: 'Performance',
-          data: [0, 20, 10, 30, 15, 40, 20, 60, 60]
-        }]
-      }
+      data: dataset
     }); // Save to jQuery object
 
     $chart.data('chart', salesChart);
   }
 
-  ; // Events
+  ;
 
-  if ($chart.length) {
-    init($chart);
-  }
+  if (salesChartToRender !== undefined) {
+    salesChartToRender.forEach(function (renderChart) {
+      var $chart = $(renderChart.canvasSelector);
+      init($chart, renderChart.type, renderChart.dataset);
+    });
+  } // var $chart = $('#chart-sales');
+  // Events
+  // if ($chart.length) {
+  //     init($chart);
+  // }
+
 }();
 
 /***/ }),
@@ -651,9 +664,9 @@ var Charts = function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/raksha.devi/Documents/projects/bizmod/01 - code/bizmod/resources/js/admin/dashboard.js */"./resources/js/admin/dashboard.js");
-__webpack_require__(/*! /home/raksha.devi/Documents/projects/bizmod/01 - code/bizmod/resources/sass/app.scss */"./resources/sass/app.scss");
-module.exports = __webpack_require__(/*! /home/raksha.devi/Documents/projects/bizmod/01 - code/bizmod/resources/sass/admin.scss */"./resources/sass/admin.scss");
+__webpack_require__(/*! /home/walkwel/Documents/Projects/nifto/biz-mod/01 - code/biz-mod/resources/js/admin/dashboard.js */"./resources/js/admin/dashboard.js");
+__webpack_require__(/*! /home/walkwel/Documents/Projects/nifto/biz-mod/01 - code/biz-mod/resources/sass/app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! /home/walkwel/Documents/Projects/nifto/biz-mod/01 - code/biz-mod/resources/sass/admin.scss */"./resources/sass/admin.scss");
 
 
 /***/ })

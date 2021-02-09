@@ -45,6 +45,8 @@
 
             var serverMessage = "{{ Session::get('success') ?? Session::get('status') }}";
             var serverWarning = "{{ Session::get('warning') ?? '' }}";
+
+            let chartsToRender = [];
         </script>
 
         @stack('js')

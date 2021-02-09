@@ -15,13 +15,13 @@
                             </div>
                             <div class="col">
                                 <ul class="nav nav-pills justify-content-end">
-                                    <li class="nav-item mr-2 mr-md-0" data-toggle="chart" data-target="#chart-sales" data-update='{"data":{"datasets":[{"data":[0, 20, 10, 30, 15, 40, 20, 60, 60]}]}}' data-prefix="$" data-suffix="k">
+                                    <li class="nav-item mr-2 mr-md-0" data-toggle="chart" data-target="#chart-sales" data-update='{"data":{"datasets":@json($salesChartData['datasets'])}}' data-prefix="" data-suffix="">
                                         <a href="#" class="nav-link py-2 px-3 active" data-toggle="tab">
                                             <span class="d-none d-md-block">Month</span>
                                             <span class="d-md-none">M</span>
                                         </a>
                                     </li>
-                                    <li class="nav-item" data-toggle="chart" data-target="#chart-sales" data-update='{"data":{"datasets":[{"data":[0, 20, 5, 25, 10, 30, 15, 40, 40]}]}}' data-prefix="$" data-suffix="k">
+                                    <li class="nav-item" data-toggle="chart" data-target="#chart-sales" data-update='{"data":{"datasets":@json($salesChartWeeklyData['datasets'])}}' data-prefix="" data-suffix="">
                                         <a href="#" class="nav-link py-2 px-3" data-toggle="tab">
                                             <span class="d-none d-md-block">Week</span>
                                             <span class="d-md-none">W</span>
@@ -35,7 +35,7 @@
                         <!-- Chart -->
                         <div class="chart">
                             <!-- Chart wrapper -->
-                            <canvas id="chart-sales" class="chart-canvas"></canvas>
+                            <x-ui.chart id="chart-sales" type="line" :chartData="$salesChartData"/>
                         </div>
                     </div>
                 </div>
@@ -52,9 +52,7 @@
                     </div>
                     <div class="card-body">
                         <!-- Chart -->
-                        <div class="chart">
-                            <canvas id="chart-orders" class="chart-canvas"></canvas>
-                        </div>
+                        <x-ui.chart id="chart-orders" type="bar" :chartData="$ordersChartData"/>
                     </div>
                 </div>
             </div>
@@ -273,6 +271,38 @@
 @endsection
 
 @push('js')
+    <script>
+        // chartsToRender.push({
+        //         canvasSelector: "#chart-orders",
+        //         type: 'bar',
+        //         dataset: {
+        //             labels: ['Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        //             datasets: [
+        //                 {
+        //                     label: 'Claims',
+        //                     backgroundColor: 'theme.primary',
+        //                     data: [25, 72, 30, 22, 17, 80, 47, 14, 141, 10, 18, 85]
+        //                 },
+        //                 {
+        //                     label: 'Total',
+        //                     backgroundColor: 'gray.400',
+        //                     data: [250, 510, 74, 75, 48, 180, 80, 48, 200, 250, 180, 100]
+        //                 }
+        //             ]
+        //         }
+        // });
+
+        const salesChartToRender = [
+            {
+                canvasSelector: "#chart-sales22",
+                type: 'line',
+                dataset: {
+
+            }
+            }
+        ];
+    </script>
+
     <script src="{{ asset('argon') }}/vendor/chart.js/dist/Chart.min.js"></script>
     <script src="{{ asset('argon') }}/vendor/chart.js/dist/Chart.extension.js"></script>
     <script src="{{ mix('js/admin/dashboard.js') }}"></script>

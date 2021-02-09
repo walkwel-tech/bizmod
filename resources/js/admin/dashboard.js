@@ -6,26 +6,25 @@ import {
     Charts
 } from '../argon/components/chart-defaults';
 
+
 var OrdersChart = (function () {
-
-    //
-    // Variables
-    //
-
-    var $chart = $('#chart-orders');
-    var $ordersSelect = $('[name="ordersSelect"]');
-
-
     //
     // Methods
     //
 
     // Init chart
-    function initChart($chart) {
+    function initChart($chart, type, dataset) {
+
+        dataset.datasets = dataset.datasets.map(set => {
+            if (set.backgroundColor && set.backgroundColor !== undefined) {
+                set.backgroundColor = set.backgroundColor.split('.').reduce((o,i)=>o[i], Charts.colors);
+            }
+            return set;
+        })
 
         // Create chart
         var ordersChart = new Chart($chart, {
-            type: 'bar',
+            type: type,
             options: {
                 scales: {
                     yAxes: [{
@@ -57,24 +56,34 @@ var OrdersChart = (function () {
                     }
                 }
             },
-            data: {
-                labels: ['Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-                datasets: [{
-                    label: 'Sales',
-                    data: [25, 20, 30, 22, 17, 29]
-                }]
-            }
+            data: dataset
         });
 
         // Save to jQuery object
         $chart.data('chart', ordersChart);
     }
 
+    //
+    // Variables
+    //
+
+    if (chartsToRender !== undefined) {
+        chartsToRender.forEach(renderChart => {
+            const $chart = $(renderChart.canvasSelector);
+            if ($chart.length) {
+                initChart($chart, renderChart.type, renderChart.dataset);
+            }
+        });
+    }
+
+    // var $chart = $('#chart-orders');
+    // var $ordersSelect = $('[name="ordersSelect"]');
+
 
     // Init chart
-    if ($chart.length) {
-        initChart($chart);
-    }
+    // if ($chart.length) {
+        // initChart($chart);
+    // }
 
 })();
 
@@ -93,15 +102,15 @@ var SalesChart = (function () {
 
     // Variables
 
-    var $chart = $('#chart-sales');
+
 
 
     // Methods
 
-    function init($chart) {
+    function init($chart, type, dataset) {
 
         var salesChart = new Chart($chart, {
-            type: 'line',
+            type: type,
             options: {
                 scales: {
                     yAxes: [{
@@ -112,7 +121,7 @@ var SalesChart = (function () {
                         ticks: {
                             callback: function (value) {
                                 if (!(value % 10)) {
-                                    return '$' + value + 'k';
+                                    return value ;
                                 }
                             }
                         }
@@ -129,19 +138,13 @@ var SalesChart = (function () {
                                 content += '<span class="popover-body-label mr-auto">' + label + '</span>';
                             }
 
-                            content += '<span class="popover-body-value">$' + yLabel + 'k</span>';
+                            content += '<span class="popover-body-value">' + yLabel + '</span>';
                             return content;
                         }
                     }
                 }
             },
-            data: {
-                labels: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-                datasets: [{
-                    label: 'Performance',
-                    data: [0, 20, 10, 30, 15, 40, 20, 60, 60]
-                }]
-            }
+            data: dataset
         });
 
         // Save to jQuery object
@@ -149,12 +152,20 @@ var SalesChart = (function () {
         $chart.data('chart', salesChart);
 
     };
+    if( salesChartToRender !== undefined )
+    {
+        salesChartToRender.forEach(renderChart =>{
+            const $chart = $(renderChart.canvasSelector);
+            init($chart, renderChart.type , renderChart.dataset);
+        });
+    }
 
 
+    // var $chart = $('#chart-sales');
     // Events
 
-    if ($chart.length) {
-        init($chart);
-    }
+    // if ($chart.length) {
+    //     init($chart);
+    // }
 
 })();
