@@ -70,10 +70,16 @@ class BusinessController extends Controller
             'method' => 'PATCH',
         ];
 
-        $users = User::all();
+        $users = User::with('addresses')->get();
+
+        $usersData = $users->mapWithKeys(function($c) {
+            $data = $c->only(['first_name', 'last_name', 'email']);
+            $data['phone'] = $c->address->phone;
+            return [$c->getKey() => $data];
+        });
 
 
-        return view('backend.business.single', compact(['business', 'form', 'users']));
+        return view('backend.business.single', compact(['business', 'form', 'users', 'usersData']));
     }
 
     /**
@@ -92,10 +98,16 @@ class BusinessController extends Controller
             'method' => 'POST',
         ];
 
-        $users = User::all();
+        $users = User::with('addresses')->get();
+
+        $usersData = $users->mapWithKeys(function($c) {
+            $data = $c->only(['first_name', 'last_name', 'email']);
+            $data['phone'] = $c->address->phone;
+            return [$c->getKey() => $data];
+        });
 
 
-        return view('backend.business.single', compact(['business', 'form', 'users']));
+        return view('backend.business.single', compact(['business', 'form', 'users', 'usersData']));
     }
 
     /**
