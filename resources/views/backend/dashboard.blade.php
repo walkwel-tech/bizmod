@@ -52,7 +52,7 @@
                     </div>
                     <div class="card-body">
                         <!-- Chart -->
-                        <x-ui.chart id="chart-orders" type="bar" :chartData="$ordersChartData"/>
+                        <x-ui.chart id="chart-orders" type="bar" :chartData="$ordersChartData" mode="gridlines"/>
                     </div>
                 </div>
             </div>
@@ -292,15 +292,15 @@
         //         }
         // });
 
-        const salesChartToRender = [
-            {
-                canvasSelector: "#chart-sales22",
-                type: 'line',
-                dataset: {
+        // const salesChartToRender = [
+        //     {
+        //         canvasSelector: "#chart-sales22",
+        //         type: 'line',
+        //         dataset: {
 
-            }
-            }
-        ];
+        //     }
+        //     }
+        // ];
     </script>
 
     <script src="{{ asset('argon') }}/vendor/chart.js/dist/Chart.min.js"></script>

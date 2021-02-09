@@ -106,7 +106,7 @@ var OrdersChart = function () {
   // Methods
   //
   // Init chart
-  function initChart($chart, type, dataset) {
+  function initChart($chart, type, dataset, mode) {
     dataset.datasets = dataset.datasets.map(function (set) {
       if (set.backgroundColor && set.backgroundColor !== undefined) {
         set.backgroundColor = set.backgroundColor.split('.').reduce(function (o, i) {
@@ -122,6 +122,10 @@ var OrdersChart = function () {
       options: {
         scales: {
           yAxes: [{
+            gridLines: {
+              color: 'gridlines' !== mode ? _argon_components_chart_defaults__WEBPACK_IMPORTED_MODULE_0__["Charts"].colors.transparent : _argon_components_chart_defaults__WEBPACK_IMPORTED_MODULE_0__["Charts"].colors.gray[500],
+              zeroLineColor: 'gridlines' !== mode ? _argon_components_chart_defaults__WEBPACK_IMPORTED_MODULE_0__["Charts"].colors.transparent : _argon_components_chart_defaults__WEBPACK_IMPORTED_MODULE_0__["Charts"].colors.gray[500]
+            },
             ticks: {
               callback: function callback(value) {
                 if (!(value % 10)) {
@@ -163,84 +167,10 @@ var OrdersChart = function () {
       var $chart = $(renderChart.canvasSelector);
 
       if ($chart.length) {
-        initChart($chart, renderChart.type, renderChart.dataset);
+        initChart($chart, renderChart.type, renderChart.dataset, renderChart.mode);
       }
     });
-  } // var $chart = $('#chart-orders');
-  // var $ordersSelect = $('[name="ordersSelect"]');
-  // Init chart
-  // if ($chart.length) {
-  // initChart($chart);
-  // }
-
-}(); //
-// Charts
-//
-
-
-'use strict'; //
-// Sales chart
-//
-
-
-var SalesChart = function () {
-  // Variables
-  // Methods
-  function init($chart, type, dataset) {
-    var salesChart = new Chart($chart, {
-      type: type,
-      options: {
-        scales: {
-          yAxes: [{
-            gridLines: {
-              color: _argon_components_chart_defaults__WEBPACK_IMPORTED_MODULE_0__["Charts"].colors.gray[900],
-              zeroLineColor: _argon_components_chart_defaults__WEBPACK_IMPORTED_MODULE_0__["Charts"].colors.gray[900]
-            },
-            ticks: {
-              callback: function callback(value) {
-                if (!(value % 10)) {
-                  return value;
-                }
-              }
-            }
-          }]
-        },
-        tooltips: {
-          callbacks: {
-            label: function label(item, data) {
-              var label = data.datasets[item.datasetIndex].label || '';
-              var yLabel = item.yLabel;
-              var content = '';
-
-              if (data.datasets.length > 1) {
-                content += '<span class="popover-body-label mr-auto">' + label + '</span>';
-              }
-
-              content += '<span class="popover-body-value">' + yLabel + '</span>';
-              return content;
-            }
-          }
-        }
-      },
-      data: dataset
-    }); // Save to jQuery object
-
-    $chart.data('chart', salesChart);
   }
-
-  ;
-
-  if (salesChartToRender !== undefined) {
-    salesChartToRender.forEach(function (renderChart) {
-      var $chart = $(renderChart.canvasSelector);
-      init($chart, renderChart.type, renderChart.dataset);
-    });
-  } // var $chart = $('#chart-sales');
-  // Events
-  // if ($chart.length) {
-  //     init($chart);
-  // }
-
 }();
 
 /***/ }),
@@ -664,9 +594,9 @@ var Charts = function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/walkwel/Documents/Projects/nifto/biz-mod/01 - code/biz-mod/resources/js/admin/dashboard.js */"./resources/js/admin/dashboard.js");
-__webpack_require__(/*! /home/walkwel/Documents/Projects/nifto/biz-mod/01 - code/biz-mod/resources/sass/app.scss */"./resources/sass/app.scss");
-module.exports = __webpack_require__(/*! /home/walkwel/Documents/Projects/nifto/biz-mod/01 - code/biz-mod/resources/sass/admin.scss */"./resources/sass/admin.scss");
+__webpack_require__(/*! /home/raksha.devi/Documents/projects/bizmod/01 - code/bizmod/resources/js/admin/dashboard.js */"./resources/js/admin/dashboard.js");
+__webpack_require__(/*! /home/raksha.devi/Documents/projects/bizmod/01 - code/bizmod/resources/sass/app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! /home/raksha.devi/Documents/projects/bizmod/01 - code/bizmod/resources/sass/admin.scss */"./resources/sass/admin.scss");
 
 
 /***/ })

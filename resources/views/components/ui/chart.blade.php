@@ -8,6 +8,7 @@
         {
             canvasSelector: "#{{ $id }}",
             type: "{{$type}}",
+            mode: "{{$mode}}",
             dataset: @json($chartData)
         }
     );

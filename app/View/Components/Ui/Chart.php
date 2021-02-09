@@ -10,17 +10,20 @@ class Chart extends Component
     public $type;
     public $chartData;
 
+    public $mode;
+
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($id, $type, $chartData)
+    public function __construct($id, $type, $chartData, $mode = 'transparent')
     {
         //
         $this->id = $id;
         $this->type = $type;
         $this->chartData = $chartData;
+        $this->mode = $mode;
     }
 
     /**
