@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 
 class ClientController extends Controller
 {
-    protected $allowedFilters = ['first_name'];
+    protected $allowedFilters = ['first_name', 'email' ,'phone','country'];
 
     /**
      * @param \Illuminate\Http\Request $request
@@ -30,7 +30,9 @@ class ClientController extends Controller
         $authKey = $this->getPermissionKey();
         $addNew = auth()->user()->can("backend.{$authKey}.create");
 
-        return view('backend.client.index', compact(['allowedFilters', 'clients', 'addNew']));
+        $searchedParams = $request->input('filter');
+
+        return view('backend.client.index', compact(['allowedFilters', 'searchedParams', 'clients', 'addNew']));
     }
     /**
      * @param \Illuminate\Http\Request $request
@@ -52,7 +54,9 @@ class ClientController extends Controller
         $authKey = $this->getPermissionKey();
         $addNew = false; // auth()->user()->can("backend.{$authKey}.create");
 
-        return view('backend.client.index', compact(['allowedFilters', 'clients', 'addNew']))
+        $searchedParams = $request->input('filter');
+
+        return view('backend.client.index', compact(['allowedFilters',  'searchedParams', 'clients', 'addNew']))
             ->with('pageHeader', 'Trashed');
     }
 

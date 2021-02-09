@@ -10,7 +10,27 @@
             <div class="card shadow">
                 <div class="card-header border-0">
                     <div class="row align-items-center">
+                        <div class="col-12 ">
+                            <form method="get" accept-charset="utf-8" class="row">
+                                <div class="col-10">
+                                    <div class="row">
+                                        @foreach ($allowedFilters as $filter)
+                                        <div class="col-4">
+                                            <x-form.input :name="'filter['. $filter . ']'" :title="__($filter)" hideLabel="true" :value="Arr::get($searchedParams, $filter)"/>
 
+                                        </div>
+                                        @endforeach
+
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="button-group">
+                                        <button type="submit" class="btn btn-info">{{ __('Search') }}</button>
+                                        <a href="{{ URL::current() }}" class="btn btn-danger">{{ __('Reset') }}</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                         <div class="col-8">
                             <h3 class="mb-0">Clients</h3>
                         </div>
