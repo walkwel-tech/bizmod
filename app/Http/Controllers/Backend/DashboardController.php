@@ -33,29 +33,45 @@ class DashboardController extends Controller
         ['current' => $codeThisMonthClaimed, 'average' => $codeLastMonthClaimedAvg] = Code::calculateCreationAverage(Code::claimed());
         ['current' => $codeThisMonth, 'average' => $codeLastMonthAvg] = Code::calculateCreationAverage(Code::unclaimed());
 
+        $codeClaimedData = Code::reportingData()->claimed()->get();
+        $codeData = Code::reportingData()->get();
+        $codeReport = $codeData->map(function ($code) use ($codeClaimedData) {
+
+            $codeclaimed = $codeClaimedData->where('year', $code->year)->where('month', $code->month)->first();
+            $code->claim = $codeclaimed ? $codeclaimed->records : 0;
+
+            return $code;
+        });
+        $month = $claimedCode = $totalCode = array();
+
+        foreach ($codeReport as $report) {
+            $month[] = $report->month;
+            $claimedCode[] = $report->claim;
+            $totalCode[] = $report->records;
+        }
 
         $ordersChartData = [
-            'labels' => ['Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+            'labels' => $month,
             "datasets" => [
-                    [
-                        'label' => 'Claims',
-                        'backgroundColor' => 'theme.primary',
-                        'data' => [25, 72, 30, 22, 17, 80, 47, 14, 78, 10, 18, 85]
-                    ],
-                    [
-                        'label' => 'Total',
-                        'backgroundColor' => 'gray.400',
-                        'data' => [250, 30, 74, 75, 48, 180, 80, 48, 200, 250, 180, 100]
-                    ]
+                [
+                    'label' => 'Claims',
+                    'backgroundColor' => 'theme.primary',
+                    'data' => $claimedCode
+                ],
+                [
+                    'label' => 'Total',
+                    'backgroundColor' => 'gray.400',
+                    'data' => $totalCode
+                ]
             ]
         ];
 
         $salesChartData = [
-            'labels' => ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            'labels' => $month,
             'datasets' => [
                 [
                     'label' => 'Performance',
-                    'data' => [0, 20, 10, 78, 15, 40, 20, 60, 60]
+                    'data' => $claimedCode
                 ]
             ]
         ];
@@ -70,6 +86,6 @@ class DashboardController extends Controller
             ]
         ];
 
-        return view('backend.dashboard', compact(['businessThisMonth', 'businessLastMonthAvg', 'clientThisMonth', 'clientLastMonthAvg', 'codeThisMonth','codeLastMonthAvg', 'codeThisMonthClaimed', 'codeLastMonthClaimedAvg', 'ordersChartData', 'salesChartData', 'salesChartWeeklyData']));
+        return view('backend.dashboard', compact(['businessThisMonth', 'businessLastMonthAvg', 'clientThisMonth', 'clientLastMonthAvg', 'codeThisMonth', 'codeLastMonthAvg', 'codeThisMonthClaimed', 'codeLastMonthClaimedAvg', 'ordersChartData', 'salesChartData', 'salesChartWeeklyData']));
     }
 }

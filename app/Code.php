@@ -68,6 +68,15 @@ class Code extends Model
         return $this->belongsTo(Business::class);
     }
 
+
+    public function scopeReportingData ($query)
+    {
+        return $query->selectRaw('year(created_at) year, DATE_FORMAT(created_at, "%m") month_number, DATE_FORMAT(created_at, "%b") month, count(*) records')
+            ->groupBy('year', 'month', 'month_number')
+            ->orderBy('year', 'asc')
+            ->orderBy('month_number', 'asc');
+    }
+
     public function scopeClaimed ($query)
     {
         $query->whereNotNull('claimed_on');
