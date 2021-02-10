@@ -20,6 +20,7 @@ Route::get('/code/trashed', 'CodeController@trashed')->name('code.trashed');
 Route::post('/code/restore', 'CodeController@restore')->name('code.restore');
 Route::delete('/code/delete/permanent', 'CodeController@delete')->name('code.delete');
 
+Route::get('/code/claimed', 'CodeController@codeClaimed')->name('code.claimed');
 Route::get('/code/batch', 'CodeController@showBatchForm')->name('code.batch');
 Route::post('/code/batch', 'CodeController@updateBatch');
 

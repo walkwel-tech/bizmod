@@ -29,6 +29,7 @@ class BackendNavigationComposer
         $this->createModelRoutes('Business', 'business', 'fa fa-industry', true);
 
         $this->createModelRoutes('Codes', 'code', 'fa fa-barcode', true, true, [
+            new NavigationItem(__('Claimed Code'), route('admin.code.claimed'), 'ni ni-tv-2', 'main'),
             new NavigationItem(__('Update Batch Notes'), route('admin.code.batch'), 'ni ni-tv-2', 'main')
         ]);
 

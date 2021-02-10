@@ -18,10 +18,7 @@
                                         <div class="col-6">
                                             <x-form.date-range-picker name="filter[claimed_between]" title="Claimed Date" nameStart="claimed_on_start" nameEnd="claimed_on_end" hideLabel="true" :valueStart="Arr::get($searchedParams, 'claimed_on_start')" :valueEnd="Arr::get($searchedParams, 'claimed_on_end')" startdateplaceholder="claim date start" enddateplaceholder="claim date end"/>
                                         </div>
-                                        <div class="col-3">
-                                            <x-form.checkbox name="filter[claimed]" title="Only claimed"
-                                                :value="Arr::get($searchedParams, 'claimed')" />
-                                        </div>
+
                                     </div>
                                 </div>
                                 <div class="col-2">
@@ -56,12 +53,12 @@
                                 <th scope="col">Code</th>
                                 <th scope="col">Business</th>
                                 <th scope="col">Customer</th>
-                                <!--<th scope="col">Page</th>
+                                <th scope="col">Page</th>
                                 <th scope="col">Location</th>
                                 <th scope="col">Country</th>
                                 <th scope="col">Zip</th>
-                                <th scope="col">Notes</th>-->
                                 <th scope="col">Claimed</th>
+                                <th scope="col">Notes</th>
                                 <th scope="col"></th>
                             </tr>
                         </thead>
@@ -72,12 +69,12 @@
                                 <td>{{ $code->getSEOTitle() }}</td>
                                 <td>{{ $code->business->getSEOTitle() }}</td>
                                 <td>{{ $code->client->email }}</td>
-                                <!-- <td>{{ $code->claim_details->get('page_id', '-') }}</td>
+                                <td>{{ $code->claim_details->get('page_id', '-') }}</td>
                                 <td>{{ $code->claim_details->get('location', '-') }}</td>
                                 <td>{{ $code->claim_details->get('country', '-') }}</td>
                                 <td>{{ $code->claim_details->get('zip', '-') }}</td>
-                                <td>{{ $code->getSEODescription(2) }}</td>-->
                                 <td>{{ $code->claimed_on }}</td>
+                                <td>{{ $code->getSEODescription(2) }}</td>
                                 <td class="d-flex justify-content-end">
                                     @can('backend.codes.update')
                                     <a class="btn btn-info btn-icon btn-icon-md rounded-0"

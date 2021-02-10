@@ -108,6 +108,31 @@ class CodeController extends Controller
         return view('backend.code.single', compact(['code', 'form' ,'businessOptions']));
     }
 
+    public function codeClaimed(Request $request)
+    {
+        $allowedFilters = $this->getAllowedFilters();
+
+        $codes = QueryBuilder::for(Code::class)
+            ->allowedFilters(array_merge(
+                array_keys($allowedFilters),
+                [
+                    AllowedFilter::scope('claimed_between', 'claimedBetween'),
+                ]
+            ))
+            ->claimed()
+            ->latest()
+            ->paginate()
+            ->appends($request->query());
+
+        $authKey = $this->getPermissionKey();
+        $addNew = auth()->user()->can("backend.{$authKey}.create");
+
+        $searchedParams = $request->input('filter');
+        $searchedParams['claimed_on_start'] = $request->input('claimed_on_start');
+        $searchedParams['claimed_on_end'] = $request->input('claimed_on_end');
+
+        return view('backend.code.claimed', compact(['allowedFilters', 'searchedParams', 'codes', 'addNew']));
+    }
     /**
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
