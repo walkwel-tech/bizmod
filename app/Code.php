@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Builder;
 use Spatie\SchemalessAttributes\SchemalessAttributes;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class Code extends Model
 {
@@ -75,6 +77,12 @@ class Code extends Model
             ->groupBy('year', 'month', 'month_number')
             ->orderBy('year', 'asc')
             ->orderBy('month_number', 'asc');
+    }
+
+    public  function scopeReportingDataWeekly ($query)
+    {
+        return $query->select(DB::raw("(COUNT(*)) as records"),DB::raw("DAYNAME(created_at) as dayname"))->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->whereYear('created_at', date('Y'))
+        ->groupBy('dayname');
     }
 
     public function scopeClaimed ($query)

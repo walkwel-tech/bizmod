@@ -16,12 +16,16 @@ var OrdersChart = (function () {
     function initChart($chart, type, dataset, mode) {
 
         dataset.datasets = dataset.datasets.map(set => {
+            if (set.borderColor && set.borderColor !== undefined) {
+                set.borderColor = set.borderColor.split('.').reduce((o,i)=>o[i], Charts.colors);
+            }
+
             if (set.backgroundColor && set.backgroundColor !== undefined) {
                 set.backgroundColor = set.backgroundColor.split('.').reduce((o,i)=>o[i], Charts.colors);
             }
             return set;
         })
-
+        // console.log(dataset);
         // Create chart
         var ordersChart = new Chart($chart, {
             type: type,
@@ -75,6 +79,7 @@ var OrdersChart = (function () {
         chartsToRender.forEach(renderChart => {
             const $chart = $(renderChart.canvasSelector);
             if ($chart.length) {
+
                 initChart($chart, renderChart.type, renderChart.dataset, renderChart.mode);
             }
         });

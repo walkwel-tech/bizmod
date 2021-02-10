@@ -108,6 +108,12 @@ var OrdersChart = function () {
   // Init chart
   function initChart($chart, type, dataset, mode) {
     dataset.datasets = dataset.datasets.map(function (set) {
+      if (set.borderColor && set.borderColor !== undefined) {
+        set.borderColor = set.borderColor.split('.').reduce(function (o, i) {
+          return o[i];
+        }, _argon_components_chart_defaults__WEBPACK_IMPORTED_MODULE_0__["Charts"].colors);
+      }
+
       if (set.backgroundColor && set.backgroundColor !== undefined) {
         set.backgroundColor = set.backgroundColor.split('.').reduce(function (o, i) {
           return o[i];
@@ -115,7 +121,8 @@ var OrdersChart = function () {
       }
 
       return set;
-    }); // Create chart
+    }); // console.log(dataset);
+    // Create chart
 
     var ordersChart = new Chart($chart, {
       type: type,

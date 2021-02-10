@@ -42,46 +42,92 @@ class DashboardController extends Controller
 
             return $code;
         });
-        $month = $claimedCode = $totalCode = array();
 
-        foreach ($codeReport as $report) {
-            $month[] = $report->month;
-            $claimedCode[] = $report->claim;
-            $totalCode[] = $report->records;
-        }
+        $codeClaimedWeekly = Code::ReportingDataWeekly()->claimed()->get();
+        $codeWeekly = Code::ReportingDataWeekly()->get();
+        $defaultStats = collect([
+            'Sunday',
+            'Monday',
+            'Tuesday',
+            'Wednesday',
+            'Thursday',
+            'Friday',
+            'Saturday',
+        ])
+            ->mapWithKeys(function ($day) {
+                $code = new Code();
+
+                $code->records = 0;
+                $code->dayname = $day;
+                $code->claim = 0;
+
+                return [$day => $code];
+            });
+
+
+
+        $codeWeeklyReport = $codeWeekly
+            ->map(function ($code) use ($codeClaimedWeekly) {
+                $codeclaimed = $codeClaimedWeekly
+                    ->where('dayname', $code->dayname)
+                    ->first();
+                $code->claim = $codeclaimed ? $codeclaimed->records : 0;
+
+                return $code;
+            });
+
+        $defaultStats->map(function ($s, $k) use ($codeWeeklyReport) {
+
+            return $codeWeeklyReport->firstWhere('dayname', $k) ?? $s;
+        })->values();
+
+        $businessReport = Business::select(['prefix'])->withCount(['codes as total_codes_count', 'codes as claimed_codes_count' => function ($query) {
+            return $query->claimed();
+        }])->get();
+
 
         $ordersChartData = [
-            'labels' => $month,
+            'labels' => $businessReport->pluck('prefix'),
             "datasets" => [
                 [
                     'label' => 'Claims',
                     'backgroundColor' => 'theme.primary',
-                    'data' => $claimedCode
+                    'data' => $businessReport->pluck('claimed_codes_count'),
                 ],
                 [
                     'label' => 'Total',
                     'backgroundColor' => 'gray.400',
-                    'data' => $totalCode
+                    'data' => $businessReport->pluck('total_codes_count'),
                 ]
             ]
         ];
 
         $salesChartData = [
-            'labels' => $month,
+            'labels' =>  $codeReport->pluck('month'),
             'datasets' => [
                 [
-                    'label' => 'Performance',
-                    'data' => $claimedCode
+                    'label' => 'Claimed',
+                    'borderColor' => 'theme.primary',
+                    'data' => $codeReport->pluck('claim'),
+                ],
+                [
+                    'label' => ['Total'],
+                    'borderColor' => 'gray.400',
+                    'data' =>  $codeReport->pluck('records')
                 ]
             ]
         ];
 
         $salesChartWeeklyData = [
-            'labels' => ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            'labels' => $codeWeeklyReport->pluck('dayname'),
             'datasets' => [
                 [
-                    'label' => 'Performance',
-                    'data' => [48, 20, 90, 60, 2, 78, 45, 80, 95]
+                    'label' => 'Claimed',
+                    'data' => $codeWeeklyReport->pluck('claim'),
+                ],
+                [
+                    'label' => 'Total',
+                    'data' => $codeWeeklyReport->pluck('records'),
                 ]
             ]
         ];

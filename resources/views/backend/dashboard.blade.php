@@ -15,13 +15,13 @@
                             </div>
                             <div class="col">
                                 <ul class="nav nav-pills justify-content-end">
-                                    <li class="nav-item mr-2 mr-md-0" data-toggle="chart" data-target="#chart-sales" data-update='{"data":{"datasets":@json($salesChartData['datasets'])}}' data-prefix="" data-suffix="">
+                                    <li class="nav-item mr-2 mr-md-0" data-toggle="chart" data-target="#chart-sales" data-update='{"data":{"datasets":@json($salesChartData['datasets'])}}' data-labels="{{$salesChartData['labels']}}" data-prefix="" data-suffix="">
                                         <a href="#" class="nav-link py-2 px-3 active" data-toggle="tab">
                                             <span class="d-none d-md-block">Month</span>
                                             <span class="d-md-none">M</span>
                                         </a>
                                     </li>
-                                    <li class="nav-item" data-toggle="chart" data-target="#chart-sales" data-update='{"data":{"datasets":@json($salesChartWeeklyData['datasets'])}}' data-prefix="" data-suffix="">
+                                    <li class="nav-item" data-toggle="chart" data-target="#chart-sales" data-update='{"data":{"datasets":@json($salesChartWeeklyData['datasets'])}}' data-labels="{{$salesChartWeeklyData['labels']}}" data-prefix="" data-suffix="">
                                         <a href="#" class="nav-link py-2 px-3" data-toggle="tab">
                                             <span class="d-none d-md-block">Week</span>
                                             <span class="d-md-none">W</span>
