@@ -25,6 +25,7 @@ class ClientController extends Controller
         $clients = QueryBuilder::for(Client::class)
             ->allowedFilters($allowedFilters)
             ->latest()
+            //->withCount(['codes'])
             ->paginate();
 
         $authKey = $this->getPermissionKey();

@@ -57,6 +57,7 @@
                                 <th scope="col">Phone</th>
                                 <th scope="col">Country</th>
                                 <th scope="col">Zip</th>
+                                <th scope="col">Code Claimed</th>
                                 <th scope="col"></th>
                             </tr>
                         </thead>
@@ -69,6 +70,9 @@
                                 <td>{{ $client->phone }}</td>
                                 <td>{{ $client->country_name }}</td>
                                 <td>{{ $client->zip }}</td>
+                                <td>
+                                    <a href="{{ route('admin.code.claimed', ['filter' => ['client.email' => $client->email]]) }}">{{ $client->claimed_code }}</a>
+                                </td>
                                 <td class="d-flex justify-content-end">
                                     @can('backend.clients.update')
                                     <a class="btn btn-info btn-icon btn-icon-md rounded-0" href="{{ route('admin.client.show', $client) }}" data-toggle="tooltip" data-placement="left" title="{{ __('basic.actions.view', ['name' => 'Client']) }}">
