@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Exceptions\CodeUnavailableException;
 use App\Traits\PerformsSEO;
 use App\Traits\ScopesDateRangeBetween;
 use App\Traits\ScopesSlug;
@@ -12,6 +13,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Spatie\SchemalessAttributes\SchemalessAttributes;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Exception;
 
 class Code extends Model
 {
@@ -26,7 +28,10 @@ class Code extends Model
         'claim_details' => 'array',
     ];
 
-
+    protected $appends = [
+        'status',
+        'message',
+    ];
 
     protected $fillable = [
         'batch_no',
@@ -34,6 +39,24 @@ class Code extends Model
         'business_id',
         'description'
     ];
+
+
+    public function getStatusAttribute ()
+    {
+        if($this->isAvailableToClaim())
+        {
+            return 'available';
+        } else {
+            return ($this->client_id) ? 'applied' : 'unavailable';
+        }
+        return 'unavailable';
+    }
+
+
+    public function getMessageAttribute ()
+    {
+        return static::getMessageForStatus($this->status);
+    }
 
     /**
      * Get the route key for the model.
@@ -48,6 +71,11 @@ class Code extends Model
     public function getClaimDetailsAttribute(): SchemalessAttributes
     {
         return SchemalessAttributes::createForModel($this, 'claim_details');
+    }
+
+    public function isAvailableToClaim ()
+    {
+        return is_null($this->claimed_on);
     }
 
     public function scopeWithClaimDetails(): Builder
@@ -99,6 +127,11 @@ class Code extends Model
         return $query;
     }
 
+    public function scopeCode ($query, $code)
+    {
+        return $query->where('code', $code);
+    }
+
     public function scopeClaimedBetween ($query, $dateStart, $dateEnd)
     {
         return $query->dateRangeBetween('claimed_on', $dateStart, $dateEnd);
@@ -111,6 +144,35 @@ class Code extends Model
 
     public static function getTitleAttributeColumnName() {
         return 'code';
+    }
+
+    public static function getMessageForStatus ($status = '')
+    {
+        $messages = [
+            'available' => 'Code Available.',
+            'unavailable' => 'Code is Not Available.',
+            'applied' => 'Code Applied.',
+            'expired' => 'Code has been expired',
+        ];
+
+        return $messages[$status] ?? 'Code is Invalid';
+    }
+
+    public function applyCodeForClient (Client $client, array $claimDetails, $claimDate = null)
+    {
+        throw_if(
+            !$this->isAvailableToClaim(),
+            new CodeUnavailableException(static::getMessageForStatus('unavailable'))
+        );
+
+        $this->client_id = $client->id;
+        $this->claimed_on = $claimDate ?? now();
+
+        $this->claim_details = $claimDetails;
+
+        $this->save();
+
+        return $this;
     }
 
 }
