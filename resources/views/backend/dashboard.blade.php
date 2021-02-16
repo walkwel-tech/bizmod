@@ -21,9 +21,9 @@
                                             <span class="d-md-none">M</span>
                                         </a>
                                     </li>
-                                    <li class="nav-item" data-toggle="chart" data-target="#chart-sales" data-update='{"data":{"datasets":@json($salesChartWeeklyData['datasets'])}}' data-labels="{{$salesChartWeeklyData['labels']}}" data-prefix="" data-suffix="">
+                                    <li class="nav-item" data-toggle="chart" data-target="#chart-sales" data-update='{"data":{"datasets":@json($salesChartYearlyData['datasets'])}}' data-labels="{{$salesChartYearlyData['labels']}}" data-prefix="" data-suffix="">
                                         <a href="#" class="nav-link py-2 px-3" data-toggle="tab">
-                                            <span class="d-none d-md-block">Week</span>
+                                            <span class="d-none d-md-block">Year</span>
                                             <span class="d-md-none">W</span>
                                         </a>
                                     </li>

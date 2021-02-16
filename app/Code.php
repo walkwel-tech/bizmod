@@ -107,10 +107,11 @@ class Code extends Model
             ->orderBy('month_number', 'asc');
     }
 
-    public  function scopeReportingDataWeekly ($query)
+    public  function scopeReportingDataYearly ($query)
     {
-        return $query->select(DB::raw("(COUNT(*)) as records"),DB::raw("DAYNAME(created_at) as dayname"))->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->whereYear('created_at', date('Y'))
-        ->groupBy('dayname');
+        return $query->selectRaw('year(created_at) year, count(*) records')
+        ->groupBy('year')
+        ->orderBy('year', 'asc');
     }
 
     public function scopeClaimed ($query)
