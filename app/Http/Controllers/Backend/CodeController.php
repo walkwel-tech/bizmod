@@ -313,8 +313,8 @@ class CodeController extends Controller
             $pdf->useTemplate($templateId);
 
             if ($pageNo == 1) {
-                $pdf->SetFont('Arial', '', 20);
-                $pdf->SetTextColor(255, 0, 0);
+                $pdf->SetFont('Arial', 'B', 20);
+                $pdf->SetTextColor(0, 0, 0);
                 $pdf->SetXY(10, 10);
                 $pdf->Cell(0, 20, $code->business->title, 0, 0, 'C');
                 $pdf->SetXY(10, 175);
