@@ -296,8 +296,9 @@ class CodeController extends Controller
 
     public function createPDF(Request $request,  Code $code)
     {
+        $pathToTemplate = 'default.pdf';
         $pdf = new Fpdi();
-        $pageCount = $pdf->setSourceFile(Storage::disk('pdf')->path('sample/code_sample.pdf'));
+        $pageCount = $pdf->setSourceFile(Storage::disk('pdf')->path($pathToTemplate));
 
         for ($pageNo = 1; $pageNo <= $pageCount; $pageNo++) {
             $templateId = $pdf->importPage($pageNo);
@@ -315,10 +316,10 @@ class CodeController extends Controller
             if ($pageNo == 1) {
                 $pdf->SetFont('Arial', 'B', 20);
                 $pdf->SetTextColor(0, 0, 0);
-                $pdf->SetXY(10, 10);
-                $pdf->Cell(0, 20, $code->business->title, 0, 0, 'C');
-                $pdf->SetXY(10, 175);
-                $pdf->Cell(0, 10, $code->code, 0, 0, 'C');
+                $pdf->SetXY(10, 20);
+                $pdf->Cell(0, 0, $code->business->title, 0, 0, 'C');
+                $pdf->SetXY(10, 180);
+                $pdf->Cell(0, 0, $code->code, 0, 0, 'C');
             }
         }
 

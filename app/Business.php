@@ -69,6 +69,11 @@ class Business extends Model
         return $this->hasMany(Code::class);
     }
 
+    public function templates()
+    {
+        return $this->hasMany(PdfTemplate::class);
+    }
+
     public function claimedCodes()
     {
         return $this->hasMany(Code::class)->claimed();

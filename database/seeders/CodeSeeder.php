@@ -17,6 +17,7 @@ class CodeSeeder extends Seeder
         Business::factory()
             ->times(7)
             ->hasCodes(5)
+            ->hasTemplates(3)
             ->create();
     }
 }
