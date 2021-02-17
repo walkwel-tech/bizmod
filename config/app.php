@@ -179,6 +179,7 @@ return [
         App\Providers\NavigationServiceProvider::class,
 
         App\Providers\CategoryServiceProvider::class,
+
     ],
 
     /*
@@ -233,5 +234,6 @@ return [
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
 
     ],
+
 
 ];

@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers\Backend;
 
+use Storage;
+use setasign\Fpdi\Fpdi;
+
+
 use App\Code;
 use App\Business;
 use App\Helpers\SelectObject;
@@ -47,7 +51,7 @@ class CodeController extends Controller
     /**
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
-    */
+     */
     public function trashed(Request $request)
     {
         $allowedFilters = array_keys($this->getAllowedFilters());
@@ -84,14 +88,14 @@ class CodeController extends Controller
 
         $businessOptions = $this->getAvailableBusinessOptions();
 
-        return view('backend.code.single', compact(['code', 'form' ,'businessOptions']));
+        return view('backend.code.single', compact(['code', 'form', 'businessOptions']));
     }
 
     /**
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request )
+    public function create(Request $request)
     {
         $code = new Code();
 
@@ -105,7 +109,7 @@ class CodeController extends Controller
 
         $businessOptions = $this->getAvailableBusinessOptions();
 
-        return view('backend.code.single', compact(['code', 'form' ,'businessOptions']));
+        return view('backend.code.single', compact(['code', 'form', 'businessOptions']));
     }
 
     public function codeClaimed(Request $request)
@@ -137,7 +141,7 @@ class CodeController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function showBatchForm(Request $request )
+    public function showBatchForm(Request $request)
     {
         $form = [
             'title' => 'Batch Notes',
@@ -151,20 +155,19 @@ class CodeController extends Controller
             return new SelectObject($singleBatchString);
         });
 
-        return view('backend.code.batch', compact(['form' ,'batches']));
+        return view('backend.code.batch', compact(['form', 'batches']));
     }
 
     /**
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function updateBatch(Request $request )
+    public function updateBatch(Request $request)
     {
-       // dd($request->input('batch_no'));
+        // dd($request->input('batch_no'));
         Code::where('batch_no',  $request->input('batch_no'))->update(['description' => $request->input('description')]);
 
         return redirect()->route('admin.code.index', ['filter' => ['batch_no' => $request->input('batch_no')]])->with('success', __('basic.actions.modified', ['name' => $this->getModelName()]));
-
     }
 
 
@@ -244,13 +247,14 @@ class CodeController extends Controller
     }
 
 
-    private function getAvailableBusinessOptions() {
+    private function getAvailableBusinessOptions()
+    {
         $businessOptions = Business::all();
 
         return $businessOptions;
     }
 
-    protected static function requiresPermission ()
+    protected static function requiresPermission()
     {
         return true;
     }
@@ -260,12 +264,12 @@ class CodeController extends Controller
         return 'codes';
     }
 
-    public static function getModelName ()
+    public static function getModelName()
     {
         return 'Code';
     }
 
-    public static function getAllowedFilters ()
+    public static function getAllowedFilters()
     {
         return [
             'batch_no' => [
@@ -290,4 +294,34 @@ class CodeController extends Controller
         ];
     }
 
+    public function createPDF(Request $request,  Code $code)
+    {
+        $pdf = new Fpdi();
+        $pageCount = $pdf->setSourceFile(Storage::disk('pdf')->path('sample/code_sample.pdf'));
+
+        for ($pageNo = 1; $pageNo <= $pageCount; $pageNo++) {
+            $templateId = $pdf->importPage($pageNo);
+            $size = $pdf->getTemplateSize($templateId);
+
+
+            if ($size['width'] > $size['height']) {
+                $pdf->AddPage('L', array($size['width'], $size['height']));
+            } else {
+                $pdf->AddPage('P', array($size['width'], $size['height']));
+            }
+
+            $pdf->useTemplate($templateId);
+
+            if ($pageNo == 1) {
+                $pdf->SetFont('Arial', '', 20);
+                $pdf->SetTextColor(255, 0, 0);
+                $pdf->SetXY(10, 10);
+                $pdf->Cell(0, 20, $code->business->title, 0, 0, 'C');
+                $pdf->SetXY(10, 175);
+                $pdf->Cell(0, 10, $code->code, 0, 0, 'C');
+            }
+        }
+
+        $pdf->Output();
+    }
 }

@@ -87,6 +87,14 @@
                                         <i class="fa fa-eye"></i>
                                     </a>
                                     @endcan
+                                    @can('backend.codes.read')
+                                    <a class="btn btn-warning btn-icon btn-icon-md rounded-0"
+                                        href="{{ route('admin.code.pdf', $code) }}" data-toggle="tooltip"
+                                        data-placement="left"
+                                        title="{{ __('basic.actions.view', ['name' => 'Code']) }}" target="_blank">
+                                        <i class="fa fa-file-pdf"></i>
+                                    </a>
+                                    @endcan
                                     @can('backend.codes.delete')
                                     <x-ui.button-delete :model="$code"
                                         :route-destroy="route('admin.code.destroy', $code)"
@@ -94,6 +102,7 @@
                                         :route-restore="route('admin.code.restore', $code)" model-name="Code"
                                         :identifier="$code->id" />
                                     @endcan
+
                                 </td>
                             </tr>
                             @endforeach
