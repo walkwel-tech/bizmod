@@ -24,10 +24,10 @@ class PdfTemplateFactory extends Factory
     {
         $confg = new TemplateConfiguration(
             [
-                'position' => ['x' => '10', 'y' => '20']
+                'position' => TemplateConfiguration::getDefaultPositionConfiguration('business')
             ],
             [
-                'position' => ['x' => '10', 'y' => '180']
+                'position' => TemplateConfiguration::getDefaultPositionConfiguration('code')
             ],
         );
 

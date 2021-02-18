@@ -22,7 +22,7 @@ class TemplateConfiguration implements Arrayable {
 
     public function getBusinessPosition ()
     {
-        return $this->business['position'];
+        return $this->business['position'] ?? static::getDefaultPositionConfiguration('business');
     }
 
     public function getBusinessPositionX ()
@@ -58,7 +58,7 @@ class TemplateConfiguration implements Arrayable {
 
     public function getCodePosition ()
     {
-        return $this->code['position'];
+        return $this->code['position'] ?? static::getDefaultPositionConfiguration('code');
     }
 
     public function getCodePositionX ()
@@ -77,6 +77,22 @@ class TemplateConfiguration implements Arrayable {
             'business' => $this->business,
             'code' => $this->code
         ];
+    }
+
+    public static function getDefaultPositionConfiguration ($type = 'code')
+    {
+        $conf = [
+            'business' => [
+                'x' => 10,
+                'y' => 20,
+            ],
+            'code' => [
+                'x' => 10,
+                'y' => 180,
+            ],
+        ];
+
+        return $conf[$type];
     }
 
     public static function getDefaultTextConfiguration ()
