@@ -13,7 +13,7 @@ class PdfTemplateStoreRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return auth()->user()->can('backend.pdf_templates.create');
     }
 
     /**
@@ -23,8 +23,20 @@ class PdfTemplateStoreRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            //
+        $rules = [
+            'title' => [
+                'required',
+                'string',
+                'max:150'
+            ],
+            'description' => 'required',
+            'path' => 'required|max:10000|mimes:pdf',
         ];
+        return array_merge($rules, $this->ruleOverwrites());
+    }
+
+    protected function ruleOverwrites()
+    {
+        return [];
     }
 }

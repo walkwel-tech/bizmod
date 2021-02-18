@@ -26,6 +26,12 @@ class PdfTemplate extends Model
     use HasAddresses;
     use ScopesDateRangeBetween;
 
+    protected $fillable = [
+        'title',
+        'description',
+        'path'
+    ];
+
     protected $casts = [
         'configuration' => 'array',
     ];

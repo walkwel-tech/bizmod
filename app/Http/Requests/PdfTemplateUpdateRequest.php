@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PdfTemplateUpdateRequest extends FormRequest
+class PdfTemplateUpdateRequest extends PdfTemplateStoreRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,18 +13,11 @@ class PdfTemplateUpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return auth()->user()->can('backend.pdf_templates.update');
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
-    public function rules()
+    protected function ruleOverwrites()
     {
-        return [
-            //
-        ];
+        return [];
     }
 }

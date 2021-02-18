@@ -25,6 +25,7 @@ class RolesAndPermissionsTableSeeder extends Seeder
             'business',
             'codes',
             'clients',
+            'pdf_templates',
             'categories',
             'services',
             'steps',

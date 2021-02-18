@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Http\Controllers\ImageController;
+
 use App\Business;
 use App\Http\Requests\PdfTemplateStoreRequest;
 use App\Http\Requests\PdfTemplateUpdateRequest;
@@ -28,7 +30,7 @@ class PdfTemplateController extends Controller
         $addNew = auth()->user()->can("backend.{$authKey}.create");
 
 
-        return view('backend.pdf_teplates.index', compact(['allowedFilters',  'pdf_templates', 'addNew']));
+        return view('backend.pdf_template.index', compact(['allowedFilters',  'pdf_templates', 'addNew']));
     }
 
     /**
@@ -52,7 +54,7 @@ class PdfTemplateController extends Controller
         $addNew = false; // auth()->user()->can("backend.{$authKey}.create");
         $searchedParams = $request->input('filter');
 
-        return view('backend.pdf_teplates.index', compact(['allowedFilters', 'pdf_templates', 'addNew']))
+        return view('backend.pdf_template.index', compact(['allowedFilters', 'pdf_templates', 'addNew']))
             ->with('pageHeader', 'Trashed');
     }
 
@@ -61,7 +63,7 @@ class PdfTemplateController extends Controller
         $form = [
             'title' => 'Update',
             'action' => 'edit',
-            'action_route' => route('admin.business.update', $pdf_template),
+            'action_route' => route('admin.pdf_template.update', $pdf_template),
             'passwords' => true,
             'method' => 'PATCH',
         ];
@@ -108,11 +110,28 @@ class PdfTemplateController extends Controller
      */
     public function store(PdfTemplateStoreRequest $request)
     {
-        $business = PdfTemplate::create($request->only([
+        $pdf_template = PdfTemplate::make($request->only([
             'title',
             'description'
         ]));
 
+        //dd($pdf_template->business->title);
+
+        if ($request->hasFile('path')) {
+            $imageController = new ImageController();
+
+            $fileName     =
+                $imageController->saveFile(
+                    $request,
+                    null,
+                    'pdf',
+                    $pdf_template->business->title,
+                    'path'
+                );
+            $pdf_template->path = $fileName;
+        }
+
+        $pdf_template->save();
 
         return redirect()->route('admin.pdf_template.index');
     }
@@ -126,10 +145,23 @@ class PdfTemplateController extends Controller
     {
         $pdf_template->fill($request->only([
             'title',
-            'description',
-            'prefix',
-            'owner_id'
+            'description'
+
         ]));
+       // dd($pdf_template->business->title);
+        if ($request->hasFile('path')) {
+            $imageController = new ImageController();
+
+            $fileName     =
+                $imageController->saveFile(
+                    $request,
+                    null,
+                    'pdf',
+                    $pdf_template->business->title,
+                    'path'
+                );
+            $pdf_template->path = $fileName;
+        }
 
         $pdf_template->save();
 
@@ -140,7 +172,7 @@ class PdfTemplateController extends Controller
 
     public function restore(Request $request)
     {
-        $request->validate(['business' => 'required|exists:businesses,id']);
+        $request->validate(['pdf_template' => 'required|exists:pdf_template,id']);
         $pdf_template = PdfTemplate::withTrashed()->findOrFail($request->input('pdf_template'));
 
         $pdf_template->restore();
@@ -162,7 +194,7 @@ class PdfTemplateController extends Controller
     public function delete(Request $request)
     {
         $request->validate(['pdf_template' => 'required|exists:pdf_template,id']);
-        $PdfTemplate = PdfTemplate::withTrashed()->findOrFail($request->input('business'));
+        $PdfTemplate = PdfTemplate::withTrashed()->findOrFail($request->input('pdf_template'));
 
         $PdfTemplate->forceDelete();
 

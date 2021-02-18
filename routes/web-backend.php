@@ -33,6 +33,11 @@ Route::post('/client/restore', 'ClientController@restore')->name('client.restore
 Route::delete('/client/delete/permanent', 'ClientController@delete')->name('client.delete');
 Route::resource('client', 'ClientController');
 
+Route::get('/pdf_template/trashed', 'PdfTemplateController@trashed')->name('pdf_template.trashed');
+Route::post('/pdf_template/restore', 'PdfTemplateController@restore')->name('pdf_template.restore');
+Route::delete('/pdf_template/delete/permanent', 'PdfTemplateController@delete')->name('pdf_template.delete');
+Route::resource('pdf_template', 'PdfTemplateController');
+
 Route::get('/category/trashed', 'CategoryController@trashed')->name('category.trashed');
 Route::post('/category/restore', 'CategoryController@restore')->name('category.restore');
 Route::delete('/category/delete/permanent', 'CategoryController@delete')->name('category.delete');
