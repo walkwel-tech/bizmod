@@ -50,6 +50,8 @@
 
                                         <x-form.input type="number" name="business[position][x]" :title="__('Business X position')" :value="$pdf_template->configuration->getBusinessPositionX()" required />
                                         <x-form.input type="number" name="business[position][y]" :title="__('Business Y position')" :value="$pdf_template->configuration->getBusinessPositionY()" required />
+
+                                        <x-form.input type="text" name="code[text][color]" :title="__('Code Text Color')" :value="$pdf_template->configuration->getCodeTextColor()" required />
                                         <x-form.input type="number" name="code[position][x]" :title="__('Code X position')" :value="$pdf_template->configuration->getCodePositionX()" required />
                                         <x-form.input type="number" name="code[position][y]" :title="__('Code Y position')" :value="$pdf_template->configuration->getCodePositionY()" required />
 
