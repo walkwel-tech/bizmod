@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Helpers\TemplateConfiguration;
 use App\PdfTemplate;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -21,14 +22,21 @@ class PdfTemplateFactory extends Factory
      */
     public function definition()
     {
+        $confg = new TemplateConfiguration(
+            [
+                'position' => ['x' => '10', 'y' => '20']
+            ],
+            [
+                'position' => ['x' => '10', 'y' => '180']
+            ],
+        );
+
+
         return [
             'title' => $this->faker->unique()->word,
             'description' => $this->faker->paragraph,
             'path' => 'default.pdf',
-            'configuration' => [
-                "business" => ['x'=>'10','y'=>'20'],
-                "code" => ['x'=>'10','y'=>'180'],
-                ]
+            'configuration' => $confg,
         ];
     }
 }

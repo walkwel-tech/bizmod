@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\ImageController;
 
 use App\Business;
+use App\Helpers\TemplateConfiguration;
 use App\Http\Requests\PdfTemplateStoreRequest;
 use App\Http\Requests\PdfTemplateUpdateRequest;
 use App\PdfTemplate;
@@ -89,8 +90,6 @@ class PdfTemplateController extends Controller
         ];
 
 
-
-
         return view('backend.pdf_template.single', compact(['pdf_template', 'form']));
     }
 
@@ -114,6 +113,8 @@ class PdfTemplateController extends Controller
             'title',
             'description'
         ]));
+
+        $pdf_template->configuration = new TemplateConfiguration($request->input('business'), $request->input('code'));
 
         //dd($pdf_template->business->title);
 
@@ -148,7 +149,10 @@ class PdfTemplateController extends Controller
             'description'
 
         ]));
-       // dd($pdf_template->business->title);
+
+        $pdf_template->configuration->business = $request->input('business');
+        $pdf_template->configuration->code = $request->input('code');
+
         if ($request->hasFile('path')) {
             $imageController = new ImageController();
 

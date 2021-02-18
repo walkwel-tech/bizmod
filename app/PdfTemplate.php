@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Casts\TemplateConfigurationCast;
 use Str;
 use App\Traits\PerformsSEO;
 use App\Traits\ScopesSlug;
@@ -33,7 +34,7 @@ class PdfTemplate extends Model
     ];
 
     protected $casts = [
-        'configuration' => 'array',
+        'configuration' => TemplateConfigurationCast::class,
     ];
 
 

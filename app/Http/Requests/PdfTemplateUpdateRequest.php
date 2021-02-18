@@ -18,6 +18,8 @@ class PdfTemplateUpdateRequest extends PdfTemplateStoreRequest
 
     protected function ruleOverwrites()
     {
-        return [];
+        return [
+            'path' => 'optional|max:10000|mimes:pdf',
+        ];
     }
 }

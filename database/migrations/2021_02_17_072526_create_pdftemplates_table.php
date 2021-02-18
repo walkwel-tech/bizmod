@@ -17,7 +17,7 @@ class CreatePdftemplatesTable extends Migration
             $table->id();
             $table->string('title', 150);
             $table->string('slug');
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
             $table->string('path');
             $table->integer('business_id')->unsigned();
             $table->text('configuration')->nullable();

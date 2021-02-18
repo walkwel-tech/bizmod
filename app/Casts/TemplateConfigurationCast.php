@@ -2,22 +2,28 @@
 
 namespace App\Casts;
 
+use App\Helpers\TemplateConfiguration;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 
-class TemplateConfiguration implements CastsAttributes
+class TemplateConfigurationCast implements CastsAttributes
 {
     /**
      * Cast the given value.
      *
      * @param  \Illuminate\Database\Eloquent\Model  $model
      * @param  string  $key
-     * @param  mixed  $value
+     * @param  mixed  $valueFromDB
      * @param  array  $attributes
      * @return mixed
      */
-    public function get($model, $key, $value, $attributes)
+    public function get($model, $key, $valueFromDB, $attributes)
     {
-        return $value;
+        $decodedValue= json_decode($valueFromDB, true);
+
+        return new TemplateConfiguration(
+            $decodedValue['business'],
+            $decodedValue['code']
+        );
     }
 
     /**
@@ -29,8 +35,8 @@ class TemplateConfiguration implements CastsAttributes
      * @param  array  $attributes
      * @return mixed
      */
-    public function set($model, $key, $value, $attributes)
+    public function set($model, $key, $dataInMemory, $attributes)
     {
-        return $value;
+        return json_encode($dataInMemory);
     }
 }

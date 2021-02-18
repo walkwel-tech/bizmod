@@ -48,10 +48,10 @@
 
                                         <x-form.input-file name="path" :label="$pdf_template->path" :title="__('Sample pdf')"/>
 
-                                        <x-form.input type="number" name="business['x']" :title="__('Business X position')" :value="$pdf_template->configuration['business']['x']" required />
-                                        <x-form.input type="number" name="business['y']" :title="__('Business Y position')" :value="$pdf_template->configuration['business']['y']" required />
-                                        <x-form.input type="number" name="code['x']" :title="__('Code X position')" :value="$pdf_template->configuration['code']['x']" required />
-                                        <x-form.input type="number" name="code['y']" :title="__('Code Y position')" :value="$pdf_template->configuration['code']['y']" required />
+                                        <x-form.input type="number" name="business[position][x]" :title="__('Business X position')" :value="$pdf_template->configuration->getBusinessPositionX()" required />
+                                        <x-form.input type="number" name="business[position][y]" :title="__('Business Y position')" :value="$pdf_template->configuration->getBusinessPositionY()" required />
+                                        <x-form.input type="number" name="code[position][x]" :title="__('Code X position')" :value="$pdf_template->configuration->getCodePositionX()" required />
+                                        <x-form.input type="number" name="code[position][y]" :title="__('Code Y position')" :value="$pdf_template->configuration->getCodePositionY()" required />
 
                                         <div class="text-center">
                                             <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
