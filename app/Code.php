@@ -4,6 +4,7 @@ namespace App;
 
 use App\Exceptions\CodeUnavailableException;
 use App\Traits\PerformsSEO;
+use App\Traits\ResolveRouteBinding;
 use App\Traits\ScopesDateRangeBetween;
 use App\Traits\ScopesSlug;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -22,6 +23,7 @@ class Code extends Model
     use HasFactory;
     use ScopesSlug;
     use PerformsSEO;
+    use ResolveRouteBinding;
     use ScopesDateRangeBetween;
 
     protected $casts = [
@@ -68,6 +70,22 @@ class Code extends Model
         return static::getTitleAttributeColumnName();
     }
 
+    /**
+     * Retrieve the model for a bound value.
+     *
+     * @param  mixed  $value
+     * @param  string|null  $field
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
+    // public function resolveRouteBinding($value, $field = null)
+    // {
+    //     if (auth()->user()->hasRole('super')) {
+    //         return $this->withTrashed()->where($this->getRouteKeyName(), $value)->firstOrFail();
+    //     } else {
+    //         return $this->where($this->getRouteKeyName(), $value)->firstOrFail();
+    //     }
+    // }
+
     public function getClaimDetailsAttribute(): SchemalessAttributes
     {
         return SchemalessAttributes::createForModel($this, 'claim_details');
@@ -98,6 +116,10 @@ class Code extends Model
         return $this->belongsTo(Business::class);
     }
 
+    public function template()
+    {
+        return $this->belongsTo(PdfTemplate::class,'pdf_template_id');
+    }
 
     public function scopeReportingData ($query)
     {
@@ -107,7 +129,7 @@ class Code extends Model
             ->orderBy('month_number', 'asc');
     }
 
-    public  function scopeReportingDataYearly ($query)
+    public function scopeReportingDataYearly ($query)
     {
         return $query->selectRaw('year(created_at) year, count(*) records')
         ->groupBy('year')

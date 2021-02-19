@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\ImageController;
+use Storage;
+use setasign\Fpdi\Fpdi;
 
 use App\Business;
 use App\Helpers\TemplateConfiguration;
@@ -59,18 +61,19 @@ class PdfTemplateController extends Controller
             ->with('pageHeader', 'Trashed');
     }
 
-    public function show(Request $request,  PdfTemplate $pdf_template)
+    public function show(Request $request,  PdfTemplate $template)
     {
         $form = [
             'title' => 'Update',
             'action' => 'edit',
-            'action_route' => route('admin.pdf_template.update', $pdf_template),
+            'action_route' => route('admin.template.update', $template),
             'passwords' => true,
             'method' => 'PATCH',
         ];
 
+        $businessOptions = $this->getAvailableBusinessOptions();
 
-        return view('backend.pdf_template.single', compact(['pdf_template', 'form']));
+        return view('backend.pdf_template.single', compact(['template', 'form', 'businessOptions']));
     }
 
     /**
@@ -79,18 +82,19 @@ class PdfTemplateController extends Controller
      */
     public function create(Request $request )
     {
-        $pdf_template = new PdfTemplate();
+        $template = new PdfTemplate();
 
         $form = [
             'title' => 'Create',
             'action' => 'create',
             'passwords' => true,
-            'action_route' => route('admin.pdf_template.store'),
+            'action_route' => route('admin.template.store'),
             'method' => 'POST',
         ];
 
+        $businessOptions = $this->getAvailableBusinessOptions();
 
-        return view('backend.pdf_template.single', compact(['pdf_template', 'form']));
+        return view('backend.pdf_template.single', compact(['template', 'form', 'businessOptions']));
     }
 
     /**
@@ -100,7 +104,7 @@ class PdfTemplateController extends Controller
      */
     public function edit(Request $request, PdfTemplate $pdf_template)
     {
-        return redirect()->route('admin.pdf_template.show', [$pdf_template]);
+        return redirect()->route('admin.template.show', [$pdf_template]);
     }
 
     /**
@@ -109,6 +113,7 @@ class PdfTemplateController extends Controller
      */
     public function store(PdfTemplateStoreRequest $request)
     {
+        $business = Business::findOrFail($request->input('business_id'));
         $pdf_template = PdfTemplate::make($request->only([
             'title',
             'description'
@@ -126,15 +131,15 @@ class PdfTemplateController extends Controller
                     $request,
                     null,
                     'pdf',
-                    $pdf_template->business->title,
+                    '',
                     'path'
                 );
             $pdf_template->path = $fileName;
         }
 
-        $pdf_template->save();
+        $business->templates()->save($pdf_template);
 
-        return redirect()->route('admin.pdf_template.index');
+        return redirect()->route('admin.template.index');
     }
 
     /**
@@ -142,16 +147,17 @@ class PdfTemplateController extends Controller
      * @param \App\Project $project
      * @return \Illuminate\Http\Response
      */
-    public function update(PdfTemplateUpdateRequest $request, PdfTemplate $pdf_template)
+    public function update(PdfTemplateUpdateRequest $request, PdfTemplate $template)
     {
-        $pdf_template->fill($request->only([
+        $template->fill($request->only([
             'title',
-            'description'
+            'description',
+            'business_id'
 
         ]));
 
-        $pdf_template->configuration->business = $request->input('business');
-        $pdf_template->configuration->code = $request->input('code');
+        $template->configuration->business = $request->input('business');
+        $template->configuration->code = $request->input('code');
 
         if ($request->hasFile('path')) {
             $imageController = new ImageController();
@@ -161,27 +167,27 @@ class PdfTemplateController extends Controller
                     $request,
                     null,
                     'pdf',
-                    $pdf_template->business->title,
+                    '',
                     'path'
                 );
-            $pdf_template->path = $fileName;
+            $template->path = $fileName;
         }
 
-        $pdf_template->save();
+        $template->save();
 
 
-        return redirect()->route('admin.pdf_template.show', [$pdf_template])
+        return redirect()->route('admin.template.show', [$template])
             ->with('status', __('basic.actions.modified', ['name' => $this->getModelName()]));
     }
 
     public function restore(Request $request)
     {
-        $request->validate(['pdf_template' => 'required|exists:pdf_template,id']);
+        $request->validate(['pdf_template' => 'required|exists:pdf_templates,id']);
         $pdf_template = PdfTemplate::withTrashed()->findOrFail($request->input('pdf_template'));
 
         $pdf_template->restore();
 
-        return redirect()->route('admin.pdf_template.show', $pdf_template)->with('success', __('basic.actions.recovered', ['name' => $this->getModelName()]));
+        return redirect()->route('admin.template.show', $pdf_template)->with('success', __('basic.actions.recovered', ['name' => $this->getModelName()]));
     }
 
     /**
@@ -189,20 +195,29 @@ class PdfTemplateController extends Controller
      * @param \App\Project $project
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, PdfTemplate $pdf_template)
+    public function destroy(Request $request, PdfTemplate $template)
     {
-        $pdf_template->delete();
-        return redirect()->route('admin.pdf_template.index')->with('success', __('basic.actions.deleted', ['name' => $this->getModelName()]));
+        $template->delete();
+        return redirect()->route('admin.template.index')->with('success', __('basic.actions.deleted', ['name' => $this->getModelName()]));
     }
 
     public function delete(Request $request)
     {
-        $request->validate(['pdf_template' => 'required|exists:pdf_template,id']);
+        $request->validate(['pdf_template' => 'required|exists:pdf_templates,id']);
         $PdfTemplate = PdfTemplate::withTrashed()->findOrFail($request->input('pdf_template'));
 
         $PdfTemplate->forceDelete();
 
-        return redirect()->route('admin.pdf_template.index')->with('success', __('basic.actions.permanent_deleted', ['name' => $this->getModelName()]));
+        return redirect()->route('admin.template.index')->with('success', __('basic.actions.permanent_deleted', ['name' => $this->getModelName()]));
+    }
+
+
+
+    private function getAvailableBusinessOptions()
+    {
+        $businessOptions = Business::all();
+
+        return $businessOptions;
     }
 
 

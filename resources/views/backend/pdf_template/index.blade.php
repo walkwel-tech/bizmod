@@ -16,7 +16,7 @@
                         </div>
                         @if($addNew)
                         <div class="col-4 text-right">
-                            <a href="{{ route('admin.business.create') }}" class="btn btn-sm btn-primary">Add Template</a>
+                            <a href="{{ route('admin.template.create') }}" class="btn btn-sm btn-primary">Add Template</a>
                         </div>
                         @endif
                     </div>
@@ -39,16 +39,16 @@
                                 <td>{{ $pdf_template->getSEOTitle() }}</td>
                                 <td>{{ $pdf_template->getSEODescription(2) }}</td>
                                 <td>{{ $pdf_template->business->getSEOTitle() }}</td>
-                                <td>{{ $pdf_template->path }}</td>
+                                <td><a href="{{ route('admin.template.default', $pdf_template) }}" target="_blank">{{ $pdf_template->path }}</a></td>
 
                                 <td class="d-flex justify-content-end">
                                     @can('backend.pdf_templates.update')
-                                    <a class="btn btn-info btn-icon btn-icon-md rounded-0" href="{{ route('admin.pdf_template.show', $pdf_template) }}" data-toggle="tooltip" data-placement="left" title="{{ __('basic.actions.view', ['name' => 'Pdf Template']) }}">
+                                    <a class="btn btn-info btn-icon btn-icon-md rounded-0" href="{{ route('admin.template.show', $pdf_template) }}" data-toggle="tooltip" data-placement="left" title="{{ __('basic.actions.view', ['name' => 'Pdf Template']) }}">
                                         <i class="fa fa-eye"></i>
                                     </a>
                                     @endcan
                                     @can('backend.pdf_templates.delete')
-                                    <x-ui.button-delete :model="$pdf_template" :route-destroy="route('admin.pdf_template.destroy', $pdf_template)" :route-delete="route('admin.pdf_template.delete', $pdf_template)" :route-restore="route('admin.pdf_template.restore', $pdf_template)" model-name="PdfTemplate" :identifier="$pdf_template->id"/>
+                                    <x-ui.button-delete :model="$pdf_template" :route-destroy="route('admin.template.destroy', $pdf_template)" :route-delete="route('admin.template.delete', $pdf_template)" :route-restore="route('admin.template.restore', $pdf_template)" model-name="PdfTemplate" :identifier="$pdf_template->id"/>
                                     @endcan
                                 </td>
                             </tr>

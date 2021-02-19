@@ -21,7 +21,6 @@ Route::post('/code/restore', 'CodeController@restore')->name('code.restore');
 Route::delete('/code/delete/permanent', 'CodeController@delete')->name('code.delete');
 
 Route::get('/code/claimed', 'CodeController@codeClaimed')->name('code.claimed');
-Route::get('/code/pdf/{code}', 'CodeController@createPDF')->name('code.pdf');
 Route::get('/code/batch', 'CodeController@showBatchForm')->name('code.batch');
 Route::post('/code/batch', 'CodeController@updateBatch');
 
@@ -33,10 +32,14 @@ Route::post('/client/restore', 'ClientController@restore')->name('client.restore
 Route::delete('/client/delete/permanent', 'ClientController@delete')->name('client.delete');
 Route::resource('client', 'ClientController');
 
-Route::get('/pdf_template/trashed', 'PdfTemplateController@trashed')->name('pdf_template.trashed');
-Route::post('/pdf_template/restore', 'PdfTemplateController@restore')->name('pdf_template.restore');
-Route::delete('/pdf_template/delete/permanent', 'PdfTemplateController@delete')->name('pdf_template.delete');
-Route::resource('pdf_template', 'PdfTemplateController');
+
+Route::get('/template/trashed', 'PdfTemplateController@trashed')->name('template.trashed');
+Route::post('/template/restore', 'PdfTemplateController@restore')->name('template.restore');
+Route::delete('/template/delete/permanent', 'PdfTemplateController@delete')->name('template.delete');
+Route::resource('template', 'PdfTemplateController');
+
+Route::get('/template/{template}/default', 'TemplateRenderController@renderDefault')->name('template.default');
+Route::get('/template/{code}/code', 'TemplateRenderController@renderCode')->name('template.code');
 
 Route::get('/category/trashed', 'CategoryController@trashed')->name('category.trashed');
 Route::post('/category/restore', 'CategoryController@restore')->name('category.restore');

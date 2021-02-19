@@ -30,14 +30,6 @@ class AppServiceProvider extends ServiceProvider
             return new PermissionRepository;
         });
 
-        $this->app->singleton(DivisionRepositoryContract::class, function ($app) {
-            return new DivisionRepository;
-        });
-
-        $this->app->singleton(PhaseRepositoryContract::class, function ($app) {
-            return new PhaseRepository;
-        });
-
         $this->app->singleton(UserRepositoryContract::class, function ($app) {
             return new UserRepository;
         });

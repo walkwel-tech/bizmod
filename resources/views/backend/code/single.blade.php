@@ -39,7 +39,7 @@
                                 <div class="pl-lg-4">
                                     @if($code->getKey())
                                         <x-form.select name="business_id" :title="__('Business')" :selected="$code->business_id"
-                                            :options="$businessOptions" disabled="disabled"  :hide-label="true">
+                                            :options="$businessOptions" disabled="disabled"  :hide-label="false">
                                             @if ($code->business)
                                             <a href="{{ route('admin.business.show', $code->business) }}"
                                                 class="btn btn-link px-0 text-left">
@@ -56,14 +56,21 @@
                                         <x-form.input  name="location" :title="__('Location')" :value="$code->claim_details['location']" readonly />
                                         <x-form.input  name="country" :title="__('Country')" :value="$code->claim_details['country']"  readonly/>
                                         <x-form.input  name="zip" :title="__('Zip')" :value="$code->claim_details['zip']"  readonly/>
-                                        <x-form.input  name="zip" :title="__('Claimed on')" :value="$code->claimed_on"  readonly/>
+                                        <x-form.input  name="claimed_on" :title="__('Claimed on')" :value="$code->claimed_on"  readonly/>
+                                            @if ($code->template)
+                                            <a href="{{ route('admin.template.show', $code->template) }}"
+                                                class="btn btn-link px-0 text-left">
+                                                <i class="fas fa-level-up-alt"></i> {{ __('Pdf Template') }}
+                                            </a>
+                                            @endif
+                                        <x-form.input  name="pdf_template_id" :title="__('Pdf Template')" :value="$code->template->path"  readonly/>
                                         <x-form.textarea  name="description" :title="__('Add Note')" :value="$code->description" />
                                         <div class="text-center">
                                             <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
                                         </div>
                                     @else
                                         <x-form.select name="business_id" :title="__('Business')" :selected="$code->business_id"
-                                            :options="$businessOptions" required :hide-label="true">
+                                            :options="$businessOptions" required :hide-label="false">
                                             @if ($code->business)
                                             <a href="{{ route('admin.business.show', $code->business) }}"
                                                 class="btn btn-link px-0 text-left">
@@ -76,6 +83,16 @@
 
                                         <x-form.input name="prefix" :title="__('Code Prefix')" :value="$code->code" required readonly />
                                         <x-form.input type="number" name="no_of_codes" :title="__('Generate No. of code')" value="" required />
+
+                                        <x-form.select name="pdf_template_id" :title="__('Pdf Template')" :selected="$code->pdf_template_id"
+                                            :options="$pdfTemplates" required :hide-label="false">
+                                            @if ($code->template)
+                                            <a href="{{ route('admin.business.show', $code->template) }}"
+                                                class="btn btn-link px-0 text-left">
+                                                <i class="fas fa-level-up-alt"></i> {{ __('Pdf Template') }}
+                                            </a>
+                                            @endif
+                                        </x-form.select>
 
                                         <div class="text-center">
                                             <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
@@ -102,12 +119,15 @@
 <script>
 
     const businessData = @json($businessOptions->mapWithKeys(function($c) {return [$c->getKey() => $c->only(['prefix', 'next_batch'])];}));
+    const pdfData = @json($pdfTemplates->groupBy('business_id'));
 
 
     $(function () {
         const businessSelector = $('[name="business_id"]');
+        const pdfSelector = $('[name="pdf_template_id"]');
 
-        const {next_batch, prefix} = businessData[businessSelector.val()]
+        const {next_batch, prefix} = businessData[businessSelector.val()];
+
         @if(!$code->getKey())
             $('[name="batch_no"]').val(next_batch);
             $('[name="prefix"]').val(prefix);
@@ -118,7 +138,14 @@
 
             $('[name="batch_no"]').val(next_batch);
             $('[name="prefix"]').val(prefix);
+
+            pdfSelector.empty();
+            pdfData[businessSelector.val()].forEach(template => {
+                pdfSelector.append(new Option(template.text, template.id, false, false));
+            });
         });
+
+        businessSelector.trigger('change');
     });
 </script>
 @endpush

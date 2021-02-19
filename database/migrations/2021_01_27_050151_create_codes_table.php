@@ -20,6 +20,7 @@ class CreateCodesTable extends Migration
             $table->string('description')->nullable();
             $table->integer('business_id')->unsigned();
             $table->integer('client_id')->unsigned()->nullable();
+            $table->integer('pdf_template_id')->unsigned()->nullable();
             $table->text('claim_details')->nullable();
             $table->timestamp('claimed_on')->nullable();
             $table->softDeletes();

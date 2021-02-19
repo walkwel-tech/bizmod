@@ -9,6 +9,7 @@ use App\Traits\ScopesSlug;
 use App\Traits\WalkwelSlugMaker;
 use App\Traits\CanBeOwned;
 use App\Traits\HasAddresses;
+use App\Traits\ResolveRouteBinding;
 use App\Traits\ScopesDateRangeBetween;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -23,6 +24,7 @@ class PdfTemplate extends Model
     use HasFactory;
     use ScopesSlug;
     use PerformsSEO;
+    use ResolveRouteBinding;
     use CanBeOwned;
     use HasAddresses;
     use ScopesDateRangeBetween;
@@ -41,6 +43,11 @@ class PdfTemplate extends Model
     public function business()
     {
         return $this->belongsTo(Business::class);
+    }
+
+    public function codes()
+    {
+        return $this->hasMany(Code::class);
     }
 
     public function getRouteKeyName()

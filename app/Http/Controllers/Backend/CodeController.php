@@ -11,6 +11,7 @@ use App\Business;
 use App\Helpers\SelectObject;
 use App\Http\Requests\CodeStoreRequest;
 use App\Http\Requests\CodeUpdateRequest;
+use App\PdfTemplate;
 use Spatie\QueryBuilder\QueryBuilder;
 
 use Illuminate\Http\Request;
@@ -87,8 +88,10 @@ class CodeController extends Controller
         ];
 
         $businessOptions = $this->getAvailableBusinessOptions();
+        $pdfTemplates = $this->getAvailablePdfTemplates();
 
-        return view('backend.code.single', compact(['code', 'form', 'businessOptions']));
+
+        return view('backend.code.single', compact(['code', 'form', 'businessOptions','pdfTemplates']));
     }
 
     /**
@@ -108,8 +111,9 @@ class CodeController extends Controller
         ];
 
         $businessOptions = $this->getAvailableBusinessOptions();
+        $pdfTemplates = $this->getAvailablePdfTemplates();
 
-        return view('backend.code.single', compact(['code', 'form', 'businessOptions']));
+        return view('backend.code.single', compact(['code', 'form', 'businessOptions','pdfTemplates']));
     }
 
     public function codeClaimed(Request $request)
@@ -254,6 +258,13 @@ class CodeController extends Controller
         return $businessOptions;
     }
 
+    private function getAvailablePdfTemplates()
+    {
+        $pdfTemplates = PdfTemplate::select(['id', 'title as text','title as title', 'business_id'])->get();
+
+        return $pdfTemplates;
+    }
+
     protected static function requiresPermission()
     {
         return true;
@@ -294,35 +305,5 @@ class CodeController extends Controller
         ];
     }
 
-    public function createPDF(Request $request,  Code $code)
-    {
-        $pathToTemplate = 'default.pdf';
-        $pdf = new Fpdi();
-        $pageCount = $pdf->setSourceFile(Storage::disk('pdf')->path($pathToTemplate));
 
-        for ($pageNo = 1; $pageNo <= $pageCount; $pageNo++) {
-            $templateId = $pdf->importPage($pageNo);
-            $size = $pdf->getTemplateSize($templateId);
-
-
-            if ($size['width'] > $size['height']) {
-                $pdf->AddPage('L', array($size['width'], $size['height']));
-            } else {
-                $pdf->AddPage('P', array($size['width'], $size['height']));
-            }
-
-            $pdf->useTemplate($templateId);
-
-            if ($pageNo == 1) {
-                $pdf->SetFont('Arial', 'B', 20);
-                $pdf->SetTextColor(0, 0, 0);
-                $pdf->SetXY(10, 20);
-                $pdf->Cell(0, 0, $code->business->title, 0, 0, 'C');
-                $pdf->SetXY(10, 180);
-                $pdf->Cell(0, 0, $code->code, 0, 0, 'C');
-            }
-        }
-
-        $pdf->Output();
-    }
 }

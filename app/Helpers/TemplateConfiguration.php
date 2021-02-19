@@ -35,6 +35,21 @@ class TemplateConfiguration implements Arrayable {
         return $this->getBusinessPosition()['y'];
     }
 
+    public function setBusinessTextColor ($color)
+    {
+        $this->business['text']['color'] = $color;
+    }
+
+    public function getBusinessText ()
+    {
+        return $this->business['text'] ?? static::getDefaultTextConfiguration();
+    }
+
+    public function getBusinessTextColor ()
+    {
+        return $this->getBusinessText()['color'];
+    }
+
     public function setCodeTextColor ($color)
     {
         $this->code['text']['color'] = $color;

@@ -21,8 +21,8 @@ class TemplateConfigurationCast implements CastsAttributes
         $decodedValue= json_decode($valueFromDB, true);
 
         return new TemplateConfiguration(
-            $decodedValue['business'],
-            $decodedValue['code']
+            $decodedValue['business'] ?? [],
+            $decodedValue['code'] ?? []
         );
     }
 
