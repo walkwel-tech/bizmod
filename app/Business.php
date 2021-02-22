@@ -79,6 +79,11 @@ class Business extends Model
         return $this->hasMany(Code::class)->claimed();
     }
 
+    public function users()
+    {
+        return $this->belongsToMany(User::class)->using(BusinessUser::class)->withPivot('access');
+    }
+
     // generate random codes
     public function generateRandomCodes($noOfCodes = 10000, $batchNo = null, $prefix = null, $pdfTemplateId = null, $prefixMaxLength = 3 )
     {

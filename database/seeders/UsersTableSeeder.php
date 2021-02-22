@@ -34,7 +34,7 @@ class UsersTableSeeder extends Seeder
         }
         $user = User::create(
             [
-                'email' => 'user@example.com',            
+                'email' => 'user@example.com',
                 'first_name' => 'user',
                 'last_name' => 'user',
                 'email_verified_at' => now(),

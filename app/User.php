@@ -178,5 +178,8 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Business::class,'owner_id');
     }
 
+    public function business() {
+        return $this->belongsToMany(Business::class)->using(BusinessUser::class)->withPivot('access');
+    }
 
 }
