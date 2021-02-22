@@ -48,7 +48,9 @@
                                     </a>
                                     @endcan
                                     @can('backend.pdf_templates.delete')
-                                    <x-ui.button-delete :model="$pdf_template" :route-destroy="route('admin.template.destroy', $pdf_template)" :route-delete="route('admin.template.delete', $pdf_template)" :route-restore="route('admin.template.restore', $pdf_template)" model-name="PdfTemplate" :identifier="$pdf_template->id"/>
+                                    @if(!$pdf_template->is_assigned)
+                                        <x-ui.button-delete :model="$pdf_template" :route-destroy="route('admin.template.destroy', $pdf_template)" :route-delete="route('admin.template.delete', $pdf_template)" :route-restore="route('admin.template.restore', $pdf_template)" model-name="PdfTemplate" :identifier="$pdf_template->id"/>
+                                    @endif
                                     @endcan
                                 </td>
                             </tr>

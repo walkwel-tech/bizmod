@@ -39,6 +39,10 @@ class PdfTemplate extends Model
         'configuration' => TemplateConfigurationCast::class,
     ];
 
+    protected $appends = [
+        'is_assigned'
+    ];
+
 
     public function business()
     {
@@ -48,6 +52,11 @@ class PdfTemplate extends Model
     public function codes()
     {
         return $this->hasMany(Code::class);
+    }
+
+    public function getIsAssignedAttribute()
+    {
+        return $this->codes()->exists();
     }
 
     public function getRouteKeyName()
