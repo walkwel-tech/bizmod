@@ -113,7 +113,7 @@ class TemplateConfiguration implements Arrayable {
     public static function getDefaultTextConfiguration ()
     {
         return [
-            'color' => 'rgb(0,0,0)'
+            'color' => '#000000'
         ];
     }
 }

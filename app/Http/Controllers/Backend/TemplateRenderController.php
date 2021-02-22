@@ -51,7 +51,6 @@ class TemplateRenderController extends Controller
         $codeObj = Code::where('code', $code)->first();
         $pdfData = $this->getPdfData($codeObj);
 
-
         $pathToTemplate = $codeObj->template->path ?? 'default.pdf';
 
         $pdf = new Fpdi();

@@ -39,6 +39,7 @@ class Code extends Model
         'batch_no',
         'code',
         'business_id',
+        'pdf_template_id',
         'description'
     ];
 

@@ -195,7 +195,8 @@ class CodeController extends Controller
         $codes = $business->generateRandomCodes(
             $request->input('no_of_codes'),
             $request->input('batch_no'),
-            $request->input('prefix')
+            $request->input('prefix'),
+            $request->input('pdf_template_id')
         );
 
         $batchNo = $codes->first()->batch_no;
