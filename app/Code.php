@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Exceptions\CodeUnavailableException;
+use App\Traits\HasAccess;
 use App\Traits\PerformsSEO;
 use App\Traits\ResolveRouteBinding;
 use App\Traits\ScopesDateRangeBetween;
@@ -25,6 +26,7 @@ class Code extends Model
     use PerformsSEO;
     use ResolveRouteBinding;
     use ScopesDateRangeBetween;
+    use HasAccess;
 
     protected $casts = [
         'claim_details' => 'array',

@@ -7,6 +7,7 @@ use App\Traits\PerformsSEO;
 use App\Traits\ScopesSlug;
 use App\Traits\WalkwelSlugMaker;
 use App\Traits\CanBeOwned;
+use App\Traits\HasAccess;
 use App\Traits\HasAddresses;
 use App\Traits\ScopesDateRangeBetween;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -21,6 +22,7 @@ class Business extends Model
     use WalkwelSlugMaker;
     use HasFactory;
     use ScopesSlug;
+    use HasAccess;
     use PerformsSEO;
     use CanBeOwned;
     use HasAddresses;

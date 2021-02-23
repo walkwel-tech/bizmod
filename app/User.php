@@ -182,4 +182,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(Business::class)->using(BusinessUser::class)->withPivot('access');
     }
 
+    // Relations with Pivot
+    public function businessIds ()
+    {
+        return $this->hasMany(BusinessUser::class);
+    }
+
 }
