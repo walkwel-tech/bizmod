@@ -30,4 +30,9 @@ class BusinessUser extends Pivot
 
         return collect($values);
     }
+    public static function getDefaultAccessRole () : string
+    {
+        return 'employee';
+    }
+
 }

@@ -83,7 +83,7 @@ class Business extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class)->using(BusinessUser::class)->withPivot('access');
+        return $this->belongsToMany(User::class)->as('role')->using(BusinessUser::class)->withPivot('access');
     }
 
     // generate random codes

@@ -3,21 +3,21 @@
 namespace App\Repositories;
 
 use App\Contracts\Repository\PermissionRepositoryContract;
-use App\Project;
+use App\BusinessUser;
 use Illuminate\Support\Collection;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class PermissionRepository implements PermissionRepositoryContract {
 
-    public function getProjectRoles(): Collection
+    public function getBusinessRoles(): Collection
     {
-        return Project::getSupportedRoles();
+        return BusinessUser::getAvailableAccessRoles();
     }
 
-    public function getDefaultProjectUserRole () : string
+    public function getDefaultBusinessUserRole () : string
     {
-        return Project::getDefaultUserRole();
+        return BusinessUser::getDefaultAccessRole();
     }
 
     public function getRoles(): Collection

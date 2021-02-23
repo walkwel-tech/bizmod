@@ -7,6 +7,7 @@
 <div class="container-fluid mt--7">
     <div class="row">
         <div class="col-xl-12">
+
             <div class="card bg-secondary shadow">
                 <div class="card-header bg-white border-0">
                     <div class="row align-items-center">
@@ -55,7 +56,7 @@
                                             :hide-label="true">
                                             <a href="{{ route('admin.user.show', $business->owner) }}"
                                                 class="btn btn-link px-0 text-left">
-                                                <i class="fas fa-level-up-alt"></i> {{ __('Users') }}
+                                                <i class="fas fa-level-up-alt"></i> {{ __('Owner') }}
                                             </a>
                                         </x-form.select>
                                         @else
@@ -72,6 +73,8 @@
                                         <div class="text-center">
                                             <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
                                         </div>
+
+
                                 </div>
                             </form>
                         </div>
@@ -79,8 +82,31 @@
                     </div>
                 </div>
             </div>
+            <div class="card my-4">
+                <div class="card-header bg-white border-0">
+                    <div class="card-header bg-white border-0">
+                        <div class="row align-items-center">
+                            <div class="col-12 col-md-10 mb-0">
+                                <h3>Business Users</h3>
+                            </div>
+                            <div class="col-12 col-md-2 text-right">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            @livewire('backend.business-users', ['business' => $business])
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
+
 
     @include('layouts.footers.auth')
 </div>

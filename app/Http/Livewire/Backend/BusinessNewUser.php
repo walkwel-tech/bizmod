@@ -2,38 +2,43 @@
 
 namespace App\Http\Livewire\Backend;
 
+use App\Business;
 use App\Contracts\Repository\PermissionRepositoryContract;
 use App\Contracts\Repository\UserRepositoryContract;
-use App\Project;
+use App\BusinessUser;
 use Illuminate\Support\Arr;
 use Livewire\Component;
 
-class ProjectNewUser extends Component
+class BusinessNewUser extends Component
 {
     public $selectedRole;
     public $selectedUser;
 
     public $allUsers;
 
-    public $project;
+    public $business;
 
     public $roles;
     public $availableUsers;
 
     public $saved;
 
-    public function mount(PermissionRepositoryContract $permissionRepo, UserRepositoryContract $userRepo, Project $project)
+    public function mount(PermissionRepositoryContract $permissionRepo, UserRepositoryContract $userRepo, Business $business)
     {
-        $this->roles = $permissionRepo->getProjectRoles()->toArray();
-
-        $this->project = $project;
-
+        $this->business = $business;
         $this->allUsers = $userRepo->getUsersForSelection();
 
-        $this->availableUsers = $this->determineAvailableUsers();
+        $roles = $permissionRepo->getbusinessRoles();
 
+        $users = ($this->allUsers->isEmpty()) ? collect() : $this->determineAvailableUsers();
 
-        $this->saved = true;
+        $this->roles = $roles->toArray();
+
+        $this->availableUsers = $users->toArray();
+        $this->selectedRole = $roles->first();
+        $this->selectedUser = ($users->isEmpty()) ? '' : $users->first()->getKey();
+
+        $this->saved = false;
     }
 
     public function updated ()
@@ -44,11 +49,12 @@ class ProjectNewUser extends Component
 
     public function determineAvailableUsers ()
     {
-        $userIds = Arr::pluck($this->project->users, 'id');
+        $userIds = Arr::pluck($this->business->users, 'id');
 
         $finalUsers = collect($this->allUsers)->reject(function ($item) use ($userIds) {
-            return in_array($item['id'], $userIds);
-        })->toArray();
+            return in_array($item->getKey(), $userIds);
+        });
+
 
         return $finalUsers;
     }
@@ -56,7 +62,7 @@ class ProjectNewUser extends Component
 
     public function save ()
     {
-        $this->project->users()->attach($this->selectedUser, ['role' => $this->selectedRole]);
+        $this->business->users()->attach($this->selectedUser, ['access' => $this->selectedRole]);
 
         $this->selectedUser = '';
         $this->selectedRole = '';
@@ -72,11 +78,11 @@ class ProjectNewUser extends Component
 
     public function getAuthKeyProperty ()
     {
-        return 'backend.projects.edit';
+        return 'backend.business.edit';
     }
 
     public function render()
     {
-        return view('livewire.backend.project-new-user');
+        return view('livewire.backend.business-new-user');
     }
 }

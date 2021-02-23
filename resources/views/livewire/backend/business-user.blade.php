@@ -7,7 +7,7 @@
     </div>
 
     <div wire:ignore class="col-12 col-md-4 form-group mb-1">
-        <select name="role" wire:model="selectedRole" id="relate-project-{{ $user->getKey() }}">
+        <select name="role" wire:model="selectedRole" id="relate-business-{{ $user->getKey() }}">
             @foreach ($this->roles as $role => $roleTitle)
             <option value="{{ $role }}" @if($selectedRole === $role) selected @endif>{{ $roleTitle }}</option>
             @endforeach
@@ -41,7 +41,7 @@
 @push('js')
 <script>
     $(document).ready(function () {
-        const selector = $('#relate-project-{{ $user->getKey() }}');
+        const selector = $('#relate-business-{{ $user->getKey() }}');
         selector.select2();
         selector.on('change', function (e) {
             @this.set('selectedRole', e.target.value);

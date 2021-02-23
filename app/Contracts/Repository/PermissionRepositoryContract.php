@@ -9,6 +9,6 @@ interface PermissionRepositoryContract {
     public function getPermissionGroups() : Collection;
     public function getRoles() : Collection;
 
-    public function getProjectRoles() : Collection;
-    public function getDefaultProjectUserRole(): string;
+    public function getBusinessRoles() : Collection;
+    public function getDefaultBusinessUserRole(): string;
 }

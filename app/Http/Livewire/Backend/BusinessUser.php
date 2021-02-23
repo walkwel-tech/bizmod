@@ -2,11 +2,12 @@
 
 namespace App\Http\Livewire\Backend;
 
+use App\Business;
 use App\Contracts\Repository\PermissionRepositoryContract;
 use App\User;
 use Livewire\Component;
 
-class ProjectUser extends Component
+class BusinessUser extends Component
 {
     public $roles;
     public $user;
@@ -14,7 +15,7 @@ class ProjectUser extends Component
     public $saved;
     public $deleted;
 
-    public $project;
+    public $business;
 
     public function updated()
     {
@@ -22,19 +23,19 @@ class ProjectUser extends Component
         $this->deleted = false;
     }
 
-    public function mount(PermissionRepositoryContract $permissionRepo, User $user)
+    public function mount(PermissionRepositoryContract $permissionRepo, User $user, Business $business)
     {
-        $this->roles = $permissionRepo->getProjectRoles()->toArray();
+        $this->roles = $permissionRepo->getBusinessRoles()->toArray();
         $this->user = $user;
-        $this->project = $user->role->project_id;
-        $this->selectedRole = $user->role->role;
+        $this->business = $business;
+        $this->selectedRole = $user->role->access;
 
         $this->saved = true;
     }
 
     public function render()
     {
-        return view('livewire.backend.project-user');
+        return view('livewire.backend.business-user');
     }
 
     public function getItemNameProperty ()
@@ -51,14 +52,14 @@ class ProjectUser extends Component
     {
         $this->saved = true;
 
-        $this->user->projects()->updateExistingPivot($this->project, ['role' => $this->selectedRole]);
+        $this->user->business()->updateExistingPivot($this->business, ['access' => $this->selectedRole]);
 
         $this->emit('notifyUser', ['message' => __('basic.actions.saved', ['name' => "Relation with {$this->user->name}"]), 'type' => 'primary']);
     }
 
     public function deleteRelation ()
     {
-        $this->deleted = $this->user->projects()->detach($this->project);
+        $this->deleted = $this->user->Business()->detach($this->business);
         $this->emit('notifyUser', ['message' => __('basic.actions.removed', ['name' => "Relation with {$this->user->name}"]), 'type' => 'danger']);
 
         $this->emit('reload');
