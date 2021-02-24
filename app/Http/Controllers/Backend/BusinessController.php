@@ -197,7 +197,7 @@ class BusinessController extends Controller
 
     protected static function getPermissionKey()
     {
-        return 'business';
+        return 'businesses';
     }
 
     public static function getModelName ()

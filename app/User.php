@@ -124,6 +124,19 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->getSlugColumnName();
     }
 
+    public function getHomeRoute ()
+    {
+        if ($this->hasAnyRole('admin', 'super')) {
+            $redirectTo = '/admin';
+        } elseif ($this->hasAnyRole('user')) {
+            $redirectTo =  '/profile';
+        } else {
+            $redirectTo =  '/home';
+        }
+
+        return $redirectTo;
+    }
+
     //endregion Additional
 
     //endregion Model Methods

@@ -1,6 +1,6 @@
 <?php
 
-Route::redirect('/home', '/admin')->name('home');
+Route::redirect('/home', '/profile')->name('home');
 
 Route::name('frontend.')->group(function () {
     Route::resource('services', 'ServiceController');

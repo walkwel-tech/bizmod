@@ -69,12 +69,12 @@
                                     <a href="{{ route('admin.code.index', ['filter' => ['business.title' => $business->title, 'claimed' => true]]) }}">{{ $business->claimed_codes_count }}</a>
                                 </td>
                                 <td class="d-flex justify-content-end">
-                                    @can('backend.business.update')
+                                    @can('backend.businesses.update')
                                     <a class="btn btn-info btn-icon btn-icon-md rounded-0" href="{{ route('admin.business.show', $business) }}" data-toggle="tooltip" data-placement="left" title="{{ __('basic.actions.view', ['name' => 'Business']) }}">
                                         <i class="fa fa-eye"></i>
                                     </a>
                                     @endcan
-                                    @can('backend.business.delete')
+                                    @can('backend.businesses.delete')
                                     <x-ui.button-delete :model="$business" :route-destroy="route('admin.business.destroy', $business)" :route-delete="route('admin.business.delete', $business)" :route-restore="route('admin.business.restore', $business)" model-name="Business" :identifier="$business->id"/>
                                     @endcan
                                 </td>

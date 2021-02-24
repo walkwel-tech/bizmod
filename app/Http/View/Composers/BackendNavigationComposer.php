@@ -17,9 +17,12 @@ class BackendNavigationComposer
     public function __construct()
     {
         $this->backendRoutes = collect();
+        $user = auth()->user();
+        if ($user->can("backend.dashboard.read")) {
         $this->backendRoutes->push(
             new NavigationItem(__('Dashboard'), route('admin.home'), 'ni ni-tv-2', 'section')
         );
+        }
         $this->createModelRoutes('Roles', 'role', 'fa fa-allergies', false);
 
         $this->createModelRoutes('Users', 'user', 'fa fa-users', true);

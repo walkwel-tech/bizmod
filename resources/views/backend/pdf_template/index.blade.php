@@ -42,12 +42,12 @@
                                 <td><a href="{{ route('admin.template.default', $pdf_template) }}" target="_blank">{{ $pdf_template->path }}</a></td>
 
                                 <td class="d-flex justify-content-end">
-                                    @can('backend.pdf_templates.update')
+                                    @can('backend.templates.update')
                                     <a class="btn btn-info btn-icon btn-icon-md rounded-0" href="{{ route('admin.template.show', $pdf_template) }}" data-toggle="tooltip" data-placement="left" title="{{ __('basic.actions.view', ['name' => 'Pdf Template']) }}">
                                         <i class="fa fa-eye"></i>
                                     </a>
                                     @endcan
-                                    @can('backend.pdf_templates.delete')
+                                    @can('backend.templates.delete')
                                     @if(!$pdf_template->is_assigned)
                                         <x-ui.button-delete :model="$pdf_template" :route-destroy="route('admin.template.destroy', $pdf_template)" :route-delete="route('admin.template.delete', $pdf_template)" :route-restore="route('admin.template.restore', $pdf_template)" model-name="PdfTemplate" :identifier="$pdf_template->id"/>
                                     @endif

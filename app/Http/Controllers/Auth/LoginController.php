@@ -47,9 +47,7 @@ class LoginController extends Controller
     {
         $user = Auth::user();
 
-        return ($user->hasAnyRole('admin', 'super'))
-            ? '/admin'
-            : '/home';
+        return (method_exists($user, 'getHomeRoute')) ? $user->getHomeRoute() : $this->redirectTo;
     }
 
     /**
