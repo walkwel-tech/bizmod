@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Traits\HasAccessClients;
 use App\Traits\HasCountryInfo;
 use App\Traits\ScopesDateRangeBetween;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,6 +13,7 @@ class Client extends Model
 {
     use HasFactory;
     use HasCountryInfo;
+    use HasAccessClients;
     use SoftDeletes;
     use HasFactory;
     use ScopesDateRangeBetween;
@@ -24,6 +26,10 @@ class Client extends Model
         'country_name',
         'country_code',
         'zip'
+    ];
+
+    protected $appends = [
+        'claimed_code'
     ];
 
 
