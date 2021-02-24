@@ -30,7 +30,7 @@ class PdfTemplateStoreRequest extends FormRequest
                 'max:150'
             ],
             'description' => 'required',
-            'path' => 'required|max:10000|mimes:pdf',
+            'path' => 'required|max:10000000|mimes:pdf',
         ];
         return array_merge($rules, $this->ruleOverwrites());
     }

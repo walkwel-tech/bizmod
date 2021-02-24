@@ -22,14 +22,19 @@ class PdfTemplateFactory extends Factory
      */
     public function definition()
     {
+        // $confg = new TemplateConfiguration(
+        //     [
+        //         'position' => TemplateConfiguration::getDefaultPositionConfiguration('business')
+        //     ],
+        //     [
+        //         'position' => TemplateConfiguration::getDefaultPositionConfiguration('code')
+        //     ],
+        // );
+
         $confg = new TemplateConfiguration(
-            [
-                'position' => TemplateConfiguration::getDefaultPositionConfiguration('business')
-            ],
-            [
-                'position' => TemplateConfiguration::getDefaultPositionConfiguration('code')
-            ],
-        );
+                TemplateConfiguration::getDefaultConfiguration('business'),
+                TemplateConfiguration::getDefaultConfiguration('code')
+            );
 
 
         return [

@@ -39,7 +39,7 @@
                                 <div class="pl-lg-4">
 
                                     <x-form.select name="business_id" :title="__('Business')" :selected="$template->business_id"
-                                        :options="$businessOptions"   :hide-label="true">
+                                        :options="$businessOptions"   :hide-label="false">
                                         @if ($template->business)
                                         <a href="{{ route('admin.business.show', $template->business) }}"
                                             class="btn btn-link px-0 text-left">
@@ -59,11 +59,15 @@
 
                                         <x-form.input-file name="path" :label="$template->path" :title="__('Sample pdf')"/>
 
+                                        <x-form.input type="number" name="business[text][size]" :title="__('Business Text Size')" :value="$template->configuration->getBusinessTextSize()" required />
                                         <x-form.input type="color" name="business[text][color]" :title="__('Business Text Color')" :value="$template->configuration->getBusinessTextColor()" required />
+                                        <x-form.input type="number" name="business[text][spacing]" :title="__('Business Text Spacing')" :value="$template->configuration->getBusinessTextSpacing()" required />
                                         <x-form.input type="number" name="business[position][x]" :title="__('Business X position')" :value="$template->configuration->getBusinessPositionX()" required />
                                         <x-form.input type="number" name="business[position][y]" :title="__('Business Y position')" :value="$template->configuration->getBusinessPositionY()" required />
 
+                                        <x-form.input type="number" name="code[text][size]" :title="__('Code Text Size')" :value="$template->configuration->getCodeTextSize()" required />
                                         <x-form.input type="color" name="code[text][color]" :title="__('Code Text Color')" :value="$template->configuration->getCodeTextColor()" required />
+                                        <x-form.input type="number" name="code[text][spacing]" :title="__('Code Text Spacing')" :value="$template->configuration->getCodeTextSpacing()" required />
                                         <x-form.input type="number" name="code[position][x]" :title="__('Code X position')" :value="$template->configuration->getCodePositionX()" required />
                                         <x-form.input type="number" name="code[position][y]" :title="__('Code Y position')" :value="$template->configuration->getCodePositionY()" required />
 

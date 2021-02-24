@@ -17,8 +17,8 @@ class DatabaseSeeder extends Seeder
         $this->call(ClientSeeder::class);
         $this->call(PageSeeder::class);
         $this->call(BusinessSeeder::class);
+        $this->call(CodeSeeder::class);
 
-      //  $this->call(CategorySeeder::class);
         $this->call(ServiceSeeder::class);
         $this->call(StepSeeder::class);
         $this->call(FieldSeeder::class);

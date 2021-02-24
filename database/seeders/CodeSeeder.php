@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use \App\Business;
 use \App\User;
 use \App\BusinessUser;
+use App\Code;
 use Illuminate\Database\Seeder;
 
 class CodeSeeder extends Seeder
@@ -14,22 +15,16 @@ class CodeSeeder extends Seeder
      *
      * @return void
      */
-    // public function run()
-    // {
+    public function run()
+    {
+        $businesses = Business::with('templates')->get();
 
-    //     $business = Business::factory()
-    //         ->times(7)
-    //         ->hasTemplates(3)
-    //         ->hasCodes(5)
-    //         ->create();
-
-    //     $users = User::all();
-    //     $users->each(function ($user) use ($business) {
-    //         $businessArray = $business->shuffle()->take(3)->mapWithKeys(function ($b) {
-    //             return [$b->id => ['access' => BusinessUser::getRandomAccessRoleValue()]];
-    //         })->toArray();
-
-    //         $user->business()->sync($businessArray);
-    //     });
-    // }
+        $businesses->each(function ($business) {
+            $business->templates->each (function ($template) {
+                $template->codes()->saveMany(Code::factory()->times(5)->make([
+                    'business_id' => $template->business_id
+                ]));
+            });
+        });
+    }
 }

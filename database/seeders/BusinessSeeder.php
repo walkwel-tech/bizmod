@@ -20,7 +20,7 @@ class BusinessSeeder extends Seeder
         $business = Business::factory()
             ->times(7)
             ->hasTemplates(3)
-            ->hasCodes(5)
+            // ->hasCodes(5)
             ->create();
 
         $users = User::all();
