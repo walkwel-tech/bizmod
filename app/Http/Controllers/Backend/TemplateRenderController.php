@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\ImageController;
 use Storage;
-use setasign\Fpdi\Fpdi;
+use App\Helpers\Custom_FPDF;
 
 use App\Business;
 use App\PdfTemplate;
@@ -24,7 +24,7 @@ class TemplateRenderController extends Controller
     {
         $pathToTemplate = $template->path;
 
-        $pdf = new Fpdi();
+        $pdf = new Custom_FPDF();
         $pageCount = $pdf->setSourceFile(Storage::disk('pdf')->path($pathToTemplate));
 
         for ($pageNo = 1; $pageNo <= $pageCount; $pageNo++) {
@@ -49,11 +49,17 @@ class TemplateRenderController extends Controller
 
 
         $codeObj = Code::where('code', $code)->first();
-        $pdfData = $this->getPdfData($codeObj);
+        //$pdfData = $this->getPdfData($codeObj);
+
+        $businessData = $codeObj->template->configuration->business;
+        $codeData = $codeObj->template->configuration->code;
+
+        $businessColor = static::hex2rgb($businessData['text']['color']);
+        $codeColor = static::hex2rgb($codeData['text']['color']);
 
         $pathToTemplate = $codeObj->template->path ?? 'default.pdf';
 
-        $pdf = new Fpdi();
+        $pdf = new Custom_FPDF();
         $pageCount = $pdf->setSourceFile(Storage::disk('pdf')->path($pathToTemplate));
 
         for ($pageNo = 1; $pageNo <= $pageCount; $pageNo++) {
@@ -70,35 +76,37 @@ class TemplateRenderController extends Controller
             $pdf->useTemplate($templateId);
 
             if ($pageNo == 1) {
-                $pdf->SetFont('Arial', 'B', 20);
-                $pdf->SetTextColor($pdfData['business']['color']['r'], $pdfData['business']['color']['g'], $pdfData['business']['color']['b']);
-                $pdf->SetXY($pdfData['business']['x'], $pdfData['business']['y']);
-                $pdf->Cell(0, 0, $codeObj->business->title, 0, 0, 'C');
-                $pdf->SetTextColor($pdfData['code']['color']['r'], $pdfData['code']['color']['g'], $pdfData['code']['color']['b']);
-                $pdf->SetXY($pdfData['code']['x'], $pdfData['code']['y']);
-                $pdf->Cell(0, 0, $codeObj->code, 0, 0, 'C');
+                $pdf->SetFont('Arial', 'B', $businessData['text']['size']);
+                $pdf->SetFontSpacing($businessData['text']['spacing']);
+                $pdf->SetTextColor($businessColor['r'], $businessColor['g'], $businessColor['b']);
+                $pdf->SetXY($businessData['position']['x'], $businessData['position']['y']);
+                $pdf->Cell(0, 0, $codeObj->business->title, 0, 0, '');
+                $pdf->SetFont('Arial', 'B', $codeData['text']['size']);
+                $pdf->SetFontSpacing($codeData['text']['spacing']);
+                $pdf->SetTextColor($codeColor['r'], $codeColor['g'], $codeColor['b']);
+                $pdf->SetXY($codeData['position']['x'], $codeData['position']['y']);
+                $pdf->Cell(0, 0, $codeObj->code, 0, 0, '');
+
+                // $pdf->SetFont('Arial', 'B', 20);
+
+                // $pdf->SetTextColor(0,0,0);
+                // $pdf->SetXY(85, 20);
+                // $pdf->SetFontSpacing(10);
+                // $space = $pdf->GetStringWidth('b_title');
+                // // dd($space);
+                // $pdf->Cell(0, 0, 'btitle', 0, 0, '');
+                // //$pdf->MultiCell(0, 10, 'b_title', 1, 'C',false);
+                // $pdf->SetFont('Arial', 'B', 20);
+                // $pdf->SetFontSpacing(15);
+                // $pdf->SetTextColor(0,0,0);
+                // $pdf->SetXY(85, 180);
+                // $pdf->Cell(0, 0, 'code', 0, 0, '');
             }
         }
 
         $pdf->Output();
     }
 
-    public  function getPdfData (Code $codeObj)
-    {
-
-        $data = array();
-        $color = $codeObj->template->configuration->getBusinessTextColor();
-        $data['business']['color'] =  static::hex2rgb($color);
-        $data['business']['x'] = $codeObj->template->configuration->getBusinessPositionX();
-        $data['business']['y'] = $codeObj->template->configuration->getBusinessPositionY();
-
-        $color = $codeObj->template->configuration->getCodeTextColor();
-        $data['code']['color'] =  $this->hex2rgb($color);
-        $data['code']['x'] = $codeObj->template->configuration->getCodePositionX();
-        $data['code']['y'] = $codeObj->template->configuration->getCodePositionY();
-
-        return $data;
-    }
 
     protected static function requiresPermission()
     {
