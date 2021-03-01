@@ -44,8 +44,8 @@ class TemplateConfiguration implements Arrayable {
         $conf = [
             'business' => [
                 'position'=> [
-                    'x' => 85,
-                    'y' => 20,
+                    'x' => 10,
+                    'y' => 16,
                 ],
                 'text'=> [
                     'size' => 20,
@@ -56,8 +56,8 @@ class TemplateConfiguration implements Arrayable {
             ],
             'code' => [
                 'position'=> [
-                    'x' => 85,
-                    'y' => 180,
+                    'x' => 10,
+                    'y' => 175,
                 ],
                 'text'=> [
                     'size' => 20,

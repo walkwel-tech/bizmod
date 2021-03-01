@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\ImageController;
 use Storage;
-use App\Helpers\Custom_FPDF;
+use setasign\Fpdi\Tcpdf\Fpdi;
+//use App\Helpers\Custom_FPDF;
 
 use App\Business;
 use App\PdfTemplate;
@@ -24,7 +25,7 @@ class TemplateRenderController extends Controller
     {
         $pathToTemplate = $template->path;
 
-        $pdf = new Custom_FPDF();
+        $pdf = new Fpdi();
         $pageCount = $pdf->setSourceFile(Storage::disk('pdf')->path($pathToTemplate));
 
         for ($pageNo = 1; $pageNo <= $pageCount; $pageNo++) {
@@ -59,7 +60,7 @@ class TemplateRenderController extends Controller
 
         $pathToTemplate = $codeObj->template->path ?? 'default.pdf';
 
-        $pdf = new Custom_FPDF();
+        $pdf = new Fpdi();
         $pageCount = $pdf->setSourceFile(Storage::disk('pdf')->path($pathToTemplate));
 
         for ($pageNo = 1; $pageNo <= $pageCount; $pageNo++) {
@@ -76,31 +77,26 @@ class TemplateRenderController extends Controller
             $pdf->useTemplate($templateId);
 
             if ($pageNo == 1) {
-                $pdf->SetFont('Arial', 'B', $businessData['text']['size']);
+                // $pdf->SetFont('Arial', 'B', $businessData['text']['size']);
+                // $pdf->SetFontSpacing($businessData['text']['spacing']);
+                // $pdf->SetTextColor($businessColor['r'], $businessColor['g'], $businessColor['b']);
+                // $pdf->SetXY($businessData['position']['x'], $businessData['position']['y']);
+                // $pdf->Cell(0, 0, $codeObj->business->title, 0, 0, '');
+                // $pdf->SetFont('Arial', 'B', $codeData['text']['size']);
+                // $pdf->SetFontSpacing($codeData['text']['spacing']);
+                // $pdf->SetTextColor($codeColor['r'], $codeColor['g'], $codeColor['b']);
+                // $pdf->SetXY($codeData['position']['x'], $codeData['position']['y']);
+                // $pdf->Cell(0, 0, $codeObj->code, 0, 0, '');
+
+                $pdf->SetFont('', 'B', $businessData['text']['size']);
                 $pdf->SetFontSpacing($businessData['text']['spacing']);
                 $pdf->SetTextColor($businessColor['r'], $businessColor['g'], $businessColor['b']);
-                $pdf->SetXY($businessData['position']['x'], $businessData['position']['y']);
-                $pdf->Cell(0, 0, $codeObj->business->title, 0, 0, '');
-                $pdf->SetFont('Arial', 'B', $codeData['text']['size']);
+                $pdf->writeHTMLCell(0, 0, $businessData['position']['x'], $businessData['position']['y'], $codeObj->business->title, 0, 1, 0, true, 'C', false);
+
+                $pdf->SetFont('', 'B', $codeData['text']['size']);
                 $pdf->SetFontSpacing($codeData['text']['spacing']);
                 $pdf->SetTextColor($codeColor['r'], $codeColor['g'], $codeColor['b']);
-                $pdf->SetXY($codeData['position']['x'], $codeData['position']['y']);
-                $pdf->Cell(0, 0, $codeObj->code, 0, 0, '');
-
-                // $pdf->SetFont('Arial', 'B', 20);
-
-                // $pdf->SetTextColor(0,0,0);
-                // $pdf->SetXY(85, 20);
-                // $pdf->SetFontSpacing(10);
-                // $space = $pdf->GetStringWidth('b_title');
-                // // dd($space);
-                // $pdf->Cell(0, 0, 'btitle', 0, 0, '');
-                // //$pdf->MultiCell(0, 10, 'b_title', 1, 'C',false);
-                // $pdf->SetFont('Arial', 'B', 20);
-                // $pdf->SetFontSpacing(15);
-                // $pdf->SetTextColor(0,0,0);
-                // $pdf->SetXY(85, 180);
-                // $pdf->Cell(0, 0, 'code', 0, 0, '');
+                $pdf->writeHTMLCell(0, 0, $codeData['position']['x'], $codeData['position']['y'],  $codeObj->code, 0, 1, 0, true, 'C', false);
             }
         }
 
@@ -118,10 +114,15 @@ class TemplateRenderController extends Controller
 
 
             if ($count == 0) {
-                $pdf = new Custom_FPDF();
+                $pdf = new Fpdi();
                 $start = $key + 1;
-
             }
+            $businessData = $codeObj->template->configuration->business;
+            $codeData = $codeObj->template->configuration->code;
+
+            $businessColor = static::hex2rgb($businessData['text']['color']);
+            $codeColor = static::hex2rgb($codeData['text']['color']);
+
             $pathToTemplate = $codeObj->template->path ?? 'default.pdf';
 
             $pageCount = $pdf->setSourceFile(Storage::disk('pdf')->path($pathToTemplate));
@@ -141,32 +142,42 @@ class TemplateRenderController extends Controller
 
                 if ($pageNo == 1) {
 
-                    $pdf->SetFont('Arial', 'B', 20);
+                    // $pdf->SetFont('Arial', 'B', 20);
 
-                    $pdf->SetTextColor(0, 0, 0);
-                    $pdf->SetXY(85, 20);
-                    $pdf->SetFontSpacing(10);
-                    $space = $pdf->GetStringWidth('b_title');
-                    // dd($space);
-                    $pdf->Cell(0, 0, 'btitle', 0, 0, '');
-                    //$pdf->MultiCell(0, 10, 'b_title', 1, 'C',false);
-                    $pdf->SetFont('Arial', 'B', 20);
-                    $pdf->SetFontSpacing(15);
-                    $pdf->SetTextColor(0, 0, 0);
-                    $pdf->SetXY(85, 180);
-                    $pdf->Cell(0, 0, 'code', 0, 0, '');
+                    // $pdf->SetTextColor(0, 0, 0);
+                    // $pdf->SetXY(85, 20);
+                    // $pdf->SetFontSpacing(10);
+                    // $space = $pdf->GetStringWidth('b_title');
+                    // // dd($space);
+                    // $pdf->Cell(0, 0, 'btitle', 0, 0, '');
+                    // //$pdf->MultiCell(0, 10, 'b_title', 1, 'C',false);
+                    // $pdf->SetFont('Arial', 'B', 20);
+                    // $pdf->SetFontSpacing(15);
+                    // $pdf->SetTextColor(0, 0, 0);
+                    // $pdf->SetXY(85, 180);
+                    // $pdf->Cell(0, 0, 'code', 0, 0, '');
+
+                    $pdf->SetFont('', 'B', $businessData['text']['size']);
+                    $pdf->SetFontSpacing($businessData['text']['spacing']);
+                    $pdf->SetTextColor($businessColor['r'], $businessColor['g'], $businessColor['b']);
+                    $pdf->writeHTMLCell(0, 0, $businessData['position']['x'], $businessData['position']['y'], $codeObj->business->title, 0, 1, 0, true, 'C', false);
+
+                    $pdf->SetFont('', 'B', $codeData['text']['size']);
+                    $pdf->SetFontSpacing($codeData['text']['spacing']);
+                    $pdf->SetTextColor($codeColor['r'], $codeColor['g'], $codeColor['b']);
+                    $pdf->writeHTMLCell(0, 0, $codeData['position']['x'], $codeData['position']['y'],  $codeObj->code, 0, 1, 0, true, 'C', false);
                 }
 
                 $count++;
             }
-            if ($count >= 100 || count($codeObjects)==$key+1) {
+            if ($count >= 100 || count($codeObjects) == $key + 1) {
                 $end = $key + 1;
                 $pathToUpload = Storage::disk()->path('batch_pdf');
-                if(!Storage::exists($pathToUpload)){
+                if (!Storage::exists($pathToUpload)) {
                     Storage::makeDirectory('batch_pdf');
                 }
-                $batchFileName = 'Batch-' . $codeObj->batch_no . '-Code-' . $start . '-' . $end.'.pdf';
-                $pdf->Output('F', $pathToUpload . '/' . $batchFileName);
+                $batchFileName = 'Batch-' . $codeObj->batch_no . '-Code-' . $start . '-' . $end . '.pdf';
+                $pdf->Output($pathToUpload . '/' . $batchFileName , 'F');
                 $count = 0;
             }
         }
@@ -187,19 +198,15 @@ class TemplateRenderController extends Controller
                 $relativePath = 'Batch-' . $codeObj->batch_no . substr($filePath, strlen($path) + 1);
 
                 $zip->addFile($filePath, $relativePath);
-
             }
         }
         $zip->close();
 
         foreach ($files as $name => $file) {
             //dd($name);
-            if($file->isFile())
-            {
+            if ($file->isFile()) {
                 unlink($name);
             }
-
-
         }
 
         return response()->download($zip_file);

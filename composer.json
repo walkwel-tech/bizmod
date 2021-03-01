@@ -25,6 +25,7 @@
         "spatie/laravel-query-builder": "^2.8",
         "spatie/laravel-schemaless-attributes": "^1.8",
         "spatie/laravel-sluggable": "^2.4",
+        "tecnickcom/tcpdf": "^6.3",
         "walkweltech/laravel-otp": "^3.0"
     },
     "require-dev": {
