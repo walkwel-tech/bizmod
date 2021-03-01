@@ -49,7 +49,7 @@
                                 <th scope="col">Title</th>
                                 <th scope="col">Description</th>
                                 <th scope="col">Prefix</th>
-                                <th scope="col">User</th>
+                                <th scope="col">Owner</th>
                                 <th scope="col">Codes</th>
                                 <th scope="col">Claimed Code</th>
                                 <th scope="col"></th>
