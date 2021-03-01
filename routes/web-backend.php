@@ -22,6 +22,7 @@ Route::delete('/code/delete/permanent', 'CodeController@delete')->name('code.del
 
 Route::get('/code/claimed', 'CodeController@codeClaimed')->name('code.claimed');
 Route::get('/code/batch', 'CodeController@showBatchForm')->name('code.batch');
+Route::get('/code/pdf', 'CodeController@showPdfForm')->name('code.pdf');
 Route::post('/code/batch', 'CodeController@updateBatch');
 
 Route::resource('code', 'CodeController');
@@ -40,6 +41,7 @@ Route::resource('template', 'PdfTemplateController');
 
 Route::get('/template/{template}/default', 'TemplateRenderController@renderDefault')->name('template.default');
 Route::get('/template/{code}/code', 'TemplateRenderController@renderCode')->name('template.code');
+Route::post('/template/batch', 'TemplateRenderController@renderBatch')->name('template.batch');
 
 Route::get('/category/trashed', 'CategoryController@trashed')->name('category.trashed');
 Route::post('/category/restore', 'CategoryController@restore')->name('category.restore');

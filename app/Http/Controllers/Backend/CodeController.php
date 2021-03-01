@@ -162,6 +162,31 @@ class CodeController extends Controller
         return view('backend.code.batch', compact(['form', 'batches']));
     }
 
+    public function showPdfForm(Request $request)
+    {
+        $form = [
+            'title' => 'Batch Pdf Generate',
+            'action' => 'create',
+            'passwords' => true,
+            'action_route' => route('admin.template.batch'),
+            'method' => 'POST',
+        ];
+
+        $batches = Code::distinct('batch_no')->with(['template' => function($query){
+            $query->select('id','title');
+        }])->get()->mapWithKeys(function ($c) {
+            return [$c->batch_no => new SelectObject(
+                $c->batch_no,
+                $c->batch_no,
+                $c->template->only(['title', 'id'])
+            )];
+        });
+
+
+
+        return view('backend.code.pdf', compact(['form', 'batches']));
+    }
+
     /**
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response

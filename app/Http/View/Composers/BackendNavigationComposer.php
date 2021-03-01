@@ -33,7 +33,8 @@ class BackendNavigationComposer
 
         $this->createModelRoutes('Codes', 'code', 'fa fa-barcode', true, true, [
             new NavigationItem(__('Claimed Code'), route('admin.code.claimed'), 'ni ni-tv-2', 'main'),
-            new NavigationItem(__('Update Batch Notes'), route('admin.code.batch'), 'ni ni-tv-2', 'main')
+            new NavigationItem(__('Update Batch Notes'), route('admin.code.batch'), 'ni ni-tv-2', 'main'),
+            new NavigationItem(__('Generate Pdf for batch'), route('admin.code.pdf'), 'ni ni-tv-2', 'main')
         ]);
 
         $this->createModelRoutes('Clients', 'client', 'fa fa-users', true);
