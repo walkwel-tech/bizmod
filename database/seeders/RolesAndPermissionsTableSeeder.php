@@ -19,20 +19,10 @@ class RolesAndPermissionsTableSeeder extends Seeder
         $this->setupPermissionsForNature([
             'users',
             'roles',
-            'divisions',
-            'phases',
-            'pages',
             'businesses',
             'codes',
             'clients',
             'templates',
-            'categories',
-            'services',
-            'steps',
-            'fields',
-            'service_orders',
-            'bids',
-            'phasescopes',
             'permissions',
             'locations'
         ], 'backend');
