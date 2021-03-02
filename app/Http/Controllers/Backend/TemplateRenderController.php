@@ -90,12 +90,12 @@ class TemplateRenderController extends Controller
 
                 $pdf->SetFont('', 'B', $businessData['text']['size']);
                 $pdf->SetFontSpacing($businessData['text']['spacing']);
-                $pdf->SetTextColor($businessColor['r'], $businessColor['g'], $businessColor['b']);
+                //$pdf->SetTextColor($businessColor['r'], $businessColor['g'], $businessColor['b']);
                 $pdf->writeHTMLCell(0, 0, $businessData['position']['x'], $businessData['position']['y'], $codeObj->business->title, 0, 1, 0, true, 'C', false);
 
                 $pdf->SetFont('', 'B', $codeData['text']['size']);
                 $pdf->SetFontSpacing($codeData['text']['spacing']);
-                $pdf->SetTextColor($codeColor['r'], $codeColor['g'], $codeColor['b']);
+                //$pdf->SetTextColor($codeColor['r'], $codeColor['g'], $codeColor['b']);
                 $pdf->writeHTMLCell(0, 0, $codeData['position']['x'], $codeData['position']['y'],  $codeObj->code, 0, 1, 0, true, 'C', false);
             }
         }
@@ -159,12 +159,12 @@ class TemplateRenderController extends Controller
 
                     $pdf->SetFont('', 'B', $businessData['text']['size']);
                     $pdf->SetFontSpacing($businessData['text']['spacing']);
-                    $pdf->SetTextColor($businessColor['r'], $businessColor['g'], $businessColor['b']);
+                   // $pdf->SetTextColor($businessColor['r'], $businessColor['g'], $businessColor['b']);
                     $pdf->writeHTMLCell(0, 0, $businessData['position']['x'], $businessData['position']['y'], $codeObj->business->title, 0, 1, 0, true, 'C', false);
 
                     $pdf->SetFont('', 'B', $codeData['text']['size']);
                     $pdf->SetFontSpacing($codeData['text']['spacing']);
-                    $pdf->SetTextColor($codeColor['r'], $codeColor['g'], $codeColor['b']);
+                    //$pdf->SetTextColor($codeColor['r'], $codeColor['g'], $codeColor['b']);
                     $pdf->writeHTMLCell(0, 0, $codeData['position']['x'], $codeData['position']['y'],  $codeObj->code, 0, 1, 0, true, 'C', false);
                 }
 
