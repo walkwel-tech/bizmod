@@ -30,6 +30,7 @@ class BusinessStoreRequest extends FormRequest
             ],
             'description' => 'required',
             'prefix' => 'required|max:3',
+            'webhook_url' => 'required|url',
         ];
         return array_merge($rules, $this->ruleOverwrites());
     }

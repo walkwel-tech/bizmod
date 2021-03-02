@@ -21,6 +21,8 @@ class CreateBusinessesTable extends Migration
             $table->string('batch_no', 8)->nullable();
             $table->string('prefix', 3);
             $table->integer('owner_id')->unsigned();
+            $table->integer('threshold');
+            $table->text('webhook_url');
             $table->softDeletes();
             $table->timestamps();
         });
