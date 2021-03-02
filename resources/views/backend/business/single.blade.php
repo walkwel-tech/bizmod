@@ -109,6 +109,27 @@
                     </div>
                 </div>
             </div>
+            <div class="card my-4">
+                <div class="card-header bg-white border-0">
+                    <div class="card-header bg-white border-0">
+                        <div class="row align-items-center">
+                            <div class="col-12 col-md-10 mb-0">
+                                <h3>Token</h3>
+                            </div>
+                            <div class="col-12 col-md-2 text-right">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            @livewire('backend.business-tokens', ['business' => $business])
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

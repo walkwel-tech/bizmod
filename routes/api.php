@@ -16,9 +16,11 @@ use App\Code;
 |
 */
 
+Route::middleware(['auth:sanctum'])->prefix('business')->group(function () {
+    Route::get('/code/{code}', 'ClaimController@show');
+    Route::post('/code/{code}', 'ClaimController@store');
+});
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-
-Route::get('/code/{code}', 'ClaimController@show');
-Route::post('/code/{code}', 'ClaimController@store');

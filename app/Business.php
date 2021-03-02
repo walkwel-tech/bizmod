@@ -11,11 +11,12 @@ use App\Traits\HasAccess;
 use App\Traits\HasAddresses;
 use App\Traits\ScopesDateRangeBetween;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Sanctum\HasApiTokens;
 use Spatie\Sluggable\HasSlug;
 
-class Business extends Model
+class Business extends Authenticatable
 {
     use SoftDeletes;
     use HasSlug;
@@ -27,6 +28,7 @@ class Business extends Model
     use CanBeOwned;
     use HasAddresses;
     use ScopesDateRangeBetween;
+    use HasApiTokens;
 
     protected $fillable = [
         'title',
