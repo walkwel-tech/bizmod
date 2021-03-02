@@ -23,11 +23,11 @@ class BackendNavigationComposer
             new NavigationItem(__('Dashboard'), route('admin.home'), 'ni ni-tv-2', 'section')
         );
         }
-        $this->createModelRoutes('Roles', 'role', 'fa fa-allergies', false);
+        // $this->createModelRoutes('Roles', 'role', 'fa fa-allergies', false);
 
         $this->createModelRoutes('Users', 'user', 'fa fa-users', true);
 
-        $this->createModelRoutes('Pages', 'page', 'fa fa-barcode', true);
+        // $this->createModelRoutes('Pages', 'page', 'fa fa-barcode', true);
 
         $this->createModelRoutes('Business', 'business', 'fa fa-industry', true);
 
