@@ -22,7 +22,8 @@ class PermissionRepository implements PermissionRepositoryContract {
 
     public function getRoles(): Collection
     {
-        if (auth()->user()->hasRole('super')) {
+        $user = auth()->user();
+        if ( !method_exists($user, 'hasRole') || $user->hasRole('super')) {
             return Role::all();
         } else {
             return auth()->user()->roles;
