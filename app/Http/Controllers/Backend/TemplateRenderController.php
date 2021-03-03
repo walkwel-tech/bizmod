@@ -77,25 +77,15 @@ class TemplateRenderController extends Controller
             $pdf->useTemplate($templateId);
 
             if ($pageNo == 1) {
-                // $pdf->SetFont('Arial', 'B', $businessData['text']['size']);
-                // $pdf->SetFontSpacing($businessData['text']['spacing']);
-                // $pdf->SetTextColor($businessColor['r'], $businessColor['g'], $businessColor['b']);
-                // $pdf->SetXY($businessData['position']['x'], $businessData['position']['y']);
-                // $pdf->Cell(0, 0, $codeObj->business->title, 0, 0, '');
-                // $pdf->SetFont('Arial', 'B', $codeData['text']['size']);
-                // $pdf->SetFontSpacing($codeData['text']['spacing']);
-                // $pdf->SetTextColor($codeColor['r'], $codeColor['g'], $codeColor['b']);
-                // $pdf->SetXY($codeData['position']['x'], $codeData['position']['y']);
-                // $pdf->Cell(0, 0, $codeObj->code, 0, 0, '');
 
                 $pdf->SetFont('', 'B', $businessData['text']['size']);
-                // $pdf->SetFontSpacing($businessData['text']['spacing']);
-                //$pdf->SetTextColor($businessColor['r'], $businessColor['g'], $businessColor['b']);
+                $pdf->SetFontSpacing($businessData['text']['spacing']);
+                $pdf->SetTextColor($businessColor['r'], $businessColor['g'], $businessColor['b']);
                 $pdf->writeHTMLCell(0, 0, $businessData['position']['x'], $businessData['position']['y'], $codeObj->business->title, 0, 1, 0, true, 'C', false);
 
                 $pdf->SetFont('', 'B', $codeData['text']['size']);
-                // $pdf->SetFontSpacing($codeData['text']['spacing']);
-                //$pdf->SetTextColor($codeColor['r'], $codeColor['g'], $codeColor['b']);
+                $pdf->SetFontSpacing($codeData['text']['spacing']);
+                $pdf->SetTextColor($codeColor['r'], $codeColor['g'], $codeColor['b']);
                 $pdf->writeHTMLCell(0, 0, $codeData['position']['x'], $codeData['position']['y'],  $codeObj->code, 0, 1, 0, true, 'C', false);
             }
         }
@@ -142,29 +132,14 @@ class TemplateRenderController extends Controller
 
                 if ($pageNo == 1) {
 
-                    // $pdf->SetFont('Arial', 'B', 20);
-
-                    // $pdf->SetTextColor(0, 0, 0);
-                    // $pdf->SetXY(85, 20);
-                    // $pdf->SetFontSpacing(10);
-                    // $space = $pdf->GetStringWidth('b_title');
-                    // // dd($space);
-                    // $pdf->Cell(0, 0, 'btitle', 0, 0, '');
-                    // //$pdf->MultiCell(0, 10, 'b_title', 1, 'C',false);
-                    // $pdf->SetFont('Arial', 'B', 20);
-                    // $pdf->SetFontSpacing(15);
-                    // $pdf->SetTextColor(0, 0, 0);
-                    // $pdf->SetXY(85, 180);
-                    // $pdf->Cell(0, 0, 'code', 0, 0, '');
-
                     $pdf->SetFont('', 'B', $businessData['text']['size']);
-                    // $pdf->SetFontSpacing($businessData['text']['spacing']);
-                   // $pdf->SetTextColor($businessColor['r'], $businessColor['g'], $businessColor['b']);
+                    $pdf->SetFontSpacing($businessData['text']['spacing']);
+                    $pdf->SetTextColor($businessColor['r'], $businessColor['g'], $businessColor['b']);
                     $pdf->writeHTMLCell(0, 0, $businessData['position']['x'], $businessData['position']['y'], $codeObj->business->title, 0, 1, 0, true, 'C', false);
 
                     $pdf->SetFont('', 'B', $codeData['text']['size']);
-                    // $pdf->SetFontSpacing($codeData['text']['spacing']);
-                    //$pdf->SetTextColor($codeColor['r'], $codeColor['g'], $codeColor['b']);
+                    $pdf->SetFontSpacing($codeData['text']['spacing']);
+                    $pdf->SetTextColor($codeColor['r'], $codeColor['g'], $codeColor['b']);
                     $pdf->writeHTMLCell(0, 0, $codeData['position']['x'], $codeData['position']['y'],  $codeObj->code, 0, 1, 0, true, 'C', false);
                 }
 

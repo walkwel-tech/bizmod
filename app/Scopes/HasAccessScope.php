@@ -20,7 +20,7 @@ class HasAccessScope implements Scope
     {
         if($user = auth()->user()) {
 
-            if ($user->hasRole('super')) {
+            if (!method_exists($user, 'hasRole') || $user->hasRole('super')) {
                 return $builder;
             }
 
