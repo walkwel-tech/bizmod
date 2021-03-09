@@ -84,6 +84,16 @@
                                         <i class="fa fa-eye"></i>
                                     </a>
                                     @endcan
+                                    @can('backend.codes.read')
+                                    @if($code->template)
+                                    <a class="btn btn-warning btn-icon btn-icon-md rounded-0"
+                                        href="{{ route('admin.template.code', $code) }}" data-toggle="tooltip"
+                                        data-placement="left"
+                                        title="{{ __('View Pdf Details', ['name' => 'Code']) }}" target="_blank">
+                                        <i class="fa fa-file-pdf"></i>
+                                    </a>
+                                    @endif
+                                    @endcan
                                     @can('backend.codes.delete')
                                     <x-ui.button-delete :model="$code"
                                         :route-destroy="route('admin.code.destroy', $code)"

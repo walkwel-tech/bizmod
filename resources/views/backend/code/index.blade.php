@@ -100,7 +100,7 @@
                                     <a class="btn btn-warning btn-icon btn-icon-md rounded-0"
                                         href="{{ route('admin.template.code', $code) }}" data-toggle="tooltip"
                                         data-placement="left"
-                                        title="{{ __('basic.actions.view', ['name' => 'Code']) }}" target="_blank">
+                                        title="{{ __('View Pdf Details', ['name' => 'Code']) }}" target="_blank">
                                         <i class="fa fa-file-pdf"></i>
                                     </a>
                                     @endif
