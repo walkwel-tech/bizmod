@@ -118,7 +118,7 @@
 @push('js')
 <script>
 
-    const businessData = @json($businessOptions->mapWithKeys(function($c) {return [$c->getKey() => $c->only(['prefix', 'next_batch'])];}));
+    const businessData = @json($businessOptions->mapWithKeys(function($c) {return [$c->getKey() => $c->only(['prefix', 'next_batch' , 'batch_no'])];}));
     const pdfData = @json($pdfTemplates->groupBy('business_id'));
 
 
@@ -126,7 +126,7 @@
         const businessSelector = $('[name="business_id"]');
         const pdfSelector = $('[name="pdf_template_id"]');
 
-        const {next_batch, prefix} = businessData[businessSelector.val()];
+        const {next_batch, batch_no, prefix} = businessData[businessSelector.val()];
 
         @if(!$code->getKey())
             $('[name="batch_no"]').val(next_batch);
@@ -134,9 +134,14 @@
         @endif
 
         businessSelector.change(function (event) {
-            const {next_batch, prefix} = businessData[$(this).val()];
-
+            const {next_batch, batch_no, prefix} = businessData[$(this).val()];
+            @if(!$code->getKey())
             $('[name="batch_no"]').val(next_batch);
+            @else
+            $('[name="batch_no"]').val(batch_no);
+            @endif
+
+
             $('[name="prefix"]').val(prefix);
 
             pdfSelector.empty();
