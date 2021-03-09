@@ -184,7 +184,7 @@ class TemplateRenderController extends Controller
             }
         }
 
-        return response()->download($zip_file);
+        return response()->download($zip_file)->deleteFileAfterSend(true);
     }
 
     protected static function requiresPermission()
