@@ -62,12 +62,22 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $appends = [
         'name',
+        'title',
     ];
 
     //region Model Methods
 
     //region Accessors
     public function getNameAttribute()
+    {
+        $name = $this->first_name;
+        if ($this->last_name) {
+            $name .= ' ' . $this->last_name;
+        }
+
+        return $name;
+    }
+    public function getTitleAttribute()
     {
         $name = $this->first_name;
         if ($this->last_name) {
@@ -177,10 +187,7 @@ class User extends Authenticatable implements MustVerifyEmail
     //endregion Local Scopes
 
     //region Static Methods
-    public static function getTitleAttributeColumnName()
-    {
-        return 'first_name';
-    }
+
     //endregion Static Methods
 
     public function identities() {

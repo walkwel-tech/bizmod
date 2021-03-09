@@ -71,6 +71,11 @@ class BusinessController extends Controller
         ];
 
         $users = User::with('addresses')->get();
+        $users = $users->map(function($user){
+            $user->title = $user->first_name.' '.$user->last_name;
+
+            return $user;
+        });
 
         $usersData = $users->mapWithKeys(function($c) {
             $data = $c->only(['first_name', 'last_name', 'email']);
@@ -99,6 +104,12 @@ class BusinessController extends Controller
         ];
 
         $users = User::with('addresses')->get();
+
+        $users = $users->map(function($user){
+            $user->title = $user->first_name.' '.$user->last_name;
+
+            return $user;
+        });
 
         $usersData = $users->mapWithKeys(function($c) {
             $data = $c->only(['first_name', 'last_name', 'email']);

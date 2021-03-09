@@ -18,7 +18,7 @@ trait CanBeOwned {
 
     public function getOwnerTitle($limitCharacters = null, $end = '...')
     {
-        $title = $this->owner->first_name;
+        $title = (method_exists($this->owner, 'getSEOTitle')) ? $this->owner->getSEOTitle() : $this->owner->first_name;
 
         return ($limitCharacters)
                 ? Str::limit($title, $limitCharacters, $end)
