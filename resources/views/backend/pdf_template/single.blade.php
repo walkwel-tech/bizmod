@@ -57,6 +57,13 @@
                                         {{ __('basic.inputs.address.details') }}
                                         </x-form.input>
 
+                                        @if ($template->path)
+                                        <a href="{{ route('admin.template.default' , ['template' => $template]) }}"
+                                            class="btn btn-link px-0 text-left">
+                                            <i class="fas fa-level-up-alt"></i> {{$template->path }}
+                                        </a>
+                                        @endif
+
                                         <x-form.input-file name="path" :label="$template->path" :title="__('Sample pdf')"/>
 
                                         <x-form.input type="number" name="business[text][size]" :title="__('Business Text Size')" :value="$template->configuration->getBusinessTextSize()" required />

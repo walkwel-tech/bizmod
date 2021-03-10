@@ -18,6 +18,7 @@ class CreatePdftemplatesTable extends Migration
             $table->string('title', 150);
             $table->string('slug');
             $table->text('description')->nullable();
+            $table->enum('type', ['Digital','Print Ready']);
             $table->string('path');
             $table->integer('business_id')->unsigned();
             $table->text('configuration')->nullable();
