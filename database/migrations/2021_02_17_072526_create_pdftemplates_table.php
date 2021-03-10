@@ -1,5 +1,6 @@
 <?php
 
+use App\PdfTemplate;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,7 +19,7 @@ class CreatePdftemplatesTable extends Migration
             $table->string('title', 150);
             $table->string('slug');
             $table->text('description')->nullable();
-            $table->enum('type', ['Digital','Print Ready']);
+            $table->enum('type', PdfTemplate::getAvailableTypesValues()->toArray());
             $table->string('path');
             $table->integer('business_id')->unsigned();
             $table->text('configuration')->nullable();

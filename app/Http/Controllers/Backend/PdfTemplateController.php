@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\ImageController;
+use App\Helpers\SelectObject;
 use Storage;
 use setasign\Fpdi\Fpdi;
 
@@ -39,7 +40,7 @@ class PdfTemplateController extends Controller
     /**
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
-    */
+     */
     public function trashed(Request $request)
     {
         $allowedFilters = $this->allowedFilters;
@@ -72,15 +73,16 @@ class PdfTemplateController extends Controller
         ];
 
         $businessOptions = $this->getAvailableBusinessOptions();
+        $typeOptions = $this->getAvailableTypeOptions();
 
-        return view('backend.pdf_template.single', compact(['template', 'form', 'businessOptions']));
+        return view('backend.pdf_template.single', compact(['template', 'form', 'businessOptions', 'typeOptions']));
     }
 
     /**
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request )
+    public function create(Request $request)
     {
         $template = new PdfTemplate();
 
@@ -93,8 +95,9 @@ class PdfTemplateController extends Controller
         ];
 
         $businessOptions = $this->getAvailableBusinessOptions();
+        $typeOptions = $this->getAvailableTypeOptions();
 
-        return view('backend.pdf_template.single', compact(['template', 'form', 'businessOptions']));
+        return view('backend.pdf_template.single', compact(['template', 'form', 'businessOptions', 'typeOptions']));
     }
 
     /**
@@ -116,7 +119,8 @@ class PdfTemplateController extends Controller
         $business = Business::findOrFail($request->input('business_id'));
         $pdf_template = PdfTemplate::make($request->only([
             'title',
-            'description'
+            'description',
+            'type'
         ]));
 
         $pdf_template->configuration = new TemplateConfiguration($request->input('business'), $request->input('code'));
@@ -152,6 +156,7 @@ class PdfTemplateController extends Controller
         $template->fill($request->only([
             'title',
             'description',
+            'type',
             'business_id'
 
         ]));
@@ -211,7 +216,16 @@ class PdfTemplateController extends Controller
         return redirect()->route('admin.template.index')->with('success', __('basic.actions.permanent_deleted', ['name' => $this->getModelName()]));
     }
 
-
+    private function getAvailableTypeOptions()
+    {
+        $typeOptions = PdfTemplate::getAvailableTypes()->mapWithKeys(function ($value, $key) {
+            return [$key => new SelectObject(
+                $key,
+                $value
+            )];
+        });
+        return $typeOptions;
+    }
 
     private function getAvailableBusinessOptions()
     {
@@ -221,7 +235,7 @@ class PdfTemplateController extends Controller
     }
 
 
-    protected static function requiresPermission ()
+    protected static function requiresPermission()
     {
         return true;
     }
@@ -231,7 +245,7 @@ class PdfTemplateController extends Controller
         return 'templates';
     }
 
-    public static function getModelName ()
+    public static function getModelName()
     {
         return 'PdfTemplate';
     }

@@ -40,7 +40,7 @@ class PdfTemplateFactory extends Factory
         return [
             'title' => $this->faker->unique()->word,
             'description' => $this->faker->paragraph,
-            'type' =>  $this->faker->randomElement(['Digital','Print Ready']),
+            'type' =>  PdfTemplate::getRandomTypeValue(),
             'path' => 'default.pdf',
             'configuration' => $confg,
         ];

@@ -57,6 +57,12 @@
                                         {{ __('basic.inputs.address.details') }}
                                         </x-form.input>
 
+                                        <x-form.select name="type" :title="__('Type')" :selected="$template->type"
+                                            :options="$typeOptions"   :hide-label="false">
+
+                                        </x-form.select>
+
+
                                         @if ($template->path)
                                         <a href="{{ route('admin.template.default' , ['template' => $template]) }}"
                                             class="btn btn-link px-0 text-left">

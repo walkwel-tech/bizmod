@@ -34,6 +34,7 @@ class PdfTemplate extends Model
     protected $fillable = [
         'title',
         'description',
+        'type',
         'path'
     ];
 
@@ -44,6 +45,11 @@ class PdfTemplate extends Model
     protected $appends = [
         'is_assigned'
     ];
+
+    public  function getTypeAttribute ($value)
+    {
+        return ucfirst($value);
+    }
 
 
     public function business()
@@ -64,5 +70,24 @@ class PdfTemplate extends Model
     public function getRouteKeyName()
     {
         return $this->getSlugColumnName();
+    }
+    public static function getRandomTypeValue ()
+    {
+        return static::getAvailableTypesValues()->random();
+    }
+
+    public static function getAvailableTypesValues ()
+    {
+        return static::getAvailableTypes()->keys();
+    }
+
+    public static function getAvailableTypes ()
+    {
+        $values = [
+            'digital' => 'Digital',
+            'print ready' => 'Print Ready'
+        ];
+
+        return collect($values);
     }
 }

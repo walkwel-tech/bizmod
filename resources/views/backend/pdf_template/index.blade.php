@@ -29,6 +29,7 @@
                                 <th scope="col">Title</th>
                                 <th scope="col">Description</th>
                                 <th scope="col">Business</th>
+                                <th scope="col">Type</th>
                                 <th scope="col">Path</th>
                                 <th scope="col"></th>
                             </tr>
@@ -39,6 +40,7 @@
                                 <td>{{ $pdf_template->getSEOTitle() }}</td>
                                 <td>{{ $pdf_template->getSEODescription(2) }}</td>
                                 <td>{{ $pdf_template->business->getSEOTitle() }}</td>
+                                <td>{{ $pdf_template->type }}</td>
                                 <td><a href="{{ route('admin.template.default', $pdf_template) }}" target="_blank">{{ $pdf_template->path }}</a></td>
 
                                 <td class="d-flex justify-content-end">
