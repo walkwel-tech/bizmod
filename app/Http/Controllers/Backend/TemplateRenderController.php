@@ -45,20 +45,68 @@ class TemplateRenderController extends Controller
         $pdf->Output();
     }
 
-    public function renderCode(Request $request,   $code)
+    public function renderCodeDigital(Request $request,   $code)
     {
 
 
         $codeObj = Code::where('code', $code)->first();
         //$pdfData = $this->getPdfData($codeObj);
 
-        $businessData = $codeObj->template->configuration->business;
-        $codeData = $codeObj->template->configuration->code;
+        $businessData = $codeObj->digital_template->configuration->business;
+        $codeData = $codeObj->digital_template->configuration->code;
 
         $businessColor = static::hex2rgb($businessData['text']['color']);
         $codeColor = static::hex2rgb($codeData['text']['color']);
 
-        $pathToTemplate = $codeObj->template->path ?? 'default.pdf';
+        $pathToTemplate = $codeObj->digital_template->path ?? 'default.pdf';
+
+        $pdf = new Fpdi();
+        $pageCount = $pdf->setSourceFile(Storage::disk('pdf')->path($pathToTemplate));
+
+        for ($pageNo = 1; $pageNo <= $pageCount; $pageNo++) {
+            $templateId = $pdf->importPage($pageNo);
+            $size = $pdf->getTemplateSize($templateId);
+
+
+            if ($size['width'] > $size['height']) {
+                $pdf->AddPage('L', array($size['width'], $size['height']));
+            } else {
+                $pdf->AddPage('P', array($size['width'], $size['height']));
+            }
+
+            $pdf->useTemplate($templateId);
+
+            if ($pageNo == 1) {
+
+                $pdf->SetFont('', 'B', $businessData['text']['size']);
+                $pdf->SetFontSpacing($businessData['text']['spacing']);
+                $pdf->SetTextColor($businessColor['r'], $businessColor['g'], $businessColor['b']);
+                $pdf->writeHTMLCell(0, 0, $businessData['position']['x'], $businessData['position']['y'], $codeObj->business->title, 0, 1, 0, true, 'C', false);
+
+                $pdf->SetFont('', 'B', $codeData['text']['size']);
+                $pdf->SetFontSpacing($codeData['text']['spacing']);
+                $pdf->SetTextColor($codeColor['r'], $codeColor['g'], $codeColor['b']);
+                $pdf->writeHTMLCell(0, 0, $codeData['position']['x'], $codeData['position']['y'],  $codeObj->code, 0, 1, 0, true, 'C', false);
+            }
+        }
+
+        $pdf->Output();
+    }
+
+    public function renderCodePrint(Request $request,   $code)
+    {
+
+
+        $codeObj = Code::where('code', $code)->first();
+        //$pdfData = $this->getPdfData($codeObj);
+
+        $businessData = $codeObj->print_ready_template->configuration->business;
+        $codeData = $codeObj->print_ready_template->configuration->code;
+
+        $businessColor = static::hex2rgb($businessData['text']['color']);
+        $codeColor = static::hex2rgb($codeData['text']['color']);
+
+        $pathToTemplate = $codeObj->print_ready_template->path ?? 'default.pdf';
 
         $pdf = new Fpdi();
         $pageCount = $pdf->setSourceFile(Storage::disk('pdf')->path($pathToTemplate));
@@ -107,13 +155,13 @@ class TemplateRenderController extends Controller
                 $pdf = new Fpdi();
                 $start = $key + 1;
             }
-            $businessData = $codeObj->template->configuration->business;
-            $codeData = $codeObj->template->configuration->code;
+            $businessData = $codeObj->print_ready_template->configuration->business;
+            $codeData = $codeObj->print_ready_template->configuration->code;
 
             $businessColor = static::hex2rgb($businessData['text']['color']);
             $codeColor = static::hex2rgb($codeData['text']['color']);
 
-            $pathToTemplate = $codeObj->template->path ?? 'default.pdf';
+            $pathToTemplate = $codeObj->print_ready_template->path ?? 'default.pdf';
 
             $pageCount = $pdf->setSourceFile(Storage::disk('pdf')->path($pathToTemplate));
 

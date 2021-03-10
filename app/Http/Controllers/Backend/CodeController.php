@@ -88,10 +88,11 @@ class CodeController extends Controller
         ];
 
         $businessOptions = $this->getAvailableBusinessOptions();
-        $pdfTemplates = $this->getAvailablePdfTemplates();
+        $digitalPdfTemplates = $this->getAvailableDigitalPdfTemplates();
+        $printPdfTemplates = $this->getAvailablePrintPdfTemplates();
 
 
-        return view('backend.code.single', compact(['code', 'form', 'businessOptions','pdfTemplates']));
+        return view('backend.code.single', compact(['code', 'form', 'businessOptions','digitalPdfTemplates','printPdfTemplates']));
     }
 
     /**
@@ -111,9 +112,10 @@ class CodeController extends Controller
         ];
 
         $businessOptions = $this->getAvailableBusinessOptions();
-        $pdfTemplates = $this->getAvailablePdfTemplates();
+        $digitalPdfTemplates = $this->getAvailableDigitalPdfTemplates();
+        $printPdfTemplates = $this->getAvailablePrintPdfTemplates();
 
-        return view('backend.code.single', compact(['code', 'form', 'businessOptions','pdfTemplates']));
+        return view('backend.code.single', compact(['code', 'form', 'businessOptions','digitalPdfTemplates','printPdfTemplates']));
     }
 
     public function codeClaimed(Request $request)
@@ -172,13 +174,13 @@ class CodeController extends Controller
             'method' => 'POST',
         ];
 
-        $batches = Code::distinct('batch_no')->with(['template' => function($query){
+        $batches = Code::distinct('batch_no')->with(['print_ready_template' => function($query){
             $query->select('id','title');
         }])->get()->mapWithKeys(function ($c) {
             return [$c->batch_no => new SelectObject(
                 $c->batch_no,
                 $c->batch_no,
-                $c->template->only(['title', 'id'])
+                $c->print_ready_template->only(['title', 'id'])
             )];
         });
 
@@ -221,7 +223,8 @@ class CodeController extends Controller
             $request->input('no_of_codes'),
             $request->input('batch_no'),
             $request->input('prefix'),
-            $request->input('pdf_template_id')
+            $request->input('digital_template_id'),
+            $request->input('print_ready_template_id')
         );
 
         $batchNo = $codes->first()->batch_no;
@@ -284,9 +287,15 @@ class CodeController extends Controller
         return $businessOptions;
     }
 
-    private function getAvailablePdfTemplates()
+    private function getAvailableDigitalPdfTemplates()
     {
-        $pdfTemplates = PdfTemplate::select(['id', 'title as text','title as title', 'business_id'])->get();
+        $pdfTemplates = PdfTemplate::select(['id', 'title as text','title as title', 'business_id'])->where('type', '=', 'digital')->get();
+
+        return $pdfTemplates;
+    }
+    private function getAvailablePrintPdfTemplates()
+    {
+        $pdfTemplates = PdfTemplate::select(['id', 'title as text','title as title', 'business_id'])->where('type', '=', 'print ready')->get();
 
         return $pdfTemplates;
     }

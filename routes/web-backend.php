@@ -40,7 +40,8 @@ Route::delete('/template/delete/permanent', 'PdfTemplateController@delete')->nam
 Route::resource('template', 'PdfTemplateController');
 
 Route::get('/template/{template}/default', 'TemplateRenderController@renderDefault')->name('template.default');
-Route::get('/template/{code}/code', 'TemplateRenderController@renderCode')->name('template.code');
+Route::get('/template/{code}/code-digital', 'TemplateRenderController@renderCodeDigital')->name('template.digital');
+Route::get('/template/{code}/code-print', 'TemplateRenderController@renderCodePrint')->name('template.print');
 Route::post('/template/batch', 'TemplateRenderController@renderBatch')->name('template.batch');
 
 Route::get('/category/trashed', 'CategoryController@trashed')->name('category.trashed');

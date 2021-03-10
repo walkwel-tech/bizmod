@@ -41,7 +41,8 @@ class Code extends Model
         'batch_no',
         'code',
         'business_id',
-        'pdf_template_id',
+        'digital_template_id',
+        'print_ready_template_id',
         'description'
     ];
 
@@ -119,9 +120,14 @@ class Code extends Model
         return $this->belongsTo(Business::class);
     }
 
-    public function template()
+    public function digital_template()
     {
-        return $this->belongsTo(PdfTemplate::class,'pdf_template_id');
+        return $this->belongsTo(PdfTemplate::class,'digital_template_id');
+    }
+
+    public function print_ready_template()
+    {
+        return $this->belongsTo(PdfTemplate::class,'print_ready_template_id');
     }
 
     public function scopeReportingData ($query)

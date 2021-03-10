@@ -43,12 +43,13 @@ class PdfTemplate extends Model
     ];
 
     protected $appends = [
-        'is_assigned'
+        'is_assigned',
+        'selected_type'
     ];
 
-    public  function getTypeAttribute ($value)
+    public  function getSelectedTypeAttribute ()
     {
-        return ucfirst($value);
+        return ucwords($this->type);
     }
 
 
@@ -57,14 +58,19 @@ class PdfTemplate extends Model
         return $this->belongsTo(Business::class);
     }
 
-    public function codes()
+    public function digital_codes()
     {
-        return $this->hasMany(Code::class);
+        return $this->hasMany(Code::class,'digital_template_id');
+    }
+
+    public function print_codes()
+    {
+        return $this->hasMany(Code::class,'print_ready_template_id');
     }
 
     public function getIsAssignedAttribute()
     {
-        return $this->codes()->exists();
+        return ($this->digital_codes()->exists()) ? $this->digital_codes()->exists() : $this->print_codes()->exists() ;
     }
 
     public function getRouteKeyName()

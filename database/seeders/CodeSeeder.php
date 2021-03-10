@@ -21,7 +21,7 @@ class CodeSeeder extends Seeder
 
         $businesses->each(function ($business) {
             $business->templates->each (function ($template) {
-                $template->codes()->saveMany(Code::factory()->times(5)->make([
+                $template->print_codes()->saveMany(Code::factory()->times(5)->make([
                     'business_id' => $template->business_id
                 ]));
             });

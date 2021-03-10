@@ -57,13 +57,20 @@
                                         <x-form.input  name="country" :title="__('Country')" :value="$code->claim_details['country']"  readonly/>
                                         <x-form.input  name="zip" :title="__('Zip')" :value="$code->claim_details['zip']"  readonly/>
                                         <x-form.input  name="claimed_on" :title="__('Claimed on')" :value="$code->claimed_on"  readonly/>
-                                            @if ($code->template)
-                                            <a href="{{ route('admin.template.show', $code->template) }}"
+                                            @if ($code->digital_template)
+                                            <a href="{{ route('admin.business.show', $code->digital_template) }}"
                                                 class="btn btn-link px-0 text-left">
                                                 <i class="fas fa-level-up-alt"></i> {{ __('Pdf Template') }}
                                             </a>
                                             @endif
-                                        <x-form.input  name="pdf_template_id" :title="__('Pdf Template')" :value="$code->template->path"  readonly/>
+                                        <x-form.input  name="digital_template_id" :title="__('Digital Pdf Template')" :value="$code->digital_template->path"  readonly/>
+                                            @if ($code->print_ready_template)
+                                            <a href="{{ route('admin.business.show', $code->print_ready_template) }}"
+                                                class="btn btn-link px-0 text-left">
+                                                <i class="fas fa-level-up-alt"></i> {{ __('Pdf Template') }}
+                                            </a>
+                                            @endif
+                                            <x-form.input  name="print_ready_template_id" :title="__('Print Ready Pdf Template')" :value="$code->print_ready_template->path"  readonly/>
                                         <x-form.textarea  name="description" :title="__('Add Note')" :value="$code->description" />
                                         <div class="text-center">
                                             <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
@@ -84,10 +91,20 @@
                                         <x-form.input name="prefix" :title="__('Code Prefix')" :value="$code->code" required readonly />
                                         <x-form.input type="number" name="no_of_codes" :title="__('Generate No. of code')" value="" required />
 
-                                        <x-form.select name="pdf_template_id" :title="__('Pdf Template')" :selected="$code->pdf_template_id"
-                                            :options="$pdfTemplates" required :hide-label="false">
-                                            @if ($code->template)
-                                            <a href="{{ route('admin.business.show', $code->template) }}"
+                                        <x-form.select name="digital_template_id" :title="__('Digital Pdf Template')" :selected="$code->digital_template_id"
+                                            :options="$digitalPdfTemplates" required :hide-label="false">
+                                            @if ($code->digital_template)
+                                            <a href="{{ route('admin.business.show', $code->digital_template) }}"
+                                                class="btn btn-link px-0 text-left">
+                                                <i class="fas fa-level-up-alt"></i> {{ __('Pdf Template') }}
+                                            </a>
+                                            @endif
+                                        </x-form.select>
+
+                                        <x-form.select name="print_ready_template_id" :title="__('Print Ready Pdf Template')" :selected="$code->print_ready_template_id"
+                                            :options="$printPdfTemplates" required :hide-label="false">
+                                            @if ($code->print_ready_template)
+                                            <a href="{{ route('admin.business.show', $code->print_ready_template) }}"
                                                 class="btn btn-link px-0 text-left">
                                                 <i class="fas fa-level-up-alt"></i> {{ __('Pdf Template') }}
                                             </a>
@@ -119,12 +136,14 @@
 <script>
 
     const businessData = @json($businessOptions->mapWithKeys(function($c) {return [$c->getKey() => $c->only(['prefix', 'next_batch' , 'batch_no'])];}));
-    const pdfData = @json($pdfTemplates->groupBy('business_id'));
+    const digitalPdfData = @json($digitalPdfTemplates->groupBy('business_id'));
+    const printPdfData = @json($printPdfTemplates->groupBy('business_id'));
 
 
     $(function () {
         const businessSelector = $('[name="business_id"]');
-        const pdfSelector = $('[name="pdf_template_id"]');
+        const digitalPdfSelector = $('[name="digital_template_id"]');
+        const printPdfSelector = $('[name="print_ready_template_id"]');
 
         const {next_batch, batch_no, prefix} = businessData[businessSelector.val()];
 
@@ -144,9 +163,13 @@
 
             $('[name="prefix"]').val(prefix);
 
-            pdfSelector.empty();
-            pdfData[businessSelector.val()].forEach(template => {
-                pdfSelector.append(new Option(template.text, template.id, false, false));
+            digitalPdfSelector.empty();
+            digitalPdfData[businessSelector.val()].forEach(template => {
+                digitalPdfSelector.append(new Option(template.text, template.id, false, false));
+            });
+            printPdfSelector.empty();
+            printPdfData[businessSelector.val()].forEach(template => {
+                printPdfSelector.append(new Option(template.text, template.id, false, false));
             });
         });
 

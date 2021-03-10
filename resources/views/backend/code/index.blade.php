@@ -62,7 +62,6 @@
                                 <th scope="col">Zip</th>
                                 <th scope="col">Notes</th>-->
                                 <th scope="col">Claimed</th>
-                                <th scope="col">Pdf Template</th>
                                 <th scope="col"></th>
                             </tr>
                         </thead>
@@ -79,13 +78,7 @@
                                 <td>{{ $code->claim_details->get('zip', '-') }}</td>
                                 <td>{{ $code->getSEODescription(2) }}</td>-->
                                 <td>{{ $code->claimed_on }}</td>
-                                <td>
-                                    @if($code->template)
-                                    <a href="{{ route('admin.template.default' , ['template' => $code->template]) }}" target="_blank">{{ $code->template->path }}</a>
-                                    @else
-                                        No Template
-                                    @endif
-                                </td>
+
                                 <td class="d-flex justify-content-end">
                                     @can('backend.codes.update')
                                     <a class="btn btn-info btn-icon btn-icon-md rounded-0"
@@ -96,11 +89,21 @@
                                     </a>
                                     @endcan
                                     @can('backend.codes.read')
-                                    @if($code->template)
+                                    @if($code->digital_template)
                                     <a class="btn btn-warning btn-icon btn-icon-md rounded-0"
-                                        href="{{ route('admin.template.code', $code) }}" data-toggle="tooltip"
+                                        href="{{ route('admin.template.digital', $code) }}" data-toggle="tooltip"
                                         data-placement="left"
-                                        title="{{ __('View Pdf Details', ['name' => 'Code']) }}" target="_blank">
+                                        title="{{ __('View Digital Pdf', ['name' => 'Code']) }}" target="_blank">
+                                        <i class="fa fa-file-pdf"></i>
+                                    </a>
+                                    @endif
+                                    @endcan
+                                    @can('backend.codes.read')
+                                    @if($code->print_ready_template)
+                                    <a class="btn btn-warning btn-icon btn-icon-md rounded-0"
+                                        href="{{ route('admin.template.print', $code) }}" data-toggle="tooltip"
+                                        data-placement="left"
+                                        title="{{ __('View Print Ready Pdf', ['name' => 'Code']) }}" target="_blank">
                                         <i class="fa fa-file-pdf"></i>
                                     </a>
                                     @endif

@@ -18,8 +18,8 @@ use Illuminate\Http\Request;
 
 class PdfTemplateController extends Controller
 {
-    //
-    protected $allowedFilters = ['title'];
+
+    protected $allowedFilters = ['business.title'];
 
     public function index(Request $request)
     {
