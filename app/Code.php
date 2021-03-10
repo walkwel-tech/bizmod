@@ -127,6 +127,7 @@ class Code extends Model
     public function scopeReportingData ($query)
     {
         return $query->selectRaw('year(created_at) year, DATE_FORMAT(created_at, "%m") month_number, DATE_FORMAT(created_at, "%b") month, count(*) records')
+            ->whereYear('created_at', date('Y'))
             ->groupBy('year', 'month', 'month_number')
             ->orderBy('year', 'asc')
             ->orderBy('month_number', 'asc');

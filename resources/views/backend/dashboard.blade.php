@@ -13,22 +13,22 @@
                                 <h6 class="text-uppercase text-light ls-1 mb-1">Overview</h6>
                                 <h2 class="text-white mb-0">Code Claimed</h2>
                             </div>
-                            <div class="col">
+                            <!-- <div class="col">
                                 <ul class="nav nav-pills justify-content-end">
-                                    <li class="nav-item mr-2 mr-md-0" data-toggle="chart" data-target="#chart-sales" data-update='{"data":{"datasets":@json($salesChartData['datasets'])}}' data-labels="{{$salesChartData['labels']}}" data-prefix="" data-suffix="">
+                                    <li class="nav-item mr-2 mr-md-0" data-toggle="chart" data-target="#chart-sales" data-update='{"data":{"labels":@json($salesChartData['labels']),"datasets":@json($salesChartData['datasets'])}}' data-labels="{{$salesChartData['labels']}}" data-prefix="" data-suffix="">
                                         <a href="#" class="nav-link py-2 px-3 active" data-toggle="tab">
                                             <span class="d-none d-md-block">Month</span>
                                             <span class="d-md-none">M</span>
                                         </a>
                                     </li>
-                                    <li class="nav-item" data-toggle="chart" data-target="#chart-sales" data-update='{"data":{"datasets":@json($salesChartYearlyData['datasets'])}}' data-labels="{{$salesChartYearlyData['labels']}}" data-prefix="" data-suffix="">
+                                    <li class="nav-item" data-toggle="chart" data-target="#chart-sales" data-update='{"data":{"labels":@json($salesChartYearlyData['labels']),"datasets":@json($salesChartYearlyData['datasets'])}}' data-labels="{{$salesChartYearlyData['labels']}}" data-prefix="" data-suffix="">
                                         <a href="#" class="nav-link py-2 px-3" data-toggle="tab">
                                             <span class="d-none d-md-block">Year</span>
-                                            <span class="d-md-none">W</span>
+                                            <span class="d-md-none">Y</span>
                                         </a>
                                     </li>
                                 </ul>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     <div class="card-body">
