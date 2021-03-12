@@ -207,7 +207,7 @@ class TemplateRenderController extends Controller
 
 
 
-        $zip_file = 'Batch-' . $codeObj->batch_no;
+        $zip_file = 'Batch-' . $codeObj->batch_no.'.zip';
         $zip = new \ZipArchive();
         $zip->open($zip_file, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
 
