@@ -16,7 +16,8 @@ class ClaimController extends Controller
 {
     public function show(Request $request, $code)
     {
-        $codeObject = Code::code($code)->first();
+        $business = $request->user();
+        $codeObject = $business->codes()->code($code)->first();
 
         return (new CodeResource($codeObject))
             ->additional([
