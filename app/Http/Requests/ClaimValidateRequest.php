@@ -27,7 +27,7 @@ class ClaimValidateRequest extends FormRequest
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:50',
             'email' => 'required|email',
-            'phone' => 'required|numeric|min:9',
+            'phone' => 'required|numeric|unique:clients|min:9',
             'zip' => 'required|string|max:10',
             'country_name' => 'required|string',
             'country_code' => 'required|max:4',
