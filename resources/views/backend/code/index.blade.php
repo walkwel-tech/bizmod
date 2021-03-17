@@ -13,14 +13,25 @@
                             <form method="get" accept-charset="utf-8" class="row">
                                 <div class="col-10">
                                     <div class="row">
-                                        <x-form.filter :allowedFilters="$allowedFilters" :searchedParams="$searchedParams"/>
+                                        <x-form.filter :allowedFilters="$allowedFilters"
+                                            :searchedParams="$searchedParams" />
 
                                         <div class="col-6">
-                                            <x-form.date-range-picker name="filter[claimed_between]" title="Claimed Date" nameStart="claimed_on_start" nameEnd="claimed_on_end" hideLabel="true" :valueStart="Arr::get($searchedParams, 'claimed_on_start')" :valueEnd="Arr::get($searchedParams, 'claimed_on_end')" startdateplaceholder="claim date start" enddateplaceholder="claim date end"/>
+                                            <x-form.date-range-picker name="filter[claimed_between]"
+                                                title="Claimed Date" nameStart="claimed_on_start"
+                                                nameEnd="claimed_on_end" hideLabel="true"
+                                                :valueStart="Arr::get($searchedParams, 'claimed_on_start')"
+                                                :valueEnd="Arr::get($searchedParams, 'claimed_on_end')"
+                                                startdateplaceholder="claim date start"
+                                                enddateplaceholder="claim date end" />
                                         </div>
                                         <div class="col-3">
-                                            <x-form.checkbox name="filter[claimed]" title="Only claimed"
-                                                :value="Arr::get($searchedParams, 'claimed')" />
+                                            <x-form.radio name="filter[ClaimedFilter]" title="Claimed" value="1" :checked="Arr::get($searchedParams, 'ClaimedFilter')" />
+                                            <x-form.radio name="filter[ClaimedFilter]" title="Not Claimed" value="0" :checked="Arr::get($searchedParams, 'ClaimedFilter')"/>
+                                        </div>
+                                        <div class="col-3">
+                                            <x-form.radio name="filter[GiventFilter]" title="Given" value="1" :checked="Arr::get($searchedParams, 'GiventFilter')" />
+                                            <x-form.radio name="filter[GiventFilter]" title="Not Given" value="0" :checked="Arr::get($searchedParams, 'GiventFilter')"/>
                                         </div>
                                     </div>
                                 </div>
@@ -62,6 +73,7 @@
                                 <th scope="col">Zip</th>
                                 <th scope="col">Notes</th>-->
                                 <th scope="col">Claimed</th>
+                                <th scope="col">Given On</th>
                                 <th scope="col"></th>
                             </tr>
                         </thead>
@@ -78,6 +90,7 @@
                                 <td>{{ $code->claim_details->get('zip', '-') }}</td>
                                 <td>{{ $code->getSEODescription(2) }}</td>-->
                                 <td>{{ $code->claimed_on }}</td>
+                                <td>{{ $code->given_on }}</td>
 
                                 <td class="d-flex justify-content-end">
                                     @can('backend.codes.update')
@@ -92,8 +105,8 @@
                                     @if($code->digital_template)
                                     <a class="btn btn-warning btn-icon btn-icon-md rounded-0"
                                         href="{{ route('admin.template.digital', $code) }}" data-toggle="tooltip"
-                                        data-placement="left"
-                                        title="{{ __('View Digital Pdf', ['name' => 'Code']) }}" target="_blank">
+                                        data-placement="left" title="{{ __('View Digital Pdf', ['name' => 'Code']) }}"
+                                        target="_blank">
                                         <i class="fa fa-file-pdf"></i>
                                     </a>
                                     @endif

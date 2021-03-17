@@ -58,21 +58,25 @@
                                         <x-form.input  name="zip" :title="__('Zip')" :value="$code->claim_details['zip']"  readonly/>
                                         <x-form.input  name="claimed_on" :title="__('Claimed on')" :value="$code->claimed_on"  readonly/>
                                             @if ($code->digital_template)
-                                            <a href="{{ route('admin.business.show', $code->digital_template) }}"
+                                            <a href="{{ route('admin.template.show', $code->digital_template) }}"
                                                 class="btn btn-link px-0 text-left">
                                                 <i class="fas fa-level-up-alt"></i> {{ __('Pdf Template') }}
                                             </a>
                                             @endif
-                                        <x-form.input  name="digital_template_id" :title="__('Digital Pdf Template')" :value="$code->digital_template->path"  readonly/>
+                                        <x-form.input  name="digital_template_id" :title="__('Digital Pdf Template')" :value="$code->digital_template ? $code->digital_template->path : null"  readonly/>
                                             @if ($code->print_ready_template)
-                                            <a href="{{ route('admin.business.show', $code->print_ready_template) }}"
+                                            <a href="{{ route('admin.template.show', $code->print_ready_template) }}"
                                                 class="btn btn-link px-0 text-left">
                                                 <i class="fas fa-level-up-alt"></i> {{ __('Pdf Template') }}
                                             </a>
                                             @endif
                                             <x-form.input  name="print_ready_template_id" :title="__('Print Ready Pdf Template')" :value="$code->print_ready_template->path"  readonly/>
+                                            <x-form.input  name="given_on" :title="__('Given on')" :value="$code->given_on"  readonly/>
                                         <x-form.textarea  name="description" :title="__('Add Note')" :value="$code->description" />
                                         <div class="text-center">
+                                            @if (!$code->given_on)
+                                            <button id="code_given_btn" type="button" class="btn btn-success mt-4">{{ __('Given') }}</button>
+                                            @endif
                                             <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
                                         </div>
                                     @else
@@ -135,17 +139,16 @@
 @push('js')
 <script>
 
-    const businessData = @json($businessOptions->mapWithKeys(function($c) {return [$c->getKey() => $c->only(['prefix', 'next_batch' , 'batch_no'])];}));
+    const businessData = @json($businessOptions->mapWithKeys(function($c) {return [$c->getKey() => $c->only(['prefix', 'next_batch' ])];}));
     const digitalPdfData = @json($digitalPdfTemplates->groupBy('business_id'));
     const printPdfData = @json($printPdfTemplates->groupBy('business_id'));
-
 
     $(function () {
         const businessSelector = $('[name="business_id"]');
         const digitalPdfSelector = $('[name="digital_template_id"]');
         const printPdfSelector = $('[name="print_ready_template_id"]');
 
-        const {next_batch, batch_no, prefix} = businessData[businessSelector.val()];
+        const {next_batch, prefix} = businessData[businessSelector.val()];
 
         @if(!$code->getKey())
             $('[name="batch_no"]').val(next_batch);
@@ -153,16 +156,14 @@
         @endif
 
         businessSelector.change(function (event) {
-            const {next_batch, batch_no, prefix} = businessData[$(this).val()];
+            const {next_batch, prefix} = businessData[$(this).val()];
             @if(!$code->getKey())
             $('[name="batch_no"]').val(next_batch);
-            @else
-            $('[name="batch_no"]').val(batch_no);
             @endif
 
 
             $('[name="prefix"]').val(prefix);
-
+            @if(!$code->getKey())
             digitalPdfSelector.empty();
             digitalPdfData[businessSelector.val()].forEach(template => {
                 digitalPdfSelector.append(new Option(template.text, template.id, false, false));
@@ -171,9 +172,17 @@
             printPdfData[businessSelector.val()].forEach(template => {
                 printPdfSelector.append(new Option(template.text, template.id, false, false));
             });
+            @endif
         });
 
         businessSelector.trigger('change');
+
+        $('#code_given_btn').click(function (event) {
+            var dt = new Date();
+            //const = dt.getFullYear()+'-'+dt.getMonth()+'-'+dt.getDate()+' '+dt.getDate() ;
+            const dateTime = @json(date("Y-m-d H:i:s"));
+            $('[name="given_on"]').val(dateTime);
+        });
     });
 </script>
 @endpush

@@ -24,6 +24,7 @@ class CreateCodesTable extends Migration
             $table->integer('print_ready_template_id')->unsigned()->nullable();
             $table->text('claim_details')->nullable();
             $table->timestamp('claimed_on')->nullable();
+            $table->timestamp('given_on')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

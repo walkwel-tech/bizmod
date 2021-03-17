@@ -23,18 +23,24 @@ class CodeFactory extends Factory
      */
     public function definition()
     {
+        $code_chk = $this->faker->boolean(50);
+
+        $givenDate = $this->faker->dateTime();
+        $claimDate = $this->faker->dateTimeBetween($givenDate);
+
         return [
             'batch_no' => $this->faker->word,
             'code' => $this->faker->unique()->word,
             'client_id' => Client::all()->random()->id,
-            'claim_details' => [
+            'claim_details' =>  $code_chk ? [
                 "page_id" => $this->faker->randomNumber(),
                 "location" => $this->faker->streetAddress,
                 "country" => $this->faker->city,
                 "zip" => $this->faker->postcode
-            ],
+            ] : null,
 
-            'claimed_on' => $this->faker->dateTime()
+            'claimed_on' => $code_chk ?  $claimDate: null,
+            'given_on' => $code_chk ? $givenDate : null
         ];
     }
 }

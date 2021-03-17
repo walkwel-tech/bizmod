@@ -43,14 +43,14 @@ class Code extends Model
         'business_id',
         'digital_template_id',
         'print_ready_template_id',
+        'given_on',
         'description'
     ];
 
 
-    public function getStatusAttribute ()
+    public function getStatusAttribute()
     {
-        if($this->isAvailableToClaim())
-        {
+        if ($this->isAvailableToClaim()) {
             return 'available';
         } else {
             return ($this->client_id) ? 'applied' : 'unavailable';
@@ -59,7 +59,7 @@ class Code extends Model
     }
 
 
-    public function getMessageAttribute ()
+    public function getMessageAttribute()
     {
         return static::getMessageForStatus($this->status);
     }
@@ -95,7 +95,7 @@ class Code extends Model
         return SchemalessAttributes::createForModel($this, 'claim_details');
     }
 
-    public function isAvailableToClaim ()
+    public function isAvailableToClaim()
     {
         return is_null($this->claimed_on);
     }
@@ -122,15 +122,15 @@ class Code extends Model
 
     public function digital_template()
     {
-        return $this->belongsTo(PdfTemplate::class,'digital_template_id');
+        return $this->belongsTo(PdfTemplate::class, 'digital_template_id');
     }
 
     public function print_ready_template()
     {
-        return $this->belongsTo(PdfTemplate::class,'print_ready_template_id');
+        return $this->belongsTo(PdfTemplate::class, 'print_ready_template_id');
     }
 
-    public function scopeReportingData ($query)
+    public function scopeReportingData($query)
     {
         return $query->selectRaw('year(created_at) year, DATE_FORMAT(created_at, "%m") month_number, DATE_FORMAT(created_at, "%b") month, count(*) records')
             ->whereYear('created_at', date('Y'))
@@ -139,33 +139,60 @@ class Code extends Model
             ->orderBy('month_number', 'asc');
     }
 
-    public function scopeReportingDataYearly ($query)
+    public function scopeReportingDataYearly($query)
     {
         return $query->selectRaw('year(created_at) year, count(*) records')
-        ->groupBy('year')
-        ->orderBy('year', 'asc');
+            ->groupBy('year')
+            ->orderBy('year', 'asc');
     }
 
-    public function scopeClaimed ($query)
+    public function scopeClaimedFilter($query, $value)
+    {
+
+        if ($value == '1') {
+            $query->whereNotNull('claimed_on');
+        }
+        if($value == '0'){
+            $query->whereNull('claimed_on');
+        }
+
+        return $query;
+    }
+
+    public function scopeGiventFilter($query, $value)
+    {
+
+        if ($value == '1') {
+            $query->whereNotNull('given_on');
+        }
+        if($value == '0'){
+            $query->whereNull('given_on');
+        }
+
+        return $query;
+    }
+
+    public function scopeClaimed($query)
     {
         $query->whereNotNull('claimed_on');
 
         return $query;
     }
 
-    public function scopeUnclaimed ($query)
+    public function scopeUnclaimed($query)
     {
         $query->whereNull('claimed_on');
 
         return $query;
     }
 
-    public function scopeCode ($query, $code)
+
+    public function scopeCode($query, $code)
     {
         return $query->where('code', $code);
     }
 
-    public function scopeClaimedBetween ($query, $dateStart, $dateEnd)
+    public function scopeClaimedBetween($query, $dateStart, $dateEnd)
     {
         return $query->dateRangeBetween('claimed_on', $dateStart, $dateEnd);
     }
@@ -175,11 +202,12 @@ class Code extends Model
         return $this->belongsTo(Client::class)->withDefault();
     }
 
-    public static function getTitleAttributeColumnName() {
+    public static function getTitleAttributeColumnName()
+    {
         return 'code';
     }
 
-    public static function getMessageForStatus ($status = '')
+    public static function getMessageForStatus($status = '')
     {
         $messages = [
             'available' => 'Code Available.',
@@ -191,7 +219,7 @@ class Code extends Model
         return $messages[$status] ?? 'Code is Invalid';
     }
 
-    public function applyCodeForClient (Client $client, array $claimDetails, $claimDate = null)
+    public function applyCodeForClient(Client $client, array $claimDetails, $claimDate = null)
     {
         throw_if(
             !$this->isAvailableToClaim(),
@@ -207,5 +235,4 @@ class Code extends Model
 
         return $this;
     }
-
 }

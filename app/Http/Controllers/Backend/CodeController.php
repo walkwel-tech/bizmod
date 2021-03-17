@@ -31,7 +31,8 @@ class CodeController extends Controller
             ->allowedFilters(array_merge(
                 array_keys($allowedFilters),
                 [
-                    AllowedFilter::scope('claimed', 'claimed'),
+                    AllowedFilter::scope('ClaimedFilter', 'ClaimedFilter'),
+                    AllowedFilter::scope('GiventFilter', 'GiventFilter'),
                     AllowedFilter::scope('claimed_between', 'claimedBetween'),
                 ]
             ))
@@ -240,7 +241,8 @@ class CodeController extends Controller
     public function update(CodeUpdateRequest $request, Code $code)
     {
         $code->fill($request->only([
-            'description'
+            'description',
+            'given_on'
         ]));
 
         $code->save();
