@@ -14,12 +14,7 @@
                             <form method="get" accept-charset="utf-8" class="row">
                                 <div class="col-10">
                                     <div class="row">
-                                        @foreach ($allowedFilters as $filter)
-                                        <div class="col-4">
-                                            <x-form.input :name="'filter['. $filter . ']'" :title="__($filter)" hideLabel="true" :value="Arr::get($searchedParams, $filter)"/>
-
-                                        </div>
-                                        @endforeach
+                                        <x-form.filter :allowedFilters="$allowedFilters" :searchedParams="$searchedParams" />
 
                                     </div>
                                 </div>
@@ -57,8 +52,9 @@
                                 <th scope="col">Phone</th>
                                 <th scope="col">Country</th>
                                 <th scope="col">Zip</th>
-                                <th scope="col">Code Claimed</th>
+                                <th scope="col">Business</th>
                                 <th scope="col"></th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -70,9 +66,7 @@
                                 <td>{{ $client->phone }}</td>
                                 <td>{{ $client->country_name }}</td>
                                 <td>{{ $client->zip }}</td>
-                                <td>
-                                    <a href="{{ route('admin.code.claimed', ['filter' => ['client.email' => $client->email]]) }}">{{ $client->claimed_code }}</a>
-                                </td>
+                                <td>{{ $client->businessTitles }}</td>
                                 <td class="d-flex justify-content-end">
                                     @can('backend.clients.update')
                                     <a class="btn btn-info btn-icon btn-icon-md rounded-0" href="{{ route('admin.client.show', $client) }}" data-toggle="tooltip" data-placement="left" title="{{ __('basic.actions.view', ['name' => 'Client']) }}">
@@ -83,6 +77,7 @@
                                     <x-ui.button-delete :model="$client" :route-destroy="route('admin.client.destroy', $client)" :route-delete="route('admin.client.delete', $client)" :route-restore="route('admin.client.restore', $client)" model-name="Client" :identifier="$client->id"/>
                                     @endcan
                                 </td>
+
                             </tr>
                             @endforeach
                         </tbody>

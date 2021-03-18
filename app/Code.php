@@ -48,6 +48,7 @@ class Code extends Model
     ];
 
 
+
     public function getStatusAttribute()
     {
         if ($this->isAvailableToClaim()) {
@@ -106,7 +107,7 @@ class Code extends Model
     {
         $given_on =
         ($value)
-        ? date("Y-m-d H:i:s", strtotime($value))
+        ? (new Carbon($value))->format("Y-m-d H:i:s")
         : $value;
         $this->attributes['given_on'] = $given_on;
     }

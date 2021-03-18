@@ -73,6 +73,11 @@ class Business extends Authenticatable
         return $this->hasMany(Code::class);
     }
 
+    public function clients ()
+    {
+        return $this->belongsToMany(Client::class, 'codes')->distinct();
+    }
+
     public function templates()
     {
         return $this->hasMany(PdfTemplate::class);

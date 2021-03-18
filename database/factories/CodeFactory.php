@@ -31,7 +31,7 @@ class CodeFactory extends Factory
         return [
             'batch_no' => $this->faker->word,
             'code' => $this->faker->unique()->word,
-            'client_id' => Client::all()->random()->id,
+            'client_id' => $code_chk ? Client::all()->random()->id : null,
             'claim_details' =>  $code_chk ? [
                 "page_id" => $this->faker->randomNumber(),
                 "location" => $this->faker->streetAddress,

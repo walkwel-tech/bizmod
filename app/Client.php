@@ -8,6 +8,7 @@ use App\Traits\ScopesDateRangeBetween;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Bus;
 
 class Client extends Model
 {
@@ -46,6 +47,20 @@ class Client extends Model
     public function codes()
     {
         return $this->hasMany(Code::class);
+    }
+
+    public function businesses()
+    {
+        return $this->belongsToMany(Business::class, 'codes')
+            ->distinct();
+    }
+
+    public function getBusinessTitlesAttribute ()
+    {
+        $businesses = $this->businesses->pluck('title','prefix');
+        return trim($businesses->map(function ($business, $key) {
+                return $business.' ('.$key.')';
+            })->join(', '));
     }
 
     public function getClaimedCodeAttribute()

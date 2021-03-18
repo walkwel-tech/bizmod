@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Business;
 use App\Client;
+use App\Helpers\SelectObject;
 use App\Http\Requests\ClientStoreRequest;
 use App\Http\Requests\ClientUpdateRequest;
 use App\Repositories\LocationsRepository;
@@ -12,7 +14,7 @@ use Illuminate\Http\Request;
 
 class ClientController extends Controller
 {
-    protected $allowedFilters = ['first_name', 'email' ,'phone','country'];
+
 
     /**
      * @param \Illuminate\Http\Request $request
@@ -20,10 +22,13 @@ class ClientController extends Controller
      */
     public function index(Request $request)
     {
-        $allowedFilters = $this->allowedFilters;
+        $allowedFilters = $this->getAllowedFilters();
 
         $clients = QueryBuilder::for(Client::class)
-            ->allowedFilters($allowedFilters)
+            ->with(['businesses' => function ($q) {
+                return $q->select(['title', 'prefix']);
+            }])
+            ->allowedFilters(array_keys($allowedFilters))
             ->latest()
             //->withCount(['codes'])
             ->paginate();
@@ -198,6 +203,36 @@ class ClientController extends Controller
     public static function getModelName ()
     {
         return 'Client';
+    }
+
+    public static function getAllowedFilters()
+    {
+
+        return [
+            'businesses.prefix' => [
+                'type' => 'select',
+                'title' => 'Business',
+                'options' => Business::select(['title', 'prefix'])->pluck('title', 'prefix')->map(function ($value, $key) {
+                    return new SelectObject($key, "{$value} ({$key})");
+                })->prepend(new SelectObject("", "Select Business"))
+            ],
+            'first_name' => [
+                'type' => 'input',
+                'title' => 'First Name'
+            ],
+            'email' => [
+                'type' => 'input',
+                'title' => 'Email'
+            ],
+            'phone' => [
+                'type' => 'input',
+                'title' => 'Phone'
+            ],
+            'country' => [
+                'type' => 'input',
+                'title' => 'Country'
+            ]
+        ];
     }
 
 }
