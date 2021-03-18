@@ -216,8 +216,9 @@ class ClientController extends Controller
             'businesses.prefix' => [
                 'type' => 'select',
                 'title' => 'Business',
-                'options' => Business::select(['title', 'prefix'])->pluck('title', 'prefix')->map(function ($value, $key) {
-                    return new SelectObject($key, "{$value} ({$key})");
+                'options' => Business::select(['title', 'prefix'])->get()->map(function ($value, $key) {
+
+                    return new SelectObject($value->prefix, $value->getSEOTitle());
                 })->prepend(new SelectObject("", "Select Business"))
             ],
             'first_name' => [

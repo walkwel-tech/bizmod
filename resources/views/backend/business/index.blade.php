@@ -58,7 +58,7 @@
                         <tbody>
                             @foreach ($businesses as $business)
                             <tr>
-                                <td>{{ $business->getSEOTitle() }}</td>
+                                <td>{{ $business->getOriginalSEOTitle() }}</td>
                                 <td>{{ $business->getSEODescription(2) }}</td>
                                 <td>{{ $business->prefix }}</td>
                                 <td>{{ $business->getOwnerTitle() }}</td>

@@ -24,7 +24,9 @@ class Business extends Authenticatable
     use HasFactory;
     use ScopesSlug;
     use HasAccess;
-    use PerformsSEO;
+    use PerformsSEO {
+        PerformsSEO::getSEOTitle as getOriginalSEOTitle;
+    }
     use CanBeOwned;
     use HasAddresses;
     use ScopesDateRangeBetween;
@@ -49,6 +51,18 @@ class Business extends Authenticatable
     public function getRouteKeyName()
     {
         return $this->getSlugColumnName();
+    }
+
+    public function getSEOTitle($limitCharacters = null, $end = '...')
+    {
+        $title = $this->getAttribute(static::getTitleAttributeColumnName());
+
+        $title = ($limitCharacters)
+                ? Str::limit($title, $limitCharacters, $end)
+                : $title;
+
+
+        return "{$title} ({$this->prefix})";
     }
 
 

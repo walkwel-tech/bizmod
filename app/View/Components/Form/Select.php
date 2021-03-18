@@ -25,7 +25,7 @@ class Select extends Component
 
         $this->title = $title ?? __('basic.inputs.department.selector');
 
-        $this->id = str_replace(['[', ']'], '', "selector-{$name}");
+        $this->id = str_replace(['[', ']', '.'], '', "selector-{$name}");
 
         $this->selected = $selected;
 

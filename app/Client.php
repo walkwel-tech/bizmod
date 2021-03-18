@@ -57,10 +57,9 @@ class Client extends Model
 
     public function getBusinessTitlesAttribute ()
     {
-        $businesses = $this->businesses->pluck('title','prefix');
-        return trim($businesses->map(function ($business, $key) {
-                return $business.' ('.$key.')';
-            })->join(', '));
+        return $this->businesses->map(function ($business, $key) {
+            return $business->getSEOTitle();
+        })->join(', ');
     }
 
     public function getClaimedCodeAttribute()

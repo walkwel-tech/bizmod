@@ -15,26 +15,29 @@ use App\PdfTemplate;
 use Spatie\QueryBuilder\QueryBuilder;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class PdfTemplateController extends Controller
 {
 
-    protected $allowedFilters = ['business.title'];
+
 
     public function index(Request $request)
     {
-        $allowedFilters = $this->allowedFilters;
+        $allowedFilters = $this->getAllowedFilters();
 
         $pdf_templates = QueryBuilder::for(PdfTemplate::class)
-            ->allowedFilters($allowedFilters)
+            ->allowedFilters(array_keys($allowedFilters))
             ->latest()
             ->paginate();
 
         $authKey = $this->getPermissionKey();
         $addNew = auth()->user()->can("backend.{$authKey}.create");
+        $searchedParams = $request->input('filter');
 
+        Session::put('pdftemplate.filters', $searchedParams);
 
-        return view('backend.pdf_template.index', compact(['allowedFilters',  'pdf_templates', 'addNew']));
+        return view('backend.pdf_template.index', compact(['allowedFilters', 'searchedParams',  'pdf_templates', 'addNew']));
     }
 
     /**
@@ -58,7 +61,7 @@ class PdfTemplateController extends Controller
         $addNew = false; // auth()->user()->can("backend.{$authKey}.create");
         $searchedParams = $request->input('filter');
 
-        return view('backend.pdf_template.index', compact(['allowedFilters', 'pdf_templates', 'addNew']))
+        return view('backend.pdf_template.index', compact(['allowedFilters', 'searchedParams', 'pdf_templates', 'addNew']))
             ->with('pageHeader', 'Trashed');
     }
 
@@ -75,7 +78,7 @@ class PdfTemplateController extends Controller
         $businessOptions = $this->getAvailableBusinessOptions();
         $typeOptions = $this->getAvailableTypeOptions();
 
-        $backURL = route('admin.template.index');
+        $backURL = route('admin.template.index', ['filter' => Session::get('pdftemplate.filters', [])]);
 
         return view('backend.pdf_template.single', compact(['template', 'form', 'businessOptions', 'typeOptions','backURL']));
     }
@@ -250,5 +253,31 @@ class PdfTemplateController extends Controller
     public static function getModelName()
     {
         return 'PdfTemplate';
+    }
+
+    public static function getAllowedFilters()
+    {
+
+        return [
+            'title' => [
+                'type' => 'input',
+                'title' => 'title'
+            ],
+            'business.prefix' => [
+                'type' => 'select',
+                'title' => 'Business',
+                'options' => Business::select(['title', 'prefix'])->get()->map(function ($value, $key) {
+
+                    return new SelectObject($value->prefix, $value->getSEOTitle());
+                })->prepend(new SelectObject("", "Select Business"))
+            ],
+            'type' => [
+                'type' => 'select',
+                'title' => 'Type',
+                'options' => PdfTemplate::distinct('type')->pluck('type')->map(function ($singleTypeString) {
+                    return new SelectObject($singleTypeString);
+                })->prepend(new SelectObject("", "Type"))
+            ]
+        ];
     }
 }

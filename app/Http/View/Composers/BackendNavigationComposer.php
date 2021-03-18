@@ -29,6 +29,8 @@ class BackendNavigationComposer
 
         // $this->createModelRoutes('Pages', 'page', 'fa fa-barcode', true);
 
+        $this->createModelRoutes('Pdf Templates', 'template', 'fa fa-file-pdf', true);
+
         $this->createModelRoutes('Business', 'business', 'fa fa-industry', true);
 
         $this->createModelRoutes('Codes', 'code', 'fa fa-barcode', true, true, [
@@ -39,7 +41,7 @@ class BackendNavigationComposer
 
         $this->createModelRoutes('Clients', 'client', 'fa fa-users', true);
 
-        $this->createModelRoutes('Pdf Templates', 'template', 'fa fa-file-pdf', true);
+
 
         //$this->createModelRoutes('Services', 'service', 'fa fa-barcode', true);
 
