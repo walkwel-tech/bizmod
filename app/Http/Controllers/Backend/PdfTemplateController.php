@@ -75,7 +75,9 @@ class PdfTemplateController extends Controller
         $businessOptions = $this->getAvailableBusinessOptions();
         $typeOptions = $this->getAvailableTypeOptions();
 
-        return view('backend.pdf_template.single', compact(['template', 'form', 'businessOptions', 'typeOptions']));
+        $backURL = route('admin.template.index');
+
+        return view('backend.pdf_template.single', compact(['template', 'form', 'businessOptions', 'typeOptions','backURL']));
     }
 
     /**

@@ -14,10 +14,11 @@
                         <div class="col-12 col-md-12 mb-0">
                             <h3>{{ ($form['action'] == 'create') ? 'New' : 'Edit'  }} Code</h3>
                         </div>
-
+                        @if (isset($backURL))
                         <div class="col-12 col-md-12 mt-4">
                             <a class="btn btn-success" href="{{ $backURL }}" >Go Back</a>
                         </div>
+                        @endif
 
                     </div>
                 </div>

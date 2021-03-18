@@ -58,6 +58,7 @@
                                 <th scope="col">Country</th>
                                 <th scope="col">Zip</th>
                                 <th scope="col">Claimed</th>
+                                <th scope="col">Given On</th>
                                 <th scope="col">Notes</th>
                                 <th scope="col"></th>
                             </tr>
@@ -74,6 +75,7 @@
                                 <td>{{ $code->claim_details->get('country', '-') }}</td>
                                 <td>{{ $code->claim_details->get('zip', '-') }}</td>
                                 <td>{{ $code->claimed_on }}</td>
+                                <td>{{ $code->given_on }}</td>
                                 <td>{{ $code->getSEODescription(2) }}</td>
                                 <td class="d-flex justify-content-end">
                                     @can('backend.codes.update')

@@ -9,6 +9,7 @@ use App\Http\Requests\BusinessUpdateRequest;
 use Spatie\QueryBuilder\QueryBuilder;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class BusinessController extends Controller
 {
@@ -31,6 +32,8 @@ class BusinessController extends Controller
         $authKey = $this->getPermissionKey();
         $addNew = auth()->user()->can("backend.{$authKey}.create");
         $searchedParams = $request->input('filter');
+
+        Session::put('business.filters', $searchedParams);
 
         return view('backend.business.index', compact(['allowedFilters', 'searchedParams', 'businesses', 'addNew']));
     }
@@ -83,8 +86,9 @@ class BusinessController extends Controller
             return [$c->getKey() => $data];
         });
 
+        $backURL = route('admin.business.index', ['filter' => Session::get('business.filters', [])]);
 
-        return view('backend.business.single', compact(['business', 'form', 'users', 'usersData']));
+        return view('backend.business.single', compact(['business', 'form', 'users', 'usersData','backURL']));
     }
 
     /**

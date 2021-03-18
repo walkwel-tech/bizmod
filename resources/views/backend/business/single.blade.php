@@ -11,12 +11,14 @@
             <div class="card bg-secondary shadow">
                 <div class="card-header bg-white border-0">
                     <div class="row align-items-center">
-                        <div class="col-12 col-md-10 mb-0">
+                        <div class="col-12 col-md-12 mb-0">
                             <h3>{{ ($form['action'] == 'create') ? 'New' : 'Edit'  }} Business</h3>
                         </div>
-                        <div class="col-12 col-md-2 text-right">
-
+                        @if (isset($backURL))
+                        <div class="col-12 col-md-12 mt-4">
+                            <a class="btn btn-success" href="{{ $backURL }}" >Go Back</a>
                         </div>
+                        @endif
                     </div>
                 </div>
                 <div class="card-body">

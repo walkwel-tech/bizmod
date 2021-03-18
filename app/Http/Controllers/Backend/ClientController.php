@@ -11,6 +11,7 @@ use App\Repositories\LocationsRepository;
 use Spatie\QueryBuilder\QueryBuilder;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class ClientController extends Controller
 {
@@ -37,6 +38,8 @@ class ClientController extends Controller
         $addNew = auth()->user()->can("backend.{$authKey}.create");
 
         $searchedParams = $request->input('filter');
+
+        Session::put('client.filters', $searchedParams);
 
         return view('backend.client.index', compact(['allowedFilters', 'searchedParams', 'clients', 'addNew']));
     }
@@ -78,8 +81,9 @@ class ClientController extends Controller
 
         $countries = $locationsRepository->getCountries();
 
+        $backURL = route('admin.client.index', ['filter' => Session::get('client.filters', [])]);
 
-        return view('backend.client.single', compact(['client', 'form', 'countries']));
+        return view('backend.client.single', compact(['client', 'form', 'countries','backURL']));
     }
 
     /**
