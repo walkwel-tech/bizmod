@@ -95,6 +95,22 @@ class Code extends Model
         return SchemalessAttributes::createForModel($this, 'claim_details');
     }
 
+    public function getGivenOnAttribute($value)
+    {
+        return ($value)
+            ? date("Y-m-d", strtotime($value))
+            : $value;
+    }
+
+    public function setGivenOnAttribute($value)
+    {
+        $given_on =
+        ($value)
+        ? date("Y-m-d H:i:s", strtotime($value))
+        : $value;
+        $this->attributes['given_on'] = $given_on;
+    }
+
     public function isAvailableToClaim()
     {
         return is_null($this->claimed_on);

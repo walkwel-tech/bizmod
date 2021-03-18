@@ -15,6 +15,7 @@ use App\PdfTemplate;
 use Spatie\QueryBuilder\QueryBuilder;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Spatie\QueryBuilder\AllowedFilter;
 
 class CodeController extends Controller
@@ -46,6 +47,8 @@ class CodeController extends Controller
         $searchedParams = $request->input('filter');
         $searchedParams['claimed_on_start'] = $request->input('claimed_on_start');
         $searchedParams['claimed_on_end'] = $request->input('claimed_on_end');
+
+        Session::put('code.filters', $searchedParams);
 
         return view('backend.code.index', compact(['allowedFilters', 'searchedParams', 'codes', 'addNew']));
     }
@@ -93,7 +96,10 @@ class CodeController extends Controller
         $printPdfTemplates = $this->getAvailablePrintPdfTemplates();
 
 
-        return view('backend.code.single', compact(['code', 'form', 'businessOptions','digitalPdfTemplates','printPdfTemplates']));
+        $backURL = route('admin.code.index', ['filter' => Session::get('code.filters', [])]);
+
+
+        return view('backend.code.single', compact(['code', 'form', 'businessOptions','digitalPdfTemplates','printPdfTemplates', 'backURL']));
     }
 
     /**

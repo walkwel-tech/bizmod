@@ -10,12 +10,15 @@
             <div class="card bg-secondary shadow">
                 <div class="card-header bg-white border-0">
                     <div class="row align-items-center">
-                        <div class="col-12 col-md-10 mb-0">
+
+                        <div class="col-12 col-md-12 mb-0">
                             <h3>{{ ($form['action'] == 'create') ? 'New' : 'Edit'  }} Code</h3>
                         </div>
-                        <div class="col-12 col-md-2 text-right">
 
+                        <div class="col-12 col-md-12 mt-4">
+                            <a class="btn btn-success" href="{{ $backURL }}" >Go Back</a>
                         </div>
+
                     </div>
                 </div>
                 <div class="card-body">
@@ -180,7 +183,7 @@
         $('#code_given_btn').click(function (event) {
             var dt = new Date();
             //const = dt.getFullYear()+'-'+dt.getMonth()+'-'+dt.getDate()+' '+dt.getDate() ;
-            const dateTime = @json(date("Y-m-d H:i:s"));
+            const dateTime = @json(date("Y-m-d"));
             $('[name="given_on"]').val(dateTime);
         });
     });

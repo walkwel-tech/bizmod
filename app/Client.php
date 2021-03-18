@@ -47,6 +47,7 @@ class Client extends Model
     {
         return $this->hasMany(Code::class);
     }
+
     public function getClaimedCodeAttribute()
     {
         return trim($this->codes()->pluck('code')->join(', '));
