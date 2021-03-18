@@ -50,11 +50,11 @@
                                         <x-form.input name="prefix" :title="__('Prefix')" :value="$business->prefix"
                                             required />
 
-                                        <x-form.input type="number" name="threshold" :title="__('Threshold Per Client')"
+                                        <!-- <x-form.input type="number" name="threshold" :title="__('Threshold Per Client')"
                                             :value="$business->threshold" required />
 
                                         <x-form.input name="webhook_url" :title="__('Webhook URL')"
-                                            :value="$business->webhook_url" required />
+                                            :value="$business->webhook_url" required /> -->
 
                                         @if($business->getKey())
                                         <x-form.select name="owner_id" :title="__('User')"
