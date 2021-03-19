@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
+use Laravel\Sanctum\HasApiTokens;
 use Spatie\Sluggable\HasSlug;
 
 
@@ -26,6 +27,7 @@ class User extends Authenticatable implements MustVerifyEmail
     use HasRoles;
     use WalkwelSlugMaker;
     use HasAddresses;
+    use HasApiTokens;
     use HasSlug;
 
     /**

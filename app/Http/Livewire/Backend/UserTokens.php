@@ -2,15 +2,14 @@
 
 namespace App\Http\Livewire\Backend;
 
-use App\Business;
 use App\User;
 use Livewire\Component;
 use Laravel\Sanctum\HasApiTokens;
 
-class BusinessTokens extends Component
+class UserTokens extends Component
 {
 
-    public $business;
+    public $user;
     public $tokens;
     public $saved;
     public $deleted;
@@ -18,10 +17,10 @@ class BusinessTokens extends Component
     public $selectedToken;
     public $plainTextToken;
 
-    public function mount( Business $business)
+    public function mount( User $user)
     {
-        $this->business = $business;
-        $this->tokens = $business->tokens;
+        $this->user = $user;
+        $this->tokens = $user->tokens;
         $this->saved = false;
         $this->deleted = false;
 
@@ -39,7 +38,7 @@ class BusinessTokens extends Component
     public function save ()
     {
        // dd($this->addedToken);
-        $token = $this->business->createToken($this->addedToken);
+        $token = $this->user->createToken($this->addedToken);
 
         $this->plainTextToken = $token->plainTextToken;
 
@@ -51,8 +50,8 @@ class BusinessTokens extends Component
 
     public function deleteRelation ($tokenID)
     {
-       // dd($tokenID);
-        $this->deleted = $this->business->tokens()->where('id', $this->selectedToken)->delete();
+
+        $this->deleted = $this->user->tokens()->where('id', $this->selectedToken)->delete();
         $this->emit('notifyUser', ['message' => __('basic.actions.removed', ['name' => "Relation"]), 'type' => 'danger']);
 
         // $this->emit('reload');
@@ -60,7 +59,7 @@ class BusinessTokens extends Component
 
     public function getAuthKeyProperty ()
     {
-        return 'backend.business.edit';
+        return 'backend.user.edit';
     }
 
 }

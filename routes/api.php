@@ -21,6 +21,11 @@ Route::middleware(['auth:sanctum'])->prefix('business')->group(function () {
     Route::post('/code/{code}', 'ClaimController@store');
 });
 
+Route::middleware([])->prefix('claim')->group(function () {
+    Route::get('/code/{code}', 'ApiClaimController@show');
+    Route::post('/code/{code}', 'ApiClaimController@store');
+});
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
