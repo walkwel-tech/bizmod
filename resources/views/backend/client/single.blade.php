@@ -79,6 +79,23 @@
                     </div>
                 </div>
             </div>
+            <div class="card my-4 py-4">
+                    <div class="card-header bg-white border-0">
+                        <div class="row align-items-center">
+                            <div class="col-12 col-md-12 mb-0 text-center">
+                                <h3>Code Claimed</h3>
+                            </div>
+
+                        </div>
+                    </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <a href="{{ route('admin.code.claimed', ['filter' => ['client.email' => $client->email]]) }}">{{ $client->claimed_code }}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
