@@ -100,7 +100,7 @@
                                         <x-form.input type="number" name="no_of_codes" :title="__('Generate No. of code')" value="" required />
 
                                         <x-form.select name="digital_template_id" :title="__('Digital Pdf Template')" :selected="$code->digital_template_id"
-                                            :options="$digitalPdfTemplates" required :hide-label="false">
+                                            :options="[]" required :hide-label="false">
                                             @if ($code->digital_template)
                                             <a href="{{ route('admin.business.show', $code->digital_template) }}"
                                                 class="btn btn-link px-0 text-left">
@@ -110,7 +110,7 @@
                                         </x-form.select>
 
                                         <x-form.select name="print_ready_template_id" :title="__('Print Ready Pdf Template')" :selected="$code->print_ready_template_id"
-                                            :options="$printPdfTemplates" required :hide-label="false">
+                                            :options="[]" required :hide-label="false">
                                             @if ($code->print_ready_template)
                                             <a href="{{ route('admin.business.show', $code->print_ready_template) }}"
                                                 class="btn btn-link px-0 text-left">
@@ -144,8 +144,8 @@
 <script>
 
     const businessData = @json($businessOptions->mapWithKeys(function($c) {return [$c->getKey() => $c->only(['prefix', 'next_batch' ])];}));
-    const digitalPdfData = @json($digitalPdfTemplates->groupBy('business_id'));
-    const printPdfData = @json($printPdfTemplates->groupBy('business_id'));
+    const digitalPdfData = @json($digitalPdfTemplates);
+    const printPdfData = @json($printPdfTemplates);
 
     $(function () {
         const businessSelector = $('[name="business_id"]');
@@ -168,13 +168,19 @@
 
             $('[name="prefix"]').val(prefix);
             @if(!$code->getKey())
+           // debugger
             digitalPdfSelector.empty();
             digitalPdfData[businessSelector.val()].forEach(template => {
-                digitalPdfSelector.append(new Option(template.text, template.id, false, false));
+                // console.log('template',template);
+                if (template) {
+                    digitalPdfSelector.append(new Option(template.text, template.id, false, false));
+                }
             });
             printPdfSelector.empty();
             printPdfData[businessSelector.val()].forEach(template => {
-                printPdfSelector.append(new Option(template.text, template.id, false, false));
+                if (template) {
+                    printPdfSelector.append(new Option(template.text, template.id, false, false));
+                }
             });
             @endif
         });

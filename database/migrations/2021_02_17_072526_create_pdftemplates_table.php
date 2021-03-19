@@ -21,7 +21,7 @@ class CreatePdftemplatesTable extends Migration
             $table->text('description')->nullable();
             $table->enum('type', PdfTemplate::getAvailableTypesValues()->toArray());
             $table->string('path');
-            $table->integer('business_id')->unsigned();
+            $table->integer('business_id')->unsigned()->nullable();
             $table->text('configuration')->nullable();
             $table->softDeletes();
             $table->timestamps();

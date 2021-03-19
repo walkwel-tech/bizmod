@@ -29,9 +29,9 @@ class BackendNavigationComposer
 
         // $this->createModelRoutes('Pages', 'page', 'fa fa-barcode', true);
 
-        $this->createModelRoutes('Pdf Templates', 'template', 'fa fa-file-pdf', true);
-
         $this->createModelRoutes('Business', 'business', 'fa fa-industry', true);
+
+        $this->createModelRoutes('Pdf Templates', 'template', 'fa fa-file-pdf', true);
 
         $this->createModelRoutes('Codes', 'code', 'fa fa-barcode', true, true, [
             new NavigationItem(__('Claimed Code'), route('admin.code.claimed'), 'ni ni-tv-2', 'main'),

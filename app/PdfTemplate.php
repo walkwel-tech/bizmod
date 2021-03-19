@@ -52,6 +52,11 @@ class PdfTemplate extends Model
         return ucwords($this->type);
     }
 
+    public function getBusinessSEOTitle ()
+    {
+        return ($this->business) ? $this->business->getSEOTitle() : 'All Business';
+    }
+
 
     public function business()
     {

@@ -121,7 +121,8 @@ class PdfTemplateController extends Controller
      */
     public function store(PdfTemplateStoreRequest $request)
     {
-        $business = Business::findOrFail($request->input('business_id'));
+
+
         $pdf_template = PdfTemplate::make($request->only([
             'title',
             'description',
@@ -145,8 +146,9 @@ class PdfTemplateController extends Controller
                 );
             $pdf_template->path = $fileName;
         }
-
-        $business->templates()->save($pdf_template);
+        $pdf_template->business_id = $request->input('business_id');
+        $pdf_template->save();
+        //$business->templates()->save($pdf_template);
 
         return redirect()->route('admin.template.index');
     }
@@ -234,7 +236,10 @@ class PdfTemplateController extends Controller
 
     private function getAvailableBusinessOptions()
     {
-        $businessOptions = Business::all();
+        $businessOptions = Business::select(['title', 'id','prefix'])->get()->map(function ($value, $key) {
+
+            return new SelectObject($value->id, $value->getSEOTitle());
+        })->prepend(new SelectObject("", "All Business"));
 
         return $businessOptions;
     }

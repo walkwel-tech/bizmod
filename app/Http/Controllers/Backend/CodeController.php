@@ -92,14 +92,14 @@ class CodeController extends Controller
         ];
 
         $businessOptions = $this->getAvailableBusinessOptions();
-        $digitalPdfTemplates = $this->getAvailableDigitalPdfTemplates();
-        $printPdfTemplates = $this->getAvailablePrintPdfTemplates();
+        $digitalPdfTemplates = $this->getAvailablePdfTemplates('digital');
+        $printPdfTemplates = $this->getAvailablePdfTemplates('print ready');
 
 
         $backURL = route('admin.code.index', ['filter' => Session::get('code.filters', [])]);
 
 
-        return view('backend.code.single', compact(['code', 'form', 'businessOptions','digitalPdfTemplates','printPdfTemplates', 'backURL']));
+        return view('backend.code.single', compact(['code', 'form', 'businessOptions', 'digitalPdfTemplates', 'printPdfTemplates', 'backURL']));
     }
 
     /**
@@ -119,10 +119,10 @@ class CodeController extends Controller
         ];
 
         $businessOptions = $this->getAvailableBusinessOptions();
-        $digitalPdfTemplates = $this->getAvailableDigitalPdfTemplates();
-        $printPdfTemplates = $this->getAvailablePrintPdfTemplates();
+        $digitalPdfTemplates = $this->getAvailablePdfTemplates('digital');
+        $printPdfTemplates = $this->getAvailablePdfTemplates('print ready');
 
-        return view('backend.code.single', compact(['code', 'form', 'businessOptions','digitalPdfTemplates','printPdfTemplates']));
+        return view('backend.code.single', compact(['code', 'form', 'businessOptions', 'digitalPdfTemplates', 'printPdfTemplates']));
     }
 
     public function codeClaimed(Request $request)
@@ -181,8 +181,8 @@ class CodeController extends Controller
             'method' => 'POST',
         ];
 
-        $batches = Code::distinct('batch_no')->with(['print_ready_template' => function($query){
-            $query->select('id','title');
+        $batches = Code::distinct('batch_no')->with(['print_ready_template' => function ($query) {
+            $query->select('id', 'title');
         }])->get()->mapWithKeys(function ($c) {
             return [$c->batch_no => new SelectObject(
                 $c->batch_no,
@@ -295,17 +295,48 @@ class CodeController extends Controller
         return $businessOptions;
     }
 
-    private function getAvailableDigitalPdfTemplates()
+    private function getAvailablePdfTemplates($type)
     {
-        $pdfTemplates = PdfTemplate::select(['id', 'title as text','title as title', 'business_id'])->where('type', '=', 'digital')->get();
+        $businessOptions = Business::all();
+        $BusinessPdfTemplate =  $businessOptions->mapWithKeys(function ($businessObj)  use ($type) {
 
-        return $pdfTemplates;
+            $pdfTemplate = PdfTemplate::select(['id', 'title as text', 'title as title', 'business_id'])
+                ->where('type', '=', $type)
+                ->where(function ($query) use ($businessObj) {
+                    $query->where('business_id', '=', $businessObj->id)
+                        ->orWhereNull('business_id');
+                })
+                ->orderBy('business_id')
+                ->get();
+
+            return [$businessObj->id => $pdfTemplate];
+        });
+        return $BusinessPdfTemplate;
     }
-    private function getAvailablePrintPdfTemplates()
-    {
-        $pdfTemplates = PdfTemplate::select(['id', 'title as text','title as title', 'business_id'])->where('type', '=', 'print ready')->get();
+    // private function getAvailablePrintPdfTemplates()
+    // {
+    //     $businessOptions = Business::all();
+    //     $BusinessPrintPdf =  $businessOptions->mapWithKeys(function ($businessObj) {
 
-        return $pdfTemplates;
+    //         $pdfTemplate = PdfTemplate::select(['id', 'title as text', 'title as title', 'business_id'])->where('type', '=', 'print ready')->where('business_id', '=', $businessObj->id)->orWhereNull('business_id')->get();
+
+    //         return [$businessObj->id => $pdfTemplate];
+    //     });
+    //     return $BusinessPrintPdf;
+    // }
+
+    private function groupPDFTemplates($templates)
+    {
+        $groupedByBusiness = $templates->groupBy('business_id');
+
+        $all = $groupedByBusiness->get("");
+
+        return $groupedByBusiness->forget("")->map(function ($g) use ($all) {
+
+            $g->push($all);
+
+            return $g->flatten();
+        });
     }
 
     protected static function requiresPermission()
@@ -352,6 +383,4 @@ class CodeController extends Controller
             ]
         ];
     }
-
-
 }

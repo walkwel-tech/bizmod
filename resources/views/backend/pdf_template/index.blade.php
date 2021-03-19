@@ -55,7 +55,7 @@
                             <tr>
                                 <td>{{ $pdf_template->getSEOTitle() }}</td>
                                 <td>{{ $pdf_template->getSEODescription(2) }}</td>
-                                <td>{{ $pdf_template->business->getSEOTitle() }}</td>
+                                <td>{{ $pdf_template->getBusinessSEOTitle() }}</td>
                                 <td>{{ $pdf_template->selected_type }}</td>
                                 <td><a href="{{ route('admin.template.default', $pdf_template) }}" target="_blank">{{ $pdf_template->path }}</a></td>
 
