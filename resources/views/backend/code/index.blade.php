@@ -26,12 +26,14 @@
                                                 enddateplaceholder="claim date end" />
                                         </div>
                                         <div class="col-3">
-                                            <x-form.radio name="filter[ClaimedFilter]" title="Claimed" value="1" :checked="Arr::get($searchedParams, 'ClaimedFilter')" />
-                                            <x-form.radio name="filter[ClaimedFilter]" title="Not Claimed" value="0" :checked="Arr::get($searchedParams, 'ClaimedFilter')"/>
+                                            <x-form.radio name="filter[ClaimedFilter]" title="All" value="all" :checked="Arr::get($searchedParams, 'ClaimedFilter')" />
+                                            <x-form.radio name="filter[ClaimedFilter]" title="Claimed" value="claimed" :checked="Arr::get($searchedParams, 'ClaimedFilter')" />
+                                            <x-form.radio name="filter[ClaimedFilter]" title="Not Claimed" value="unclaimed" :checked="Arr::get($searchedParams, 'ClaimedFilter')"/>
                                         </div>
                                         <div class="col-3">
-                                            <x-form.radio name="filter[GiventFilter]" title="Given" value="1" :checked="Arr::get($searchedParams, 'GiventFilter')" />
-                                            <x-form.radio name="filter[GiventFilter]" title="Not Given" value="0" :checked="Arr::get($searchedParams, 'GiventFilter')"/>
+                                            <x-form.radio name="filter[GiventFilter]" title="All" value="all" :checked="Arr::get($searchedParams, 'GiventFilter')" />
+                                            <x-form.radio name="filter[GiventFilter]" title="Given" value="given" :checked="Arr::get($searchedParams, 'GiventFilter')" />
+                                            <x-form.radio name="filter[GiventFilter]" title="Not Given" value="not_given" :checked="Arr::get($searchedParams, 'GiventFilter')"/>
                                         </div>
                                     </div>
                                 </div>

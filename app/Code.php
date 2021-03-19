@@ -166,10 +166,10 @@ class Code extends Model
     public function scopeClaimedFilter($query, $value)
     {
 
-        if ($value == '1') {
+        if ($value == 'claimed') {
             $query->whereNotNull('claimed_on');
         }
-        if($value == '0'){
+        if($value == 'unclaimed'){
             $query->whereNull('claimed_on');
         }
 
@@ -179,10 +179,10 @@ class Code extends Model
     public function scopeGiventFilter($query, $value)
     {
 
-        if ($value == '1') {
+        if ($value == 'given') {
             $query->whereNotNull('given_on');
         }
-        if($value == '0'){
+        if($value == 'not_given'){
             $query->whereNull('given_on');
         }
 
