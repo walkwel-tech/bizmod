@@ -21,7 +21,7 @@ Route::middleware(['auth:sanctum'])->prefix('business')->group(function () {
     Route::post('/code/{code}', 'ClaimController@store');
 });
 
-Route::middleware([])->prefix('claim')->group(function () {
+Route::prefix('claim')->group(function () {
     Route::get('/code/{code}', 'ApiClaimController@show');
     Route::post('/code/{code}', 'ApiClaimController@store');
 });
