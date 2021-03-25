@@ -28,6 +28,20 @@ class CodeResource extends JsonResource
                 'status',
                 'message'
             ]);
+            if($this->resource->status=='applied')
+            {
+                $name = $this->resource->client->first_name;
+                if ($this->resource->client->last_name) {
+                    $name .= ' ' . $this->resource->client->last_name;
+                }
+                    $data['sender_id'] = $this->resource->business->sender_id;
+                    $data['b_id'] = $this->resource->business->b_id;
+                    $data['client_name'] = $name;
+                    $data['client_email'] = $this->resource->client->email;
+                    $data['client_phone'] = $this->resource->client->phone;
+                    $data['location'] = $this->resource->claim_details->get('location_no', '-');
+                    $data['country'] = $this->resource->claim_details->get('country_no', '-');
+            }
         }
         return $data;
     }

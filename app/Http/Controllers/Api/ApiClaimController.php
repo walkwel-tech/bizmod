@@ -57,21 +57,11 @@ class ApiClaimController extends Controller
             'zip',
         ]));
 
-        $name = $code->client->first_name;
-        if ($code->client->last_name) {
-            $name .= ' ' . $code->client->last_name;
-        }
+
 
         return (new CodeResource($code))
             ->additional([
                 'success' => true,
-                'sender_id' => $code->business->sender_id,
-                'b_id' => $code->business->b_id,
-                'client_name' => $name,
-                'client_email' => $code->client->email,
-                'client_phone' => $code->client->phone,
-                'location' => $code->claim_details->get('location_no', '-'),
-                'country' => $code->claim_details->get('country_no', '-')
             ]);
     }
 
