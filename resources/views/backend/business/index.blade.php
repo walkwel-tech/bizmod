@@ -50,6 +50,8 @@
                                 <th scope="col">Description</th>
                                 <th scope="col">Prefix</th>
                                 <th scope="col">Owner</th>
+                                <th scope="col">Sender Id</th>
+                                <th scope="col">Business Id</th>
                                 <th scope="col">Codes</th>
                                 <th scope="col">Claimed Code</th>
                                 <th scope="col"></th>
@@ -62,6 +64,8 @@
                                 <td>{{ $business->getSEODescription(2) }}</td>
                                 <td>{{ $business->prefix }}</td>
                                 <td>{{ $business->getOwnerTitle() }}</td>
+                                <td>{{ $business->sender_id }}</td>
+                                <td>{{ $business->b_id }}</td>
                                 <td>
                                     <a href="{{ route('admin.code.index', ['filter' => ['business.title' => $business->title]]) }}">{{ $business->codes_count }}</a>
                                 </td>

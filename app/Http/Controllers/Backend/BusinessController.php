@@ -145,7 +145,9 @@ class BusinessController extends Controller
             'title',
             'description',
             'prefix',
-            'owner_id'
+            'owner_id',
+            'sender_id',
+            'b_id'
         ]));
 
 
@@ -163,7 +165,9 @@ class BusinessController extends Controller
             'title',
             'description',
             'prefix',
-            'owner_id'
+            'owner_id',
+            'sender_id',
+            'b_id'
         ]));
 
         $business->save();

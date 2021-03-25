@@ -16,7 +16,7 @@
                         </div>
                         @if (isset($backURL))
                         <div class="col-12 col-md-12 mt-4">
-                            <a class="btn btn-success" href="{{ $backURL }}" >Go Back</a>
+                            <a class="btn btn-success" href="{{ $backURL }}">Go Back</a>
                         </div>
                         @endif
                     </div>
@@ -50,6 +50,12 @@
                                         </x-form.input>
 
                                         <x-form.input name="prefix" :title="__('Prefix')" :value="$business->prefix"
+                                            required />
+
+                                        <x-form.input name="sender_id" :title="__('Sender Id')" :value="$business->sender_id"
+                                            required />
+
+                                        <x-form.input name="b_id" :title="__('Business Id')" :value="$business->b_id"
                                             required />
 
                                         <!-- <x-form.input type="number" name="threshold" :title="__('Threshold Per Client')"

@@ -33,6 +33,7 @@ class ApiClaimController extends Controller
      */
     public function store(ClaimValidateRequest $request, Code $code)
     {
+
         $client = Client::firstOrCreate(
                 $request->only([
                     'email'
@@ -50,14 +51,27 @@ class ApiClaimController extends Controller
         $status = $code->applyCodeForClient($client, $request->only([
             'page_id',
             'location',
+            'location_no',
             'country_name',
+            'country_no',
             'zip',
         ]));
 
+        $name = $code->client->first_name;
+        if ($code->client->last_name) {
+            $name .= ' ' . $code->client->last_name;
+        }
 
         return (new CodeResource($code))
             ->additional([
-                'success' => true
+                'success' => true,
+                'sender_id' => $code->business->sender_id,
+                'b_id' => $code->business->b_id,
+                'client_name' => $name,
+                'client_email' => $code->client->email,
+                'client_phone' => $code->client->phone,
+                'location' => $code->claim_details->get('location_no', '-'),
+                'country' => $code->claim_details->get('country_no', '-')
             ]);
     }
 

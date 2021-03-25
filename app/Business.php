@@ -37,6 +37,8 @@ class Business extends Authenticatable
         'description',
         'prefix',
         'owner_id',
+        'sender_id',
+        'b_id',
     ];
 
     protected $appends = [
