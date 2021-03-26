@@ -203,7 +203,10 @@ class CodeController extends Controller
     public function updateBatch(Request $request)
     {
         // dd($request->input('batch_no'));
-        Code::where('batch_no',  $request->input('batch_no'))->update(['description' => $request->input('description')]);
+        Code::where('batch_no',  $request->input('batch_no'))->update(
+            ['expire_on' => $request->input('expire_on'),
+            'description' => $request->input('description')
+            ]);
 
         return redirect()->route('admin.code.index', ['filter' => ['batch_no' => $request->input('batch_no')]])->with('success', __('basic.actions.modified', ['name' => $this->getModelName()]));
     }

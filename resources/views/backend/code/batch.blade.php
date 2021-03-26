@@ -39,6 +39,7 @@
                                         :options="$batches" required :hide-label="true">
 
                                     </x-form.select>
+                                    <x-form.date-picker  name="expire_on" :title="__('Code Expire on')"   required/>
                                     <x-form.textarea  name="description" :title="__('Add Note')"  />
 
                                     <div class="text-center">
