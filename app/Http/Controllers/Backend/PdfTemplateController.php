@@ -129,7 +129,7 @@ class PdfTemplateController extends Controller
             'type'
         ]));
 
-        $pdf_template->configuration = new TemplateConfiguration($request->input('business'), $request->input('code'));
+        $pdf_template->configuration = new TemplateConfiguration($request->input('business'), $request->input('code'), $request->input('expire'));
 
         //dd($pdf_template->business->title);
 
@@ -170,6 +170,7 @@ class PdfTemplateController extends Controller
 
         $template->configuration->business = $request->input('business');
         $template->configuration->code = $request->input('code');
+        $template->configuration->expire = $request->input('expire');
 
         if ($request->hasFile('path')) {
             $imageController = new ImageController();
@@ -184,7 +185,7 @@ class PdfTemplateController extends Controller
                 );
             $template->path = $fileName;
         }
-
+        $template->business_id = $request->input('business_id');
         $template->save();
 
 

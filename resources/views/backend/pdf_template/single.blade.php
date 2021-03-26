@@ -86,6 +86,13 @@
                                         <x-form.input type="number" name="code[position][x]" :title="__('Code X position')" :value="$template->configuration->getCodePositionX()" required />
                                         <x-form.input type="number" name="code[position][y]" :title="__('Code Y position')" :value="$template->configuration->getCodePositionY()" required />
 
+                                            <x-form.input type="number" name="expire[text][size]" :title="__('Expire Date Size')" :value="$template->configuration->getExpireTextSize()" required />
+                                                <x-form.input type="color" name="expire[text][color]" :title="__('Expire Date Color')" :value="$template->configuration->getExpireTextColor()" required />
+                                                <x-form.input type="number" name="expire[text][spacing]" :title="__('Expire Date Spacing')" :value="$template->configuration->getExpireTextSpacing()" required />
+                                                <x-form.input type="number" name="expire[position][x]" :title="__('Expire X position')" :value="$template->configuration->getExpirePositionX()" required />
+                                                <x-form.input type="number" name="expire[position][y]" :title="__('Expire Y position')" :value="$template->configuration->getExpirePositionY()" required />
+
+
                                         <div class="text-center">
                                             <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
                                         </div>

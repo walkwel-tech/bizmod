@@ -9,10 +9,11 @@ class TemplateConfiguration implements Arrayable {
     public $business;
     public $code;
 
-    public function __construct($business, $code)
+    public function __construct($business, $code, $expire)
     {
         $this->business = $business;
         $this->code = $code;
+        $this->expire = $expire;
     }
 
     public function __call($name, $arguments)
@@ -35,7 +36,8 @@ class TemplateConfiguration implements Arrayable {
     {
         return [
             'business' => $this->business,
-            'code' => $this->code
+            'code' => $this->code,
+            'expire' => $this->expire
         ];
     }
 
@@ -63,6 +65,18 @@ class TemplateConfiguration implements Arrayable {
                     'size' => 20,
                     'color' => "#000000",
                     'spacing' => 15,
+                ]
+
+                ],
+            'expire' => [
+                'position'=> [
+                    'x' => 85,
+                    'y' => 280,
+                ],
+                'text'=> [
+                    'size' => 8,
+                    'color' => "#FF0000",
+                    'spacing' => 0,
                 ]
 
             ]

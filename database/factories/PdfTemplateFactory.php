@@ -33,7 +33,8 @@ class PdfTemplateFactory extends Factory
 
         $confg = new TemplateConfiguration(
                 TemplateConfiguration::getDefaultConfiguration('business'),
-                TemplateConfiguration::getDefaultConfiguration('code')
+                TemplateConfiguration::getDefaultConfiguration('code'),
+                TemplateConfiguration::getDefaultConfiguration('expire')
             );
 
 

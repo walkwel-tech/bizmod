@@ -22,7 +22,8 @@ class TemplateConfigurationCast implements CastsAttributes
 
         return new TemplateConfiguration(
             $decodedValue['business'] ?? [],
-            $decodedValue['code'] ?? []
+            $decodedValue['code'] ?? [],
+            $decodedValue['expire'] ?? []
         );
     }
 

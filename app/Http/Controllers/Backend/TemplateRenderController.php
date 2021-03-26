@@ -10,6 +10,7 @@ use setasign\Fpdi\Tcpdf\Fpdi;
 use App\Business;
 use App\PdfTemplate;
 use App\Code;
+use Carbon\Carbon;
 
 use App\Helpers\TemplateConfiguration;
 
@@ -54,9 +55,12 @@ class TemplateRenderController extends Controller
 
         $businessData = $codeObj->digital_template->configuration->business;
         $codeData = $codeObj->digital_template->configuration->code;
+        $expireData = $codeObj->digital_template->configuration->expire;
+        $expireDate = (new Carbon($codeObj->expire_on))->format("d-m-Y");
 
         $businessColor = static::hex2rgb($businessData['text']['color']);
         $codeColor = static::hex2rgb($codeData['text']['color']);
+        $expireColor = static::hex2rgb($expireData['text']['color']);
 
         $pathToTemplate = $codeObj->digital_template->path ?? 'default.pdf';
 
@@ -88,6 +92,15 @@ class TemplateRenderController extends Controller
                 $pdf->SetTextColor($codeColor['r'], $codeColor['g'], $codeColor['b']);
                 $pdf->writeHTMLCell(0, 0, $codeData['position']['x'], $codeData['position']['y'],  $codeObj->code, 0, 1, 0, true, 'C', false);
             }
+            if ($pageNo == 2) {
+                $pdf->SetAutoPageBreak('auto',0);
+                $pdf->SetFont('', 'B', $expireData['text']['size']);
+                $pdf->SetFontSpacing($expireData['text']['spacing']);
+                $pdf->SetTextColor($expireColor['r'], $expireColor['g'], $expireColor['b']);
+                $pdf->writeHTMLCell(0, 0, $expireData['position']['x'], $expireData['position']['y'] , $expireDate, 0, true, '', false);
+
+
+            }
         }
 
         $pdf->Output();
@@ -102,9 +115,12 @@ class TemplateRenderController extends Controller
 
         $businessData = $codeObj->print_ready_template->configuration->business;
         $codeData = $codeObj->print_ready_template->configuration->code;
+        $expireData = $codeObj->print_ready_template->configuration->expire;
+        $expireDate = (new Carbon($codeObj->expire_on))->format("d-m-Y");
 
         $businessColor = static::hex2rgb($businessData['text']['color']);
         $codeColor = static::hex2rgb($codeData['text']['color']);
+        $expireColor = static::hex2rgb($expireData['text']['color']);
 
         $pathToTemplate = $codeObj->print_ready_template->path ?? 'default.pdf';
 
@@ -136,6 +152,15 @@ class TemplateRenderController extends Controller
                 $pdf->SetTextColor($codeColor['r'], $codeColor['g'], $codeColor['b']);
                 $pdf->writeHTMLCell(0, 0, $codeData['position']['x'], $codeData['position']['y'],  $codeObj->code, 0, 1, 0, true, 'C', false);
             }
+            if ($pageNo == 2) {
+                $pdf->SetAutoPageBreak('auto',0);
+                $pdf->SetFont('', 'B', $expireData['text']['size']);
+                $pdf->SetFontSpacing($expireData['text']['spacing']);
+                $pdf->SetTextColor($expireColor['r'], $expireColor['g'], $expireColor['b']);
+                $pdf->writeHTMLCell(0, 0, $expireData['position']['x'], $expireData['position']['y'] , $expireDate, 0, true, '', false);
+
+
+            }
         }
 
         $pdf->Output();
@@ -157,9 +182,12 @@ class TemplateRenderController extends Controller
             }
             $businessData = $codeObj->print_ready_template->configuration->business;
             $codeData = $codeObj->print_ready_template->configuration->code;
+            $expireData = $codeObj->print_ready_template->configuration->expire;
+            $expireDate = (new Carbon($codeObj->expire_on))->format("d-m-Y");
 
             $businessColor = static::hex2rgb($businessData['text']['color']);
             $codeColor = static::hex2rgb($codeData['text']['color']);
+            $expireColor = static::hex2rgb($expireData['text']['color']);
 
             $pathToTemplate = $codeObj->print_ready_template->path ?? 'default.pdf';
 
@@ -189,6 +217,15 @@ class TemplateRenderController extends Controller
                     $pdf->SetFontSpacing($codeData['text']['spacing']);
                     $pdf->SetTextColor($codeColor['r'], $codeColor['g'], $codeColor['b']);
                     $pdf->writeHTMLCell(0, 0, $codeData['position']['x'], $codeData['position']['y'],  $codeObj->code, 0, 1, 0, true, 'C', false);
+                }
+                if ($pageNo == 2) {
+                    $pdf->SetAutoPageBreak('auto',0);
+                    $pdf->SetFont('', 'B', $expireData['text']['size']);
+                    $pdf->SetFontSpacing($expireData['text']['spacing']);
+                    $pdf->SetTextColor($expireColor['r'], $expireColor['g'], $expireColor['b']);
+                    $pdf->writeHTMLCell(0, 0, $expireData['position']['x'], $expireData['position']['y'] , $expireDate, 0, true, '', false);
+
+
                 }
 
                 $count++;
