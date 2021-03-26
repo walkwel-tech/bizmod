@@ -52,9 +52,13 @@ class Code extends Model
 
     public function getStatusAttribute()
     {
-        if ($this->isAvailableToClaim()) {
+        if ($this->isAvailableToClaim() && $this->isNotExpired()) {
             return 'available';
-        } else {
+        }
+        if ($this->isAvailableToClaim() && !$this->isNotExpired()) {
+            return 'expired';
+        }
+        else {
             return ($this->client_id) ? 'applied' : 'unavailable';
         }
         return 'unavailable';
@@ -107,9 +111,9 @@ class Code extends Model
     public function setGivenOnAttribute($value)
     {
         $given_on =
-        ($value)
-        ? (new Carbon($value))->format("Y-m-d H:i:s")
-        : $value;
+            ($value)
+            ? (new Carbon($value))->format("Y-m-d H:i:s")
+            : $value;
         $this->attributes['given_on'] = $given_on;
     }
 
@@ -123,15 +127,24 @@ class Code extends Model
     public function setExpireOnAttribute($value)
     {
         $expire_on =
-        ($value)
-        ? (new Carbon($value))->format("Y-m-d H:i:s")
-        : $value;
+            ($value)
+            ? (new Carbon($value))->format("Y-m-d H:i:s")
+            : $value;
         $this->attributes['expire_on'] = $expire_on;
     }
 
     public function isAvailableToClaim()
     {
         return is_null($this->claimed_on);
+    }
+
+    public function isNotExpired()
+    {
+
+        $date1 = new Carbon($this->expire_on);
+        $date2 = Carbon::now();
+
+        return  $date1->gt($date2);
     }
 
     public function scopeWithClaimDetails(): Builder
@@ -186,7 +199,7 @@ class Code extends Model
         if ($value == 'claimed') {
             $query->whereNotNull('claimed_on');
         }
-        if($value == 'unclaimed'){
+        if ($value == 'unclaimed') {
             $query->whereNull('claimed_on');
         }
 
@@ -199,7 +212,7 @@ class Code extends Model
         if ($value == 'given') {
             $query->whereNotNull('given_on');
         }
-        if($value == 'not_given'){
+        if ($value == 'not_given') {
             $query->whereNull('given_on');
         }
 
@@ -256,7 +269,7 @@ class Code extends Model
     public function applyCodeForClient(Client $client, array $claimDetails, $claimDate = null)
     {
         throw_if(
-            !$this->isAvailableToClaim(),
+            !$this->isAvailableToClaim() && !$this->isNotExpired(),
             new CodeUnavailableException(static::getMessageForStatus('unavailable'))
         );
 

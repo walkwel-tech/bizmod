@@ -23,7 +23,7 @@ class ApiClaimController extends Controller
 
         return (new CodeResource($codeObject))
             ->additional([
-                'success' => ($codeObject) ? $codeObject->isAvailableToClaim() : false,
+                'success' => ($codeObject) ? ($codeObject->isAvailableToClaim() &&  $codeObject->isNotExpired()) : false,
             ]);
     }
 
