@@ -44,6 +44,7 @@ class Code extends Model
         'digital_template_id',
         'print_ready_template_id',
         'given_on',
+        'expire_on',
         'description'
     ];
 
@@ -110,6 +111,22 @@ class Code extends Model
         ? (new Carbon($value))->format("Y-m-d H:i:s")
         : $value;
         $this->attributes['given_on'] = $given_on;
+    }
+
+    public function getExpireOnAttribute($value)
+    {
+        return ($value)
+            ? date("Y-m-d", strtotime($value))
+            : $value;
+    }
+
+    public function setExpireOnAttribute($value)
+    {
+        $expire_on =
+        ($value)
+        ? (new Carbon($value))->format("Y-m-d H:i:s")
+        : $value;
+        $this->attributes['expire_on'] = $expire_on;
     }
 
     public function isAvailableToClaim()

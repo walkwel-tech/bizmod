@@ -76,6 +76,7 @@
                                             @endif
                                             <x-form.input  name="print_ready_template_id" :title="__('Print Ready Pdf Template')" :value="$code->print_ready_template->path"  readonly/>
                                             <x-form.input  name="given_on" :title="__('Given on')" :value="$code->given_on"  readonly/>
+                                                <x-form.date-picker  name="expire_on" :title="__('Expire on')" :value="$code->expire_on"  required/>
                                         <x-form.textarea  name="description" :title="__('Add Note')" :value="$code->description" />
                                         <div class="text-center">
                                             @if (!$code->given_on)
@@ -98,7 +99,7 @@
 
                                         <x-form.input name="prefix" :title="__('Code Prefix')" :value="$code->code" required readonly />
                                         <x-form.input type="number" name="no_of_codes" :title="__('Generate No. of code')" value="" required />
-
+                                        <x-form.date-picker  name="expire_on" :title="__('Expire on')"   required/>
                                         <x-form.select name="digital_template_id" :title="__('Digital Pdf Template')" :selected="$code->digital_template_id"
                                             :options="[]" required :hide-label="false">
                                             @if ($code->digital_template)

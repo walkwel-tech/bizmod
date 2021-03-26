@@ -76,6 +76,7 @@
                                 <th scope="col">Notes</th>-->
                                 <th scope="col">Claimed</th>
                                 <th scope="col">Given On</th>
+                                <th scope="col">Expire On</th>
                                 <th scope="col"></th>
                             </tr>
                         </thead>
@@ -93,7 +94,7 @@
                                 <td>{{ $code->getSEODescription(2) }}</td>-->
                                 <td>{{ $code->claimed_on }}</td>
                                 <td>{{ $code->given_on }}</td>
-
+                                <td>{{ $code->expire_on }}</td>
                                 <td class="d-flex justify-content-end">
                                     @can('backend.codes.update')
                                     <a class="btn btn-info btn-icon btn-icon-md rounded-0"

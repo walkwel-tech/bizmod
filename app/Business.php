@@ -110,7 +110,7 @@ class Business extends Authenticatable
     }
 
     // generate random codes
-    public function generateRandomCodes($noOfCodes = 10000, $batchNo = null, $prefix = null, $digitalTemplateId = null,$printTemplateId = null, $prefixMaxLength = 3 )
+    public function generateRandomCodes($noOfCodes = 10000, $batchNo = null, $prefix = null, $digitalTemplateId = null,$printTemplateId = null, $expireOn , $prefixMaxLength = 3 )
     {
 
         $this->batch_no = $batchNo ? $batchNo : $this->next_batch;
@@ -125,6 +125,7 @@ class Business extends Authenticatable
                 'code' => $prefix . static::getRandomString(3, 3),
                 'digital_template_id' => $digitalTemplateId,
                 'print_ready_template_id' => $printTemplateId,
+                'expire_on' => $expireOn,
                 'claim_details' => [],
             ]));
         }

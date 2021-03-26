@@ -231,7 +231,8 @@ class CodeController extends Controller
             $request->input('batch_no'),
             $request->input('prefix'),
             $request->input('digital_template_id'),
-            $request->input('print_ready_template_id')
+            $request->input('print_ready_template_id'),
+            $request->input('expire_on')
         );
 
         $batchNo = $codes->first()->batch_no;
@@ -248,7 +249,8 @@ class CodeController extends Controller
     {
         $code->fill($request->only([
             'description',
-            'given_on'
+            'given_on',
+            'expire_on'
         ]));
 
         $code->save();
