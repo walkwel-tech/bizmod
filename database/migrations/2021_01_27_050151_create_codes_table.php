@@ -25,7 +25,7 @@ class CreateCodesTable extends Migration
             $table->text('claim_details')->nullable();
             $table->timestamp('claimed_on')->nullable();
             $table->timestamp('given_on')->nullable();
-            $table->timestamp('expire_on');
+            $table->timestamp('expire_on')->useCurrent();
             $table->softDeletes();
             $table->timestamps();
         });
