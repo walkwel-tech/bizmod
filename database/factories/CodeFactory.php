@@ -27,7 +27,7 @@ class CodeFactory extends Factory
 
         $givenDate = $this->faker->dateTime();
         $claimDate = $this->faker->dateTimeBetween($givenDate);
-        $expireDate = $this->faker->dateTimeBetween('+12 month','+13 month');
+        $expireDate = $this->faker->dateTimeBetween('+18 month','+19 month');
 
         return [
             'batch_no' => $this->faker->word,

@@ -121,7 +121,7 @@ class Code extends Model
     {
         return ($value)
             ? date("Y-m-d", strtotime($value))
-            : $value;
+            : date("Y-m-d", strtotime(Carbon::now()->addMonths(18)));
     }
 
     public function setExpireOnAttribute($value)
