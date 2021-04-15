@@ -61,10 +61,10 @@
                                 <td>{{ $business->prefix }}</td>
                                 <td>{{ $business->getOwnerTitle() }}</td>
                                 <td>
-                                    <a href="{{ route('admin.code.index', ['filter' => ['business.title' => $business->title]]) }}">{{ $business->codes_count }}</a>
+                                    <a href="{{ route('admin.code.index', ['filter' => ['business.prefix' => $business->prefix]]) }}">{{ $business->codes_count }}</a>
                                 </td>
                                 <td>
-                                    <a href="{{ route('admin.code.index', ['filter' => ['business.title' => $business->title, 'claimed' => true]]) }}">{{ $business->claimed_codes_count }}</a>
+                                    <a href="{{ route('admin.code.index', ['filter' => ['business.prefix' => $business->prefix, 'ClaimedFilter' => 'claimed']]) }}">{{ $business->claimed_codes_count }}</a>
                                 </td>
                                 <td class="d-flex justify-content-end">
                                     @can('backend.businesses.update')

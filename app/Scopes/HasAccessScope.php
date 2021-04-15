@@ -25,7 +25,7 @@ class HasAccessScope implements Scope
             }
 
             $businessIds = $user->businessIds->pluck('business_id')->toArray();
-            $columnToSearchIn = ($model instanceof Business) ? 'id' : 'business_id';
+            $columnToSearchIn = ($model instanceof Business) ? 'businesses.id' : 'business_id';
             $builder->whereIn($columnToSearchIn, $businessIds);
         }
 

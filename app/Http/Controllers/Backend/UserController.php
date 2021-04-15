@@ -123,6 +123,7 @@ class UserController extends Controller
         ]));
 
         $user->password = Hash::make($request->password);
+        $user->email_verified_at = now();
 
         if ($request->hasFile('avatar')) {
             $imageController = new ImageController();

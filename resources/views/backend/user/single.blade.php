@@ -47,7 +47,10 @@
                             <x-form.input name="email" :title="__('Email')" :value="$user->email" type="email" placeholder="someone@example.com" required :hideLabel="true">
                                 <x-form.toggle class="mb-2" name="email_verified" title="Email" :value="$user->hasVerifiedEmail()" />
                             </x-form.input>
+
+                            @if ( !method_exists(auth()->user(), 'hasRole') || auth()->user()->hasRole('super'))
                             <x-roles-selector :model="$user"/>
+                            @endif
 
                             @if($form['passwords'])
                                 <x-form.input type="password" name="password" :title="__('New Password')" value=""/>
