@@ -279,7 +279,7 @@ class TemplateRenderController extends Controller
 
     protected static function getPermissionKey()
     {
-        return 'pdf_templates';
+        return 'templates';
     }
 
     public static function getModelName()
