@@ -8,13 +8,13 @@
         </select>
     </div>
 
-    <div wire:ignore class="col-12 col-md-4 form-group">
+    <!-- <div wire:ignore class="col-12 col-md-4 form-group">
         <select name="role" wire:model="selectedRole" id="relate-business-new-role-{{ $business->getKey() }}">
             @foreach ($this->roles as $role => $roleTitle)
             <option value="{{ $role }}" @if($selectedRole === $role) selected @endif>{{ $roleTitle }}</option>
             @endforeach
         </select>
-    </div>
+    </div> -->
     <div class="col-md-4">
 
         <button {{ ($saved) ? 'disabled' : '' }}
