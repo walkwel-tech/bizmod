@@ -184,6 +184,7 @@ class CodeController extends Controller
         $batches = Code::distinct('batch_no')->with(['print_ready_template' => function ($query) {
             $query->select('id', 'title');
         }])->get()->mapWithKeys(function ($c) {
+
             return [$c->batch_no => new SelectObject(
                 $c->batch_no,
                 $c->batch_no,
