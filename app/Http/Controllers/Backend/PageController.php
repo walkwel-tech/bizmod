@@ -72,6 +72,13 @@ class PageController extends Controller
         return view('backend.page.single', compact(['page', 'form']));
     }
 
+    public function view(Request $request, Page $page)
+    {
+
+
+        return view('backend.page.view', compact(['page']));
+    }
+
     /**
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
@@ -110,7 +117,7 @@ class PageController extends Controller
     {
         $page = Page::create($request->only([
             'title',
-            'description'
+            'content'
         ]));
 
 
@@ -126,7 +133,7 @@ class PageController extends Controller
     {
         $page->fill($request->only([
             'title',
-            'description',
+            'content',
         ]));
 
         $page->save();

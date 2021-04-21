@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 trait PerformsSEO {
     use PerformsBasicSEO;
@@ -39,5 +40,14 @@ trait PerformsSEO {
                         : $this->content;
 
         return $content;
+    }
+
+    public function getCompleteContentFormated()
+    {
+        $content = $this->content;
+        $content = str_replace('{% user_avatar %}', auth()->user()->getImage(),$content);
+        $content = str_replace('{% user_name %}', auth()->user()->name,$content);
+
+        return htmlspecialchars_decode($content);
     }
 }

@@ -14,9 +14,9 @@
                             <h3 class="mb-0">Pages</h3>
                         </div>
                         @if($addNew)
-                        <div class="col-4 text-right">
+                        <!-- <div class="col-4 text-right">
                             <a href="{{ route('admin.page.create') }}" class="btn btn-sm btn-primary">Add Page</a>
-                        </div>
+                        </div> -->
                         @endif
                     </div>
                 </div>
@@ -26,7 +26,8 @@
                         <thead class="thead-light">
                             <tr>
                                 <th scope="col">Title</th>
-                                <th scope="col">Description</th>
+                                <th scope="col">Content</th>
+                                <th scope="col">Preivew</th>
                                 <th scope="col"></th>
                             </tr>
                         </thead>
@@ -34,16 +35,17 @@
                             @foreach ($pages as $page)
                             <tr>
                                 <td>{{ $page->getSEOTitle() }}</td>
-                                <td>{{ $page->getSEODescription(2) }}</td>
+                                <td>{{ $page->getSEOContent() }}</td>
+                                <td> <a class="" href="{{ route('admin.page.view', $page) }}" data-toggle="tooltip" data-placement="left" title="{{ __('basic.actions.view', ['name' => 'Page']) }}">
+                                    {{ $page->getSEOTitle() }}
+                                </a></td>
                                 <td class="d-flex justify-content-end">
                                     @can('backend.pages.update')
                                     <a class="btn btn-info btn-icon btn-icon-md rounded-0" href="{{ route('admin.page.show', $page) }}" data-toggle="tooltip" data-placement="left" title="{{ __('basic.actions.view', ['name' => 'Page']) }}">
                                         <i class="fa fa-eye"></i>
                                     </a>
                                     @endcan
-                                    @can('backend.pages.delete')
-                                    <x-ui.button-delete :model="$page" :route-destroy="route('admin.page.destroy', $page)" :route-delete="route('admin.page.delete', $page)" :route-restore="route('admin.page.restore', $page)" model-name="Page" :identifier="$page->id"/>
-                                    @endcan
+
                                 </td>
                             </tr>
                             @endforeach

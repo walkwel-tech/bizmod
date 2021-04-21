@@ -19,15 +19,15 @@ class BackendNavigationComposer
         $this->backendRoutes = collect();
         $user = auth()->user();
         if ($user->can("backend.dashboard.read")) {
-        $this->backendRoutes->push(
-            new NavigationItem(__('Dashboard'), route('admin.home'), 'ni ni-tv-2', 'section')
-        );
+            $this->backendRoutes->push(
+                new NavigationItem(__('Dashboard'), route('admin.home'), 'ni ni-tv-2', 'section')
+            );
         }
         $this->createModelRoutes('Roles', 'role', 'fa fa-allergies', false);
 
         $this->createModelRoutes('Users', 'user', 'fa fa-users', true);
 
-        // $this->createModelRoutes('Pages', 'page', 'fa fa-barcode', true);
+        $this->createModelRoutes('Pages', 'page', 'fa fa-barcode', true);
 
         $this->createModelRoutes('Business', 'business', 'fa fa-industry', true);
 
@@ -45,11 +45,11 @@ class BackendNavigationComposer
 
         //$this->createModelRoutes('Services', 'service', 'fa fa-barcode', true);
 
-      //  $this->createModelRoutes('Steps', 'step', 'fa fa-barcode', true);
+        //  $this->createModelRoutes('Steps', 'step', 'fa fa-barcode', true);
 
-       // $this->createModelRoutes('Fields', 'field', 'fa fa-barcode', true);
+        // $this->createModelRoutes('Fields', 'field', 'fa fa-barcode', true);
 
-       // $this->createModelRoutes('Service Order', 'serviceorder', 'fa fa-barcode', true);
+        // $this->createModelRoutes('Service Order', 'serviceorder', 'fa fa-barcode', true);
     }
 
     public function createModelRoutes($modelTitle, $modelRouteKey, $icon = null, $softDeletes = true, $creations = true, $additionalRoutes = [])
@@ -62,14 +62,17 @@ class BackendNavigationComposer
             $modelRoutes->setIconClass($icon);
 
             $modelRoutes->addChild('List ' . Str::plural($modelTitle), route("admin.{$modelRouteKey}.index"));
+            if ($key == 'pages') {
+            } else {
+                if ($creations && $user->can("backend.{$key}.create")) {
+                    $modelRoutes->addChild('Create ' . Str::singular($modelTitle), route("admin.{$modelRouteKey}.create"));
+                }
 
-            if ($creations && $user->can("backend.{$key}.create")) {
-                $modelRoutes->addChild('Create ' . Str::singular($modelTitle), route("admin.{$modelRouteKey}.create"));
+                if ($softDeletes && $user->can("backend.{$key}.delete")) {
+                    $modelRoutes->addChild('Trashed ' . Str::plural($modelTitle), route("admin.{$modelRouteKey}.trashed"));
+                }
             }
 
-            if ($softDeletes && $user->can("backend.{$key}.delete")) {
-                $modelRoutes->addChild('Trashed ' . Str::plural($modelTitle), route("admin.{$modelRouteKey}.trashed"));
-            }
 
 
             foreach ($additionalRoutes as $newRoute) {

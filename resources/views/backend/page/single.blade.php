@@ -14,7 +14,12 @@
                             <h3>{{ ($form['action'] == 'create') ? 'New' : 'Edit'  }} Page</h3>
                         </div>
                         <div class="col-12 col-md-2 text-right">
-                            
+                            <a class="btn btn-sm btn-primary" href="{{ route('admin.page.view', $page) }}" data-toggle="tooltip" data-placement="left" title="{{ __('basic.actions.view', ['name' => 'Page']) }}">
+                                Preview
+                            </a>
+                        </div>
+                        <div class="col-12 col-md-12 mt-4">
+                            <a class="btn btn-success" href="{{ route('admin.page.index') }}" >Go Back</a>
                         </div>
                     </div>
                 </div>
@@ -40,10 +45,11 @@
                                     <x-form.input name="title" :title="__('Title')" :value="$page->title" required />
 
 
-                                    <x-form.textarea name="description" placeholder="Descr" :value="$page->description">
+                                    <x-form.textarea name="content" placeholder="Content" :value="$page->content">
                                         {{ __('basic.inputs.address.details') }}
                                     </x-form.input>
-                                    
+                                    <span> Use variable : {% user_avatar %} , {% user_name %}</span>
+
 
                                     <div class="text-center">
                                         <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
@@ -51,7 +57,7 @@
                                 </div>
                             </form>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
@@ -61,4 +67,3 @@
     @include('layouts.footers.auth')
 </div>
 @endsection
-

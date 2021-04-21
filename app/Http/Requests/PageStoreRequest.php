@@ -31,7 +31,7 @@ class PageStoreRequest extends FormRequest
                 'required',
                 'string',
             ],
-            'description' => 'required',
+            'content' => 'required',
         ];
         return array_merge($rules, $this->ruleOverwrites());
     }
