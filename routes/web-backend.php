@@ -10,7 +10,7 @@ Route::get('/page/trashed', 'PageController@trashed')->name('page.trashed');
 Route::post('/page/restore', 'PageController@restore')->name('page.restore');
 Route::delete('/page/delete/permanent', 'PageController@delete')->name('page.delete');
 Route::resource('page', 'PageController');
-Route::get('/page/view/{page}', 'PageController@view')->name('page.view');
+Route::get('/page/view/{page}', 'WelcomeController@view')->name('page.view');
 
 Route::get('/business/trashed', 'BusinessController@trashed')->name('business.trashed');
 Route::post('/business/restore', 'BusinessController@restore')->name('business.restore');

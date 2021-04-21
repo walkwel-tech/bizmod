@@ -15,6 +15,7 @@ use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Sluggable\HasSlug;
+use App\Page;
 
 
 class User extends Authenticatable implements MustVerifyEmail
@@ -140,10 +141,10 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         if ($this->hasAnyRole('admin', 'super')) {
             $redirectTo = '/admin';
-        } elseif ($this->hasAnyRole('user')) {
-            $redirectTo =  '/profile';
         } else {
-            $redirectTo =  '/home';
+            $page = Page::first();
+            $route = route('admin.page.view', $page);
+            $redirectTo =  $route;
         }
 
         return $redirectTo;

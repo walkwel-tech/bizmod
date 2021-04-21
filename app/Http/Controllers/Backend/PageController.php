@@ -72,12 +72,7 @@ class PageController extends Controller
         return view('backend.page.single', compact(['page', 'form']));
     }
 
-    public function view(Request $request, Page $page)
-    {
 
-
-        return view('backend.page.view', compact(['page']));
-    }
 
     /**
      * @param \Illuminate\Http\Request $request
