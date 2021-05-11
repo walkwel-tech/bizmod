@@ -45,6 +45,9 @@ Route::get('/template/{code}/code-digital', 'TemplateRenderController@renderCode
 Route::get('/template/{code}/code-print', 'TemplateRenderController@renderCodePrint')->name('template.print');
 Route::post('/template/batch', 'TemplateRenderController@renderBatch')->name('template.batch');
 
+Route::get('/import', 'ImportController@create')->name('import');
+Route::post('/import', 'ImportController@store')->name('import');
+
 Route::get('/category/trashed', 'CategoryController@trashed')->name('category.trashed');
 Route::post('/category/restore', 'CategoryController@restore')->name('category.restore');
 Route::delete('/category/delete/permanent', 'CategoryController@delete')->name('category.delete');

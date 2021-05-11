@@ -41,7 +41,11 @@ class BackendNavigationComposer
 
         $this->createModelRoutes('Clients', 'client', 'fa fa-users', true);
 
-
+        if ($user->can("backend.import.read")) {
+            $this->backendRoutes->push(
+                new NavigationItem(__('Import'), route('admin.import'), 'fa fa-upload', 'section')
+            );
+        }
 
         //$this->createModelRoutes('Services', 'service', 'fa fa-barcode', true);
 
