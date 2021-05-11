@@ -11,10 +11,12 @@ use Illuminate\Support\Facades\Session;
 
 use Maatwebsite\Excel\Importer;
 use App\Imports\ClientImport;
+use App\Imports\UserImport;
+
 
 class ImportController extends Controller
 {
-    protected $allowedFilters = ['title','prefix','owner.first_name'];
+    protected $allowedFilters = ['title', 'prefix', 'owner.first_name'];
     private $importer;
 
     public function __construct(Importer $importer)
@@ -26,7 +28,7 @@ class ImportController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request )
+    public function create(Request $request)
     {
 
         $form = [
@@ -47,16 +49,24 @@ class ImportController extends Controller
     public function store(ImportStoreRequest $request)
     {
 
-        if($request->input('import_type') == 'client')
-        {
-            $this->importer->import(new ClientImport, request()->file('import_file'));
+        switch ($request->input('import_type')) {
+            case "client":
+                $this->importer->import(new ClientImport, request()->file('import_file'));
+                break;
+            case "user":
+                $this->importer->import(new UserImport, request()->file('import_file'));
+                break;
+            case "business":
+
+                break;
+            default:
         }
         return redirect()->route('admin.import')->with('success', __('basic.actions.saved', ['name' => $request->input('import_type')]));
     }
 
 
 
-    protected static function requiresPermission ()
+    protected static function requiresPermission()
     {
         return true;
     }
@@ -65,7 +75,4 @@ class ImportController extends Controller
     {
         return 'import';
     }
-
-
-
 }
