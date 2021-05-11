@@ -26,13 +26,7 @@ class ClientImport implements ToModel , WithUpserts, WithHeadingRow
             'country_code' => (isset($row['phone_code'])) ? substr($row['phone_code'],0,4) : '',
             'zip' => (isset($row['zip'])) ? $row['zip'] : '',
         ]);
-        // return new Client([
-        //     'first_name'     => $row[1],
-        //     'last_name'    => $row[2],
-        //     'email' => $row[3],
-        //     'phone' => $row[4],
-        //     'country_code' => $row[7],
-        // ]);
+
     }
     public function uniqueBy()
     {

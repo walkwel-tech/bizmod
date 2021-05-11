@@ -51,7 +51,7 @@ class ImportController extends Controller
         {
             $this->importer->import(new ClientImport, request()->file('import_file'));
         }
-
+        return redirect()->route('admin.import')->with('success', __('basic.actions.saved', ['name' => $request->input('import_type')]));
     }
 
 

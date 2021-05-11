@@ -39,9 +39,11 @@
                                 <div class="pl-lg-4">
                                     <div class="form-group">
                                     <label class="form-control-label" for="input-import_type">Select import type</label>
-                                    <x-form.radio name="import_type" title="Client" value="client" checked="client" />
-                                    <x-form.radio name="import_type" title="Codes" value="code" checked=""/>
+                                    <x-form.radio name="import_type" title="User" value="user" checked="user" />
                                     <x-form.radio name="import_type" title="Business" value="business" checked="" />
+                                    <x-form.radio name="import_type" title="Client" value="client" checked="" />
+                                    <x-form.radio name="import_type" title="Codes" value="code" checked=""/>
+
                                     </div>
                                     <x-form.input-file name="import_file" :title="__('Upload csv')" lable="Upload import file"  />
 
