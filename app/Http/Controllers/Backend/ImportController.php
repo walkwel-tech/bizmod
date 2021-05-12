@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Session;
 use Maatwebsite\Excel\Importer;
 use App\Imports\ClientImport;
 use App\Imports\UserImport;
+use App\Imports\BusinessImport;
 
 
 class ImportController extends Controller
@@ -57,7 +58,7 @@ class ImportController extends Controller
                 $this->importer->import(new UserImport, request()->file('import_file'));
                 break;
             case "business":
-
+                $this->importer->import(new BusinessImport, request()->file('import_file'));
                 break;
             default:
         }
