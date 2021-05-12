@@ -13,6 +13,7 @@ use Maatwebsite\Excel\Importer;
 use App\Imports\ClientImport;
 use App\Imports\UserImport;
 use App\Imports\BusinessImport;
+use App\Imports\CodeImport;
 
 
 class ImportController extends Controller
@@ -60,7 +61,11 @@ class ImportController extends Controller
             case "business":
                 $this->importer->import(new BusinessImport, request()->file('import_file'));
                 break;
+            case "code":
+                $this->importer->import(new CodeImport, request()->file('import_file'));
+                break;
             default:
+            break;
         }
         return redirect()->route('admin.import')->with('success', __('basic.actions.saved', ['name' => $request->input('import_type')]));
     }
