@@ -43,7 +43,8 @@ class BackendNavigationComposer
 
         if ($user->can("backend.import.read")) {
             $this->backendRoutes->push(
-                new NavigationItem(__('Import'), route('admin.import'), 'fa fa-upload', 'section')
+                new NavigationItem(__('Import'), route('admin.import'), 'fa fa-upload', 'section'),
+                new NavigationItem(__('Export'), route('admin.export'), 'fa fa-download', 'section')
             );
         }
 

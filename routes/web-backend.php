@@ -48,6 +48,9 @@ Route::post('/template/batch', 'TemplateRenderController@renderBatch')->name('te
 Route::get('/import', 'ImportController@create')->name('import');
 Route::post('/import', 'ImportController@store')->name('import');
 
+Route::get('/export', 'ExportController@create')->name('export');
+Route::post('/export', 'ExportController@store')->name('export');
+
 Route::get('/category/trashed', 'CategoryController@trashed')->name('category.trashed');
 Route::post('/category/restore', 'CategoryController@restore')->name('category.restore');
 Route::delete('/category/delete/permanent', 'CategoryController@delete')->name('category.delete');
