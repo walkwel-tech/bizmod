@@ -14,7 +14,7 @@ use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 
-class CodeImport implements ToModel, WithHeadingRow, WithBatchInserts, WithUpserts
+class CodeImport implements ToModel, WithHeadingRow, WithBatchInserts, WithUpserts, WithChunkReading, ShouldQueue
 {
     /**
      * @param array $row
@@ -74,7 +74,11 @@ class CodeImport implements ToModel, WithHeadingRow, WithBatchInserts, WithUpser
     }
     public function batchSize(): int
     {
-        return 2000;
+        return 1000;
+    }
+    public function chunkSize(): int
+    {
+        return 1000;
     }
 
 }

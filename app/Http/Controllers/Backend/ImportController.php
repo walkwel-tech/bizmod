@@ -14,6 +14,7 @@ use App\Imports\ClientImport;
 use App\Imports\UserImport;
 use App\Imports\BusinessImport;
 use App\Imports\CodeImport;
+use App\Imports\CodeImportNew;
 
 
 class ImportController extends Controller
@@ -62,7 +63,7 @@ class ImportController extends Controller
                 $this->importer->import(new BusinessImport, request()->file('import_file'));
                 break;
             case "code":
-                $this->importer->import(new CodeImport, request()->file('import_file'));
+                $this->importer->queueImport(new CodeImportNew, request()->file('import_file'));
                 break;
             default:
             break;
