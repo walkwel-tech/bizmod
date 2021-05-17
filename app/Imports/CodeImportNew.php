@@ -10,21 +10,26 @@ use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Maatwebsite\Excel\Concerns\RemembersChunkOffset;
 
-class CodeImportNew implements ToCollection, WithHeadingRow, WithChunkReading, ShouldQueue
+class CodeImportNew implements ToCollection, WithHeadingRow, WithChunkReading
 {
+
+    use RemembersChunkOffset;
+
     /**
      * @param array $row
      *
      * @return User|null
      */
-    private $datArray;
+    private $dataArray;
     public function collection(Collection $rows)
     {
+        $chunkOffset = $this->getChunkOffset();
 
         foreach ($rows as $row) {
 
-            $datArray[] = array(
+            $dataArray[] = array(
 
                 'batch_no'     => (isset($row['batch_no'])) ? $row['batch_no'] : '',
                 'code'     => (isset($row['code'])) ? $row['code'] : '',
@@ -38,32 +43,35 @@ class CodeImportNew implements ToCollection, WithHeadingRow, WithChunkReading, S
             );
 
         }
-        dump("batch------------------");
-        dump($datArray);
+
+        Code::upsert($dataArray, 'code');
+        // dump("batch------------------");
+        // dump($chunkOffset);
+        // dd($dataArray);
     }
 
-    private function getClientId($email)
-    {
-        $client = Client::where('email', $email)->first();
-        return ($client) ? $client->getKey() : null;
-    }
+    // private function getClientId($email)
+    // {
+    //     $client = Client::where('email', $email)->first();
+    //     return ($client) ? $client->getKey() : null;
+    // }
 
-    private function getBusinessId($code)
-    {
-        $prefix = substr($code, 0, 3);
-        $business = Business::where('prefix', $prefix)->first();
-        return ($business) ? $business->getKey() : 0;
-    }
+    // private function getBusinessId($code)
+    // {
+    //     $prefix = substr($code, 0, 3);
+    //     $business = Business::where('prefix', $prefix)->first();
+    //     return ($business) ? $business->getKey() : 0;
+    // }
 
     private function getClaimDetails($row)
     {
         if (isset($row['page_id']) || isset($row['location']) || isset($row['country']) || isset($row['zip'])) {
-            $claim_details =  array(
+            $claim_details =  json_encode(array(
                 "page_id" => (isset($row['page_id'])) ? $row['page_id'] : '',
                 "location" => (isset($row['location'])) ? $row['location'] : '',
                 "country" => (isset($row['country'])) ? $row['country'] : '',
                 "zip" => (isset($row['zip'])) ? $row['zip'] : '',
-            );
+            ));
         } else {
             $claim_details = '';
         }
@@ -74,7 +82,7 @@ class CodeImportNew implements ToCollection, WithHeadingRow, WithChunkReading, S
 
     public function chunkSize(): int
     {
-        return 10000;
+        return 5000;
     }
 
 }

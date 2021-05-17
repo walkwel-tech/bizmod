@@ -74,11 +74,11 @@ class CodeImport implements ToModel, WithHeadingRow, WithBatchInserts, WithUpser
     }
     public function batchSize(): int
     {
-        return 1000;
+        return 5000;
     }
     public function chunkSize(): int
     {
-        return 1000;
+        return 5000;
     }
 
 }
