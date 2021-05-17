@@ -55,12 +55,15 @@ class ImportController extends Controller
 
         switch ($request->input('import_type')) {
             case "client":
+                set_time_limit(0);
                 $this->importer->import(new ClientImport, request()->file('import_file'));
                 break;
             case "user":
+                set_time_limit(0);
                 $this->importer->import(new UserImport, request()->file('import_file'));
                 break;
             case "business":
+                set_time_limit(0);
                 $this->importer->import(new BusinessImport, request()->file('import_file'));
                 break;
             case "code":
