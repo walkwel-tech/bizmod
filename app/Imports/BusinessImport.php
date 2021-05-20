@@ -27,6 +27,8 @@ class BusinessImport implements ToModel , WithUpserts, WithHeadingRow
             'owner_id' => $this->getOwnerId($row),
             'threshold' => (isset($row['threshold'])) ? $row['threshold'] : '',
             'webhook_url' => (isset($row['webhook_url'])) ? $row['webhook_url'] : '',
+            'b_id' => (isset($row['fbde_business'])) ? $row['fbde_business'] : '',
+            'sender_id' => (isset($row['fbde_sender'])) ? $row['fbde_sender'] : '',
         ]);
     }
 
