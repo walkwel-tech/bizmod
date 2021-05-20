@@ -28,11 +28,11 @@ class CodeImport implements ToModel, WithHeadingRow, WithBatchInserts, WithUpser
             'batch_no'     => (isset($row['batch_no'])) ? $row['batch_no'] : '',
             'code'     => (isset($row['code'])) ? $row['code'] : '',
             'description'    => (isset($row['description'])) ? $row['description'] : '',
-            'business_id'    => (isset($row['business_id'])) ? $row['business_id'] : '',
+            'business_id'    => $this->getBusinessId($row['code']),
             'given_on' => (isset($row['given_on'])) ? $row['given_on'] : null,
             'expire_on' => (isset($row['expire_on'])) ? $row['expire_on'] : date('Y-m-d H:i:s', strtotime("+18 month")),
         ]);
-        $code->client_id = (isset($row['client_id'])) ? $row['client_id'] : null;
+        $code->client_id = $this->getClientId($row['email']);
         $code->claimed_on = (isset($row['claimed_on'])) ? date('Y-m-d H:i:s', strtotime($row['claimed_on'])) : null;
         $code->claim_details = $this->getClaimDetails($row);
         return $code;
