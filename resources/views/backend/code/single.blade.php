@@ -74,7 +74,7 @@
                                                 <i class="fas fa-level-up-alt"></i> {{ __('Pdf Template') }}
                                             </a>
                                             @endif
-                                            <x-form.input  name="print_ready_template_id" :title="__('Print Ready Pdf Template')" :value="$code->print_ready_template->path"  readonly/>
+                                            <x-form.input  name="print_ready_template_id" :title="__('Print Ready Pdf Template')" :value="$code->print_ready_template ? $code->print_ready_template->path : null"  readonly/>
                                             <x-form.input  name="given_on" :title="__('Given on')" :value="$code->given_on"  readonly/>
                                                 <x-form.date-picker  name="expire_on" :title="__('Expire on')" :value="$code->expire_on"  required/>
                                         <x-form.textarea  name="description" :title="__('Add Note')" :value="$code->description" />
