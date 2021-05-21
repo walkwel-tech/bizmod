@@ -85,7 +85,7 @@
                             <tr>
                                 <td>{{ $code->batch_no }}</td>
                                 <td>{{ $code->getSEOTitle() }}</td>
-                                <td>{{ $code->business->getSEOTitle() }}</td>
+                                <td>@if($code->business){{ $code->business->getSEOTitle() }}@endif</td>
                                 <td>{{ $code->client->email }}</td>
                                 <!-- <td>{{ $code->claim_details->get('page_id', '-') }}</td>
                                 <td>{{ $code->claim_details->get('location', '-') }}</td>
