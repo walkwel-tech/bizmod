@@ -73,7 +73,7 @@ class CodeImportNew implements ToCollection, WithHeadingRow, WithChunkReading
                 "zip" => (isset($row['zip'])) ? $row['zip'] : '',
             ));
         } else {
-            $claim_details = '';
+            $claim_details = null;
         }
 
         //dd($claim_details);
