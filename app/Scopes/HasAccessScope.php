@@ -3,6 +3,7 @@
 namespace App\Scopes;
 
 use App\Business;
+use App\PdfTemplate;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Scope;
@@ -27,6 +28,10 @@ class HasAccessScope implements Scope
             $businessIds = $user->businessIds->pluck('business_id')->toArray();
             $columnToSearchIn = ($model instanceof Business) ? 'businesses.id' : 'business_id';
             $builder->whereIn($columnToSearchIn, $businessIds);
+
+            if ($model instanceof PdfTemplate) {
+                $builder->orWhere($columnToSearchIn, '=', null);
+            }
         }
 
         return $builder;
