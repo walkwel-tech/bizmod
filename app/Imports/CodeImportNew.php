@@ -44,7 +44,7 @@ class CodeImportNew implements ToCollection, WithHeadingRow, WithChunkReading
 
         }
 
-        Code::upsert($dataArray, 'code');
+        Code::upsert($dataArray, 'code',['batch_no','description','business_id','given_on','client_id','claimed_on','claim_details']);
         // dump("batch------------------");
         // dump($chunkOffset);
         // dd($dataArray);
