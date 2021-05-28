@@ -68,7 +68,7 @@ class ImportController extends Controller
                 break;
             case "code":
                 set_time_limit(0);
-                $this->importer->import(new CodeImportNew, request()->file('import_file'));
+                $this->importer->import(new CodeImport, request()->file('import_file'));
                 break;
             default:
             break;
