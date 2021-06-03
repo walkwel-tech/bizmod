@@ -29,7 +29,11 @@
                             <x-form.input-alternative name="password_confirmation" :placeholder="__('Confirm Password')" icon="ni ni-lock-circle-open" type="password" />
 
                             <hr>
-                            <x-form.backend.address-input :address="new App\Address" />
+                            <x-form.input-alternative name="country" :placeholder="__('Country')" icon="fas fa-chess-king" type="text" />
+                            <x-form.input-alternative name="state" :placeholder="__('State')" icon="fas fa-chess-king" type="text" />
+                            <x-form.input-alternative name="city" :placeholder="__('City')" icon="fas fa-chess-king" type="text" />
+                            <x-form.input-alternative name="zip" :placeholder="__('Zip')" icon="fas fa-chess-king" type="text" />
+                            <x-form.input-alternative name="phone" :placeholder="__('Phone')" icon="fas fa-chess-king" type="text" />
 
                             {{--
                             <div class="text-muted font-italic">

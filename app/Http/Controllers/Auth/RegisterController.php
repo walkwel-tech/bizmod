@@ -57,6 +57,7 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'tnc'  => ['required'],
+            'phone' => ['required', 'max:16'],
         ]);
     }
 
@@ -74,16 +75,21 @@ class RegisterController extends Controller
             'last_name' => $data['last_name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'country' => $data['country'],
+            'state' => $data['state'],
+            'city' => $data['city'],
+            'zip' => $data['zip'],
+            'phone' => $data['phone'],
         ]);
 
         $user->assignRole('user');
 
-        $user->syncAddresses(
-            Arr::get($data, 'address'),
-            Arr::get($data, 'country'),
-            Arr::get($data, 'state'),
-            Arr::get($data, 'city')
-        );
+        // $user->syncAddresses(
+        //     Arr::get($data, 'address'),
+        //     Arr::get($data, 'country'),
+        //     Arr::get($data, 'state'),
+        //     Arr::get($data, 'city')
+        // );
 
         return $user;
     }
