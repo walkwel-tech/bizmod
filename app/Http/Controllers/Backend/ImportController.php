@@ -42,6 +42,12 @@ class ImportController extends Controller
             'action_route' => route('admin.import'),
             'method' => 'POST',
         ];
+        $errorCode = Session::get('errorCode');
+        if( $errorCode)
+        {
+            $request->session()->flash('status', '<strong>Error codes: </strong>'.implode(", ", $errorCode));
+        }
+        $request->session()->forget('errorCode');
 
         return view('backend.import.single', compact(['form']));
     }
