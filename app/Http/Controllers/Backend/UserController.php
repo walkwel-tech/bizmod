@@ -10,10 +10,10 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
-    protected $allowedFilters = ['first_name', 'last_name', 'email'];
 
     /**
      * @param \Illuminate\Http\Request $request
@@ -21,10 +21,10 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $allowedFilters = $this->allowedFilters;
+        $allowedFilters = $this->getAllowedFilters();
 
         $users = QueryBuilder::for(User::class)
-            ->allowedFilters($allowedFilters)
+                ->allowedFilters(array_keys($allowedFilters))
             // ->allowedIncludes(['tags'])
             // ->allowedAppends(['status'])
             // ->withDisabled()
@@ -34,7 +34,11 @@ class UserController extends Controller
         $authKey = $this->getPermissionKey();
         $addNew = auth()->user()->can("backend.{$authKey}.create");
 
-        return view('backend.user.index', compact(['allowedFilters', 'users', 'addNew']));
+        $searchedParams = $request->input('filter');
+
+        Session::put('user.filters', $searchedParams);
+
+        return view('backend.user.index', compact(['allowedFilters', 'searchedParams',  'users', 'addNew']));
     }
 
     /**
@@ -76,8 +80,9 @@ class UserController extends Controller
             'method' => 'PATCH',
         ];
 
+        $backURL = route('admin.user.index', ['filter' => Session::get('user.filters', [])]);
 
-        return view('backend.user.single', compact(['user', 'form']));
+        return view('backend.user.single', compact(['user', 'form','backURL']));
     }
 
     /**
@@ -253,5 +258,23 @@ class UserController extends Controller
     public static function getModelName ()
     {
         return 'User';
+    }
+    public static function getAllowedFilters()
+    {
+
+        return [
+            'first_name' => [
+                'type' => 'input',
+                'title' => 'First Name'
+            ],
+            'last_name' => [
+                'type' => 'input',
+                'title' => 'Last Name'
+            ],
+            'email' => [
+                'type' => 'input',
+                'title' => 'Email'
+            ]
+        ];
     }
 }
