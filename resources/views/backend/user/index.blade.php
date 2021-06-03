@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-    @include('layouts.headers.cards')
+@include('layouts.headers.cards')
 
 <div class="container-fluid mt--7">
     <div class="row">
@@ -13,7 +13,8 @@
                             <form method="get" accept-charset="utf-8" class="row">
                                 <div class="col-10">
                                     <div class="row">
-                                        <x-form.filter :allowedFilters="$allowedFilters" :searchedParams="$searchedParams" />
+                                        <x-form.filter :allowedFilters="$allowedFilters"
+                                            :searchedParams="$searchedParams" />
 
                                     </div>
                                 </div>
@@ -57,14 +58,18 @@
                                 <td class="d-flex justify-content-center">
 
                                     @can('backend.users.delete')
-                                    <x-ui.button-delete :model="$user" :route-destroy="route('admin.user.destroy', $user)" :route-restore="route('admin.user.restore')" :route-delete="route('admin.user.delete')" model-name="User" :identifier="$user->id"/>
+                                    <x-ui.button-delete :model="$user"
+                                        :route-destroy="route('admin.user.destroy', $user)"
+                                        :route-restore="route('admin.user.restore')"
+                                        :route-delete="route('admin.user.delete')" model-name="User"
+                                        :identifier="$user->id" />
                                     @endcan
 
-                                    <x-ui.dropdown>
-                                        @can('backend.users.update')
-                                        <a class="dropdown-item" href="{{ route('admin.user.show', $user) }}">Edit</a>
-                                        @endcan
-                                    </x-ui.dropdown>
+
+                                    @can('backend.users.update')
+                                    <a class="btn btn-info btn-icon btn-icon-md rounded-0"  href="{{ route('admin.user.show', $user) }}" data-toggle="tooltip" data-placement="left" title="{{ __('basic.actions.view', ['name' => 'User']) }}"><i class="fa fa-eye"></i></a>
+                                    @endcan
+
                                 </td>
                             </tr>
                             @endforeach

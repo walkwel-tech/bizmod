@@ -24,7 +24,7 @@ class UserController extends Controller
         $allowedFilters = $this->getAllowedFilters();
 
         $users = QueryBuilder::for(User::class)
-                ->allowedFilters(array_keys($allowedFilters))
+            ->allowedFilters(array_keys($allowedFilters))
             // ->allowedIncludes(['tags'])
             // ->allowedAppends(['status'])
             // ->withDisabled()
@@ -44,7 +44,7 @@ class UserController extends Controller
     /**
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
-    */
+     */
     public function trashed(Request $request)
     {
         $allowedFilters = $this->allowedFilters;
@@ -82,7 +82,7 @@ class UserController extends Controller
 
         $backURL = route('admin.user.index', ['filter' => Session::get('user.filters', [])]);
 
-        return view('backend.user.single', compact(['user', 'form','backURL']));
+        return view('backend.user.single', compact(['user', 'form', 'backURL']));
     }
 
     /**
@@ -124,7 +124,12 @@ class UserController extends Controller
             'first_name',
             'last_name',
             'middle_name',
-            'email'
+            'email',
+            'country',
+            'state',
+            'city',
+            'zip',
+            'phone'
         ]));
 
         $user->password = Hash::make($request->password);
@@ -147,8 +152,7 @@ class UserController extends Controller
             $user->markEmailAsVerified();
         }
 
-        if ($request->has('roles'))
-        {
+        if ($request->has('roles')) {
             $user->syncRoles($request->roles);
         }
 
@@ -172,7 +176,12 @@ class UserController extends Controller
             'first_name',
             'last_name',
             'middle_name',
-            'email'
+            'email',
+            'country',
+            'state',
+            'city',
+            'zip',
+            'phone'
         ]));
 
         if ($request->password) {
@@ -183,8 +192,7 @@ class UserController extends Controller
             $user->markEmailAsVerified();
         }
 
-        if ($request->has('roles'))
-        {
+        if ($request->has('roles')) {
             $user->syncRoles($request->roles);
         }
 
@@ -245,7 +253,7 @@ class UserController extends Controller
         return redirect()->route('admin.user.index')->with('success', __('basic.actions.permanent_deleted', ['name' => $this->getModelName()]));
     }
 
-    protected static function requiresPermission ()
+    protected static function requiresPermission()
     {
         return true;
     }
@@ -255,7 +263,7 @@ class UserController extends Controller
         return 'users';
     }
 
-    public static function getModelName ()
+    public static function getModelName()
     {
         return 'User';
     }

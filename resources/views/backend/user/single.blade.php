@@ -64,7 +64,11 @@
                                 <x-form.input type="password" name="password_confirmation" :title="__('Confirm Password')" value="" />
                             @endif
 
-                            <x-form.backend.address-input :address="$user->getFirstAddress()"/>
+                            <x-form.input name="country" :title="__('Country')" :value="$user->country"  />
+                                <x-form.input name="state" :title="__('State')" :value="$user->state"  />
+                                <x-form.input name="city" :title="__('City')" :value="$user->city"  />
+                                <x-form.input name="zip" :title="__('Zip')" :value="$user->zip"  />
+                                <x-form.input type="number" name="phone" :title="__('Phone')" :value="$user->phone"  required/>
 
                             <div class="text-center">
                                 <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
