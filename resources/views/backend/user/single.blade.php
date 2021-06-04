@@ -14,7 +14,14 @@
             <div class="card bg-secondary shadow">
                 <div class="card-header bg-white border-0">
                     <div class="row align-items-center">
-                        <h3 class="col-12 mb-0">{{ ($form['action'] == 'create') ? 'New' : 'Edit'  }} User</h3>
+                        <div class="col-12 col-md-12 mb-0">
+                            <h3 class="col-12 mb-0">{{ ($form['action'] == 'create') ? 'New' : 'Edit'  }} User</h3>
+                        </div>
+                        @if (isset($backURL))
+                        <div class="col-12 col-md-12 mt-4">
+                            <a class="btn btn-success" href="{{ $backURL }}" >Go Back</a>
+                        </div>
+                        @endif
                     </div>
                 </div>
                 <div class="card-body">
@@ -57,7 +64,11 @@
                                 <x-form.input type="password" name="password_confirmation" :title="__('Confirm Password')" value="" />
                             @endif
 
-                            <x-form.backend.address-input :address="$user->getFirstAddress()"/>
+                            <x-form.input name="country" :title="__('Country')" :value="$user->country"  />
+                                <x-form.input name="state" :title="__('State')" :value="$user->state"  />
+                                <x-form.input name="city" :title="__('City')" :value="$user->city"  />
+                                <x-form.input name="zip" :title="__('Zip')" :value="$user->zip"  />
+                                <x-form.input type="number" name="phone" :title="__('Phone')" :value="$user->phone"  required/>
 
                             <div class="text-center">
                                 <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>

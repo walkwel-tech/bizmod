@@ -81,8 +81,7 @@ class BusinessController extends Controller
         });
 
         $usersData = $users->mapWithKeys(function($c) {
-            $data = $c->only(['first_name', 'last_name', 'email']);
-            $data['phone'] = $c->address->phone;
+            $data = $c->only(['first_name', 'last_name', 'email','phone']);
             return [$c->getKey() => $data];
         });
 
@@ -116,8 +115,7 @@ class BusinessController extends Controller
         });
 
         $usersData = $users->mapWithKeys(function($c) {
-            $data = $c->only(['first_name', 'last_name', 'email']);
-            $data['phone'] = $c->address->phone;
+            $data = $c->only(['first_name', 'last_name', 'email','phone']);
             return [$c->getKey() => $data];
         });
 
