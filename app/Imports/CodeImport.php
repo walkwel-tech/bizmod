@@ -50,6 +50,7 @@ class CodeImport implements ToModel, WithHeadingRow, WithBatchInserts, WithUpser
     private function getCodeClientId(array $row)
     {
         $code = Code::where('code', $row['code'])->first();
+        if ($code) {
         if ($code->client_id) {
             if (!$row['client_email']) {
                 Session::push('errorCode', $code->code);
@@ -59,6 +60,11 @@ class CodeImport implements ToModel, WithHeadingRow, WithBatchInserts, WithUpser
         } else {
             return  null;
         }
+    }
+    else
+    {
+        return  null;
+    }
     }
 
     private function getClientId($email)
